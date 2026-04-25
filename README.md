@@ -15,7 +15,15 @@ The viewer is a convenience layer. The canonical project memory remains the Mark
 
 ## Run The Local Viewer
 
-Install Node.js first if needed. Then run:
+First, install **Node.js** if it is not already installed on your computer.
+
+Then clone this repository:
+
+```bash
+git clone https://github.com/Natizh/inCampus-documentation-wiki.git
+cd inCampus-documentation-wiki
+```
+Then run:
 
 ```bash
 cd wiki-web-viewer
