@@ -1,0 +1,27 @@
+# macOS and editor noise
+.DS_Store
+
+# local Codex/agent automation; not part of the publishable repo
+.agents/
+.codex/
+
+# local secrets
+.env
+.env.*
+!.env.example
+
+# Wiki web viewer dependencies and build output
+wiki-web-viewer/node_modules/
+wiki-web-viewer/dist/
+wiki-web-viewer/dist-server/
+
+# TypeScript incremental build caches
+*.tsbuildinfo
+
+# Local SQLite indexes and temporary files
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*

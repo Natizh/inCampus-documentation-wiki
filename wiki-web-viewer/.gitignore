@@ -1,0 +1,52 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# production
+/dist
+/dist-server
+
+# local sqlite indexes if WIKIOS_INDEX_DB is pointed into this folder
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.sqlite3
+*.sqlite3-*
+
+# local workspace and misc
+/.agents
+/.claude
+/.codex
+/CLAUDE.md
+/skills-lock.json
+/components.json
+.DS_Store
+.kiro
+*.pem
+version.json
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo

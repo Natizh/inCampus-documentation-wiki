@@ -1,0 +1,182 @@
+@startuml InCampusUseCaseRelationshipsV3
+title InCampus Use Case Relationships
+
+left to right direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam dpi 200
+skinparam defaultFontName Helvetica
+skinparam wrapWidth 170
+
+skinparam actor {
+  BorderColor #334155
+  BackgroundColor #F8FAFC
+  FontColor #0F172A
+}
+
+skinparam rectangle {
+  BorderColor #1F2937
+  BackgroundColor #F8FAFC
+}
+
+skinparam package {
+  BorderColor #475569
+  BackgroundColor #FFFFFF
+  FontColor #0F172A
+}
+
+skinparam usecase {
+  BorderColor #334155
+  BackgroundColor #FFFFFF
+  FontColor #111827
+}
+
+skinparam usecase<<Deferred>> {
+  BorderColor #8B5CF6
+  BackgroundColor #F5F3FF
+  FontColor #4C1D95
+}
+
+actor Student
+actor "Student\nHost" as Host
+actor "Student\nGuest" as Guest
+actor "Campus\nAdmin" as Admin
+
+Student <|-- Host
+Student <|-- Guest
+
+rectangle "InCampus mobile app" {
+  package "Access and profile" as PKG_Access {
+    usecase "[US-01]\nSign Up with\nUniversity Email" as UC_SignUp
+    usecase "[US-15]\nSign In" as UC_SignIn
+    usecase "[US-16]\nSelect Campus" as UC_SelectCampus
+    usecase "[US-14]\nSet Up Profile" as UC_SetUpProfile
+    usecase "[US-14]\nEdit Profile" as UC_EditProfile
+    usecase "[US-22]\nView Student\nMinimal Profile" as UC_ViewProfile
+
+    UC_SignUp -[hidden]down- UC_SignIn
+    UC_SignIn -[hidden]down- UC_SelectCampus
+    UC_SelectCampus -[hidden]down- UC_SetUpProfile
+    UC_SetUpProfile -[hidden]down- UC_EditProfile
+    UC_EditProfile -[hidden]down- UC_ViewProfile
+  }
+
+  package "Discovery and participation" as PKG_Discovery {
+    usecase "[US-04]\nBrowse and Filter\nActivities" as UC_Browse
+    usecase "[US-21]\nView Activity\nDetails" as UC_ViewDetails
+    usecase "[US-20]\nJoin Activity" as UC_Join
+    usecase "[US-27]\nWithdraw Join\nRequest" as UC_Withdraw
+    usecase "[US-27]\nLeave Joined\nActivity" as UC_Leave
+    usecase "[US-09]\nView Personal\nActivity List" as UC_PersonalList
+
+    UC_Browse -[hidden]down- UC_ViewDetails
+    UC_ViewDetails -[hidden]down- UC_Join
+    UC_Join -[hidden]down- UC_Withdraw
+    UC_Withdraw -[hidden]down- UC_Leave
+    UC_Leave -[hidden]down- UC_PersonalList
+  }
+
+  package "Hosting and lifecycle" as PKG_Hosting {
+    usecase "[US-03]\nCreate Activity" as UC_CreateActivity
+    usecase "[US-25]\nSet Activity\nDate and Time" as UC_SetDateTime
+    usecase "[US-05]\nManage Join\nRequests" as UC_ManageRequests
+    usecase "[US-05 / US-28]\nUpdate Activity\nStatus" as UC_UpdateStatus
+    usecase "[US-26]\nDelete Activity" as UC_DeleteActivity
+
+    UC_CreateActivity -[hidden]down- UC_SetDateTime
+    UC_SetDateTime -[hidden]down- UC_ManageRequests
+    UC_ManageRequests -[hidden]down- UC_UpdateStatus
+    UC_UpdateStatus -[hidden]down- UC_DeleteActivity
+  }
+
+  package "Notifications and system flows" as PKG_Notify {
+    usecase "[US-06]\nNotify Host of\nJoin Event" as UC_NotifyHost
+    usecase "[US-07]\nNotify Participant of\nApplication Outcome" as UC_NotifyOutcome
+    usecase "[US-28]\nNotify Participant of\nActivity Cancellation" as UC_NotifyCancellation
+
+    UC_NotifyHost -[hidden]down- UC_NotifyOutcome
+    UC_NotifyOutcome -[hidden]down- UC_NotifyCancellation
+  }
+
+  package "Safety and moderation" as PKG_Safety {
+    usecase "[US-19]\nView Community\nRules" as UC_ViewRules
+    usecase "[US-17]\nReport User\nor Activity" as UC_Report
+    usecase "[US-18]\nBlock User" as UC_Block
+    usecase "[US-02]\nReview Report" as UC_ReviewReport
+
+    UC_ViewRules -[hidden]down- UC_Report
+    UC_Report -[hidden]down- UC_Block
+    UC_Block -[hidden]down- UC_ReviewReport
+  }
+
+  package "Campus administration" as PKG_Admin {
+    usecase "[US-23]\nConfigure New\nCampus" as UC_ConfigureCampus
+    usecase "[US-24]\nManage Campus\nStructured Options" as UC_ManageOptions
+
+    UC_ConfigureCampus -[hidden]down- UC_ManageOptions
+  }
+
+  package "Deferred postMVP" as PKG_Deferred {
+    usecase "[US-10]\nView Friends and\nSocial Indicators" as UC_ViewFriends
+    usecase "[US-11]\nReceive Activity\nReminder" as UC_ReceiveReminder
+    usecase "[US-12]\nTrack Participation\nPoints" as UC_TrackPoints
+    usecase "[US-13]\nUpload Activity\nPhoto" as UC_UploadPhoto
+
+    UC_ViewFriends -[hidden]down- UC_ReceiveReminder
+    UC_ReceiveReminder -[hidden]down- UC_TrackPoints
+    UC_TrackPoints -[hidden]down- UC_UploadPhoto
+  }
+
+
+}
+
+' Actor to Package relationships
+Student -[#64748B]-> PKG_Access
+Guest -[#64748B]-> PKG_Discovery
+Host -[#64748B]-> PKG_Hosting
+Admin -[#64748B]-> PKG_Admin
+
+' Safety and Moderation has mixed actors
+Student -[#64748B]-> UC_ViewRules
+Student -[#64748B]-> UC_Report
+Student -[#64748B]-> UC_Block
+Admin -[#64748B]-> UC_ReviewReport
+
+' --- Unified relationships ---
+UC_ConfigureCampus -[#16A34A,thickness=2]-> UC_ManageOptions
+UC_CreateActivity -[#16A34A,thickness=2]-> UC_SetDateTime
+UC_Join -[#16A34A,thickness=2]-> UC_NotifyHost
+UC_ManageRequests -[#16A34A,thickness=2]-> UC_ViewProfile
+
+UC_ViewProfile -[#16A34A,thickness=2]-> UC_ViewDetails
+UC_Report -[#16A34A,thickness=2]-> UC_ViewDetails
+UC_NotifyCancellation -[#16A34A,thickness=2]-> UC_UpdateStatus
+
+UC_Browse -[#16A34A,thickness=2]-> UC_ViewDetails
+UC_NotifyHost -[#16A34A,thickness=2]-> UC_ManageRequests
+UC_ManageRequests -[#16A34A,thickness=2]-> UC_NotifyOutcome
+UC_Report -[#16A34A,thickness=2]-> UC_ReviewReport
+
+UC_ManageOptions -[#16A34A,thickness=2]-> UC_CreateActivity
+UC_CreateActivity -[#16A34A,thickness=2]-> UC_ViewDetails
+UC_CreateActivity -[#16A34A,thickness=2]-> UC_Join
+UC_UpdateStatus -[#16A34A,thickness=2]-> UC_PersonalList
+
+UC_ViewDetails -[#FACC15,dashed,thickness=2]-> UC_ViewFriends
+UC_PersonalList -[#FACC15,dashed,thickness=2]-> UC_ReceiveReminder
+UC_PersonalList -[#FACC15,dashed,thickness=2]-> UC_TrackPoints
+UC_ViewDetails -[#FACC15,dashed,thickness=2]-> UC_UploadPhoto
+UC_Block -[#16A34A,thickness=2]-> UC_Join
+
+
+legend right
+<b>Visual key</b>
+
+<color:#16A34A><b>Green arrow</b></color> — Include
+<color:#FACC15><b>Yellow arrow</b></color> — Extend
+<back:F5F3FF><b>Deferred post-MVP</b></back> — Use case analyzed but not in MVP scope
+endlegend
+
+@enduml
