@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Activity, ArrowUp, FolderOpen, Network, RefreshCw, Search } from "lucide-react";
+import { Activity, Archive, ArrowUp, FolderOpen, Network, RefreshCw, Search } from "lucide-react";
 import { Link, useRevalidator } from "react-router-dom";
 
 import { useWikiConfig } from "@/client/wiki-config";
@@ -235,6 +235,14 @@ export function SearchBox({
           >
             <Network className="h-4.5 w-4.5 text-[var(--teal)]" />
             {config.navigation.graphLabel}
+          </Link>
+          <Link
+            to="/raw-archive"
+            className="surface flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-[var(--foreground)] transition-[transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] sm:px-4"
+          >
+            <Archive className="h-4.5 w-4.5 text-[var(--lavender)]" />
+            <span className="hidden sm:inline">Raw Archive</span>
+            <span className="sm:hidden">Raw</span>
           </Link>
           <Link
             to="/stats"

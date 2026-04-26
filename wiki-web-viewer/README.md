@@ -23,6 +23,14 @@ By default, this viewer opens the canonical wiki at:
 
 That path is resolved relative to this `wiki-web-viewer` folder, so teammates should not need to configure an absolute path on their own computer.
 
+The viewer also has a `Raw Archive` section for local browsing of:
+
+```text
+../inCampusLLMwiki/raw
+```
+
+Raw files remain original source/evidence material. They are not indexed into the main wiki search.
+
 ## Requirements
 
 Install Node.js before running the viewer. Node.js includes `npm`.
@@ -180,7 +188,15 @@ Adjust the commit message to describe the actual ingest or update.
 
 ## Raw Archive Principle
 
-`inCampusLLMwiki/raw/` is source/evidence material, not the main wiki. Do not clean, rewrite, or move old raw snapshots while using the viewer. Main navigation and search should stay focused on `inCampusLLMwiki/wiki/`. Raw archive browsing can be added later as a separate, clearly labeled feature if the team needs it.
+`inCampusLLMwiki/raw/` is source/evidence material, not the main wiki. Do not clean, rewrite, or move old raw snapshots while using the viewer. Main navigation and search stay focused on `inCampusLLMwiki/wiki/`.
+
+Use the `Raw Archive` button in the viewer to browse raw folders, preview readable files, inspect images/PDFs, or open unsupported binaries. Canonical pages can link to raw material with local-only links:
+
+```md
+[Original source](/raw/affine/25:04:2026/example.md)
+```
+
+The `/raw/...` route is served by the local Node/Fastify viewer and is constrained to `inCampusLLMwiki/raw/`; it is not a GitHub Pages or static export feature.
 
 ## Useful Commands
 

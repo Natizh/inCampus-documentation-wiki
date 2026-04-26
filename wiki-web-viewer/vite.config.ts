@@ -25,6 +25,7 @@ export default defineConfig({
     port: devPort,
     proxy: {
       "/api": `http://${devApiHost}:${devApiPort}`,
+      "/raw": `http://${devApiHost}:${devApiPort}`,
     },
   },
 });

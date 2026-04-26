@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, redirect, useLoaderData, useNavigate } from "react-router-dom";
 import Graph from "graphology";
 import forceAtlas2 from "graphology-layout-forceatlas2";
+import { Archive } from "lucide-react";
 
 import { useWikiConfig } from "@/client/wiki-config";
 import { getTopicColor, type TopicAliasConfig } from "@/lib/wiki-config";
@@ -177,7 +178,6 @@ function createFallbackGraphModel(
       return aRank - bRank || b.backlinkCount - a.backlinkCount || a.title.localeCompare(b.title);
     });
 
-  const maxBacklinks = Math.max(1, ...visibleNodes.map((node) => node.backlinkCount));
   const neighborCount = visibleNodes.filter((node) => focusedNeighborSet.has(node.slug)).length;
   let neighborIndex = 0;
   let orbitIndex = 0;
@@ -880,6 +880,14 @@ export function Component() {
           >
             <span className="sm:hidden">Back</span>
             <span className="hidden sm:inline">{config.navigation.backToWikiLabel}</span>
+          </Link>
+          <Link
+            to="/raw-archive"
+            className="surface flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-[var(--foreground)] transition-[transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] sm:px-4"
+          >
+            <Archive className="h-4.5 w-4.5 text-[var(--lavender)]" />
+            <span className="hidden sm:inline">Raw Archive</span>
+            <span className="sm:hidden">Raw</span>
           </Link>
         </div>
       </header>

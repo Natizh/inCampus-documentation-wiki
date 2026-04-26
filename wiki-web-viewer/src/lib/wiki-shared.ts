@@ -35,6 +35,12 @@ export interface WikiNeighbor {
   categories: string[];
 }
 
+export interface WikiUnresolvedLink {
+  target: string;
+  slug: string;
+  count: number;
+}
+
 export interface WikiPageData {
   slug: string;
   title: string;
@@ -45,6 +51,9 @@ export interface WikiPageData {
   modifiedAt: number;
   categories: string[];
   neighbors: WikiNeighbor[];
+  outgoingLinks: WikiNeighbor[];
+  backlinks: WikiNeighbor[];
+  unresolvedWikiLinks: WikiUnresolvedLink[];
   isPerson: boolean;
   personOverride: PersonOverrideValue | null;
 }
@@ -95,6 +104,48 @@ export interface GraphEdge {
 export interface GraphData {
   nodes: GraphNode[];
   edges: GraphEdge[];
+}
+
+export type RawArchiveEntryType = "directory" | "file";
+
+export type RawPreviewKind =
+  | "markdown"
+  | "text"
+  | "source"
+  | "html-source"
+  | "image"
+  | "pdf"
+  | "download";
+
+export interface RawArchiveEntry {
+  name: string;
+  path: string;
+  type: RawArchiveEntryType;
+  size: number | null;
+  modifiedAt: number | null;
+  extension: string | null;
+  previewKind: RawPreviewKind | null;
+  children?: RawArchiveEntry[];
+}
+
+export interface RawArchiveTree {
+  rootLabel: string;
+  available: boolean;
+  totalFiles: number;
+  totalFolders: number;
+  entries: RawArchiveEntry[];
+}
+
+export interface RawArchiveFile {
+  name: string;
+  path: string;
+  size: number;
+  modifiedAt: number;
+  extension: string | null;
+  previewKind: RawPreviewKind;
+  rawUrl: string;
+  textContent: string | null;
+  truncated: boolean;
 }
 
 export function decodeSlugParts(parts: string[]) {

@@ -1,4 +1,4 @@
-import { promises as fs } from "node:fs";
+import { createReadStream, promises as fs } from "node:fs";
 import path from "node:path";
 
 import fastifyStatic from "@fastify/static";
@@ -7,6 +7,13 @@ import Fastify, { type FastifyInstance, type FastifyReply } from "fastify";
 import { getBuiltClientRoot, getVersionInfoPath } from "./app-paths";
 import { configureServerWikiCore } from "./wiki-core-adapter";
 import { getWikiOsConfig } from "./wiki-config";
+import {
+  getRawArchiveFile,
+  getRawArchiveTree,
+  getRawContentType,
+  RawArchiveError,
+  resolveRawArchiveFile,
+} from "./raw-archive";
 import {
   getWikiSetupStatus,
   loadWikiRuntimeConfig,
@@ -139,6 +146,14 @@ function replyForWikiError(
   }
 
   return reply.code(notFoundStatus).send({ error: errorMessage(error, fallback) });
+}
+
+function replyForRawArchiveError(error: unknown, reply: FastifyReply) {
+  if (error instanceof RawArchiveError) {
+    return reply.code(error.statusCode).send({ error: error.message });
+  }
+
+  return reply.code(500).send({ error: errorMessage(error, "Raw archive request failed") });
 }
 
 export async function warmWikiSnapshot() {
@@ -396,12 +411,40 @@ export async function buildServer({
     }
   });
 
+  app.get("/api/raw/tree", async (_request, reply) => {
+    try {
+      return await getRawArchiveTree();
+    } catch (error) {
+      return replyForRawArchiveError(error, reply);
+    }
+  });
+
+  app.get<{ Params: { "*": string } }>("/api/raw/file/*", async (request, reply) => {
+    try {
+      return await getRawArchiveFile(request.params["*"]);
+    } catch (error) {
+      return replyForRawArchiveError(error, reply);
+    }
+  });
+
   app.get<{ Params: { "*": string } }>("/api/wiki/*", async (request, reply) => {
     try {
       const slugParts = request.params["*"]?.split("/").filter(Boolean) ?? [];
       return await getWikiPage(slugParts);
     } catch (error) {
       return replyForWikiError(error, reply, "Wiki page not found", 404);
+    }
+  });
+
+  app.get<{ Params: { "*": string } }>("/raw/*", async (request, reply) => {
+    try {
+      const rawFile = await resolveRawArchiveFile(request.params["*"]);
+      reply.header("cache-control", "no-store");
+      return reply.type(getRawContentType(rawFile.relativePath)).send(
+        createReadStream(rawFile.absolutePath),
+      );
+    } catch (error) {
+      return replyForRawArchiveError(error, reply);
     }
   });
 
