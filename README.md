@@ -12,6 +12,7 @@ InCampus is a mobile app concept for reducing isolation in university campus lif
 - `wiki-web-viewer/` contains the local WikiOS-based viewer adapted for this project.
 
 The viewer is a convenience layer. The canonical project memory remains the Markdown content in `inCampusLLMwiki/wiki/`.
+Its main search is intentionally canonical-only. Raw source files are browsed separately through the local Raw Archive view.
 
 ## Run The Local Viewer
 
@@ -38,6 +39,18 @@ http://localhost:5211
 ```
 
 Stop the server with `Ctrl + C`.
+
+The viewer also exposes a local-only Raw Archive section at:
+
+```text
+http://localhost:5211/raw-archive
+```
+
+Canonical pages can link to original source material with local `/raw/...` links, for example:
+
+```md
+[Original source](/raw/affine/25:04:2026/example.md)
+```
 
 ## Start Reading
 

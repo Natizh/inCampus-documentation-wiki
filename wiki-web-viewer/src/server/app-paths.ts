@@ -24,6 +24,10 @@ export function getDefaultInCampusWikiRoot() {
   return path.resolve(APP_ROOT, "..", "inCampusLLMwiki", "wiki");
 }
 
+export function getDefaultInCampusRawRoot() {
+  return path.resolve(APP_ROOT, "..", "inCampusLLMwiki", "raw");
+}
+
 export function getSourceConfigPath() {
   return resolveAppPath("wiki-os.config.ts");
 }

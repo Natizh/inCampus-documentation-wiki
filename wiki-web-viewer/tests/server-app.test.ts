@@ -9,9 +9,11 @@ const originalHome = process.env.HOME;
 
 async function loadServerModule({
   root,
+  rawRoot,
   setupConfigPath,
 }: {
   root?: string;
+  rawRoot?: string;
   setupConfigPath?: string;
 } = {}) {
   process.env.HOME = setupConfigPath ? path.dirname(setupConfigPath) : root ?? os.tmpdir();
@@ -31,6 +33,21 @@ async function loadServerModule({
   }
 
   vi.resetModules();
+  if (rawRoot) {
+    vi.doMock("../src/server/app-paths", async () => {
+      const actual = await vi.importActual<typeof import("../src/server/app-paths")>(
+        "../src/server/app-paths",
+      );
+
+      return {
+        ...actual,
+        getDefaultInCampusRawRoot: () => rawRoot,
+      };
+    });
+  } else {
+    vi.doUnmock("../src/server/app-paths");
+  }
+
   delete (globalThis as typeof globalThis & { __wikiUiCache?: unknown })[cacheKey];
   return import("../src/server/app");
 }
@@ -46,6 +63,7 @@ afterEach(() => {
   delete process.env.WIKIOS_FORCE_WIKI_ROOT;
   delete process.env.WIKIOS_ADMIN_TOKEN;
   delete process.env.WIKIOS_SETUP_CONFIG;
+  vi.doUnmock("../src/server/app-paths");
   vi.doUnmock("../src/server/folder-picker");
   vi.resetModules();
   delete (globalThis as typeof globalThis & { __wikiUiCache?: unknown })[cacheKey];
@@ -144,6 +162,78 @@ describe("server app", () => {
       await app.close();
     } finally {
       await rm(root, { recursive: true, force: true });
+    }
+  });
+
+  it("serves a safe read-only raw archive without mixing raw files into canonical search", async () => {
+    const tempDir = await mkdtemp(path.join(os.tmpdir(), "wiki-ui-raw-"));
+    const root = path.join(tempDir, "wiki");
+    const rawRoot = path.join(tempDir, "raw");
+
+    try {
+      await mkdir(path.join(rawRoot, "affine", "25:04:2026", "assets"), { recursive: true });
+      await mkdir(root, { recursive: true });
+      await writeFile(path.join(root, "Alpha.md"), "# Alpha\n\nCanonical page.\n");
+      await writeFile(
+        path.join(rawRoot, "affine", "25:04:2026", "example.md"),
+        "# Raw Example\n\nraw-only-token stays outside canonical search.\n",
+      );
+      await writeFile(
+        path.join(rawRoot, "affine", "25:04:2026", "assets", "pixel.png"),
+        Buffer.from("iVBORw0KGgo=", "base64"),
+      );
+      await writeFile(path.join(tempDir, "outside.txt"), "do not expose");
+
+      const server = await loadServerModule({ root, rawRoot });
+      await server.warmWikiSnapshot();
+      const app = await server.buildServer({ logger: false, serveClient: false });
+      await app.ready();
+
+      const tree = await app.inject({ method: "GET", url: "/api/raw/tree" });
+      const file = await app.inject({
+        method: "GET",
+        url: "/api/raw/file/affine/25%3A04%3A2026/example.md",
+      });
+      const image = await app.inject({
+        method: "GET",
+        url: "/raw/affine/25%3A04%3A2026/assets/pixel.png",
+      });
+      const traversal = await app.inject({
+        method: "GET",
+        url: "/raw/..%2Foutside.txt",
+      });
+      const search = await app.inject({
+        method: "GET",
+        url: "/api/search?q=raw-only-token",
+      });
+
+      expect(tree.statusCode).toBe(200);
+      expect(tree.json()).toMatchObject({
+        available: true,
+        totalFiles: 2,
+        rootLabel: "inCampusLLMwiki/raw",
+      });
+
+      expect(file.statusCode).toBe(200);
+      expect(file.json()).toMatchObject({
+        path: "affine/25:04:2026/example.md",
+        previewKind: "markdown",
+        rawUrl: "/raw/affine/25%3A04%3A2026/example.md",
+      });
+      expect(file.json().textContent).toContain("raw-only-token");
+
+      expect(image.statusCode).toBe(200);
+      expect(image.headers["content-type"]).toContain("image/png");
+
+      expect(traversal.statusCode).toBe(403);
+      expect(traversal.body).not.toContain("do not expose");
+
+      expect(search.statusCode).toBe(200);
+      expect(search.json().results).toEqual([]);
+
+      await app.close();
+    } finally {
+      await rm(tempDir, { recursive: true, force: true });
     }
   });
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Link,
   redirect,
@@ -10,6 +10,7 @@ import {
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
+import { Archive } from "lucide-react";
 
 import { useWikiConfig } from "@/client/wiki-config";
 import { getTopicColor, type TopicAliasConfig } from "@/lib/wiki-config";
@@ -211,6 +212,176 @@ function splitContentSections(markdown: string) {
     sourceLinks: sourceMatch ? parseMarkdownLinks(sourceMatch[1]) : [],
     sourceRaw: sourceMatch?.[1]?.trim() ?? "",
   };
+}
+
+interface PageTraceLinks {
+  rawLinks: ParsedLink[];
+  externalLinks: ParsedLink[];
+}
+
+function cleanMarkdownHref(href: string) {
+  return href.trim().replace(/^<|>$/g, "");
+}
+
+function collectPageTraceLinks(markdown: string): PageTraceLinks {
+  const rawLinks = new Map<string, ParsedLink>();
+  const externalLinks = new Map<string, ParsedLink>();
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let match;
+
+  while ((match = linkRegex.exec(markdown)) !== null) {
+    if (match.index > 0 && markdown[match.index - 1] === "!") {
+      continue;
+    }
+
+    const label = match[1].trim();
+    const href = cleanMarkdownHref(match[2]);
+    if (!label || !href) {
+      continue;
+    }
+
+    if (href.startsWith("/raw/")) {
+      rawLinks.set(href, { label, href });
+    } else if (/^https?:\/\//i.test(href)) {
+      externalLinks.set(href, { label, href });
+    }
+  }
+
+  return {
+    rawLinks: [...rawLinks.values()],
+    externalLinks: [...externalLinks.values()],
+  };
+}
+
+function TraceLinkGroup({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-4">
+      <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">
+        {title}
+      </p>
+      <div className="space-y-2">{children}</div>
+    </div>
+  );
+}
+
+function CanonicalTraceLink({ link }: { link: WikiNeighbor }) {
+  return (
+    <Link
+      to={`/wiki/${link.slug}`}
+      className="group flex items-center justify-between gap-3 rounded-md px-3 py-2 text-sm transition-colors duration-150 hover:bg-[var(--surface-highlight)]"
+    >
+      <span className="min-w-0 truncate text-[var(--foreground)]">{link.title}</span>
+      <span className="shrink-0 font-mono text-[0.68rem] text-[var(--muted-foreground)]">
+        {link.backlinkCount}
+      </span>
+    </Link>
+  );
+}
+
+function SimpleTraceAnchor({
+  link,
+  label,
+}: {
+  link: ParsedLink;
+  label: string;
+}) {
+  return (
+    <a
+      href={link.href}
+      target={link.href.startsWith("http") ? "_blank" : undefined}
+      rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+      className="group flex items-center justify-between gap-3 rounded-md px-3 py-2 text-sm transition-colors duration-150 hover:bg-[var(--surface-highlight)]"
+    >
+      <span className="min-w-0 truncate text-[var(--foreground)]">{link.label}</span>
+      <span className="shrink-0 rounded-sm bg-[var(--surface-highlight)] px-2 py-0.5 font-mono text-[0.65rem] text-[var(--muted-foreground)]">
+        {label}
+      </span>
+    </a>
+  );
+}
+
+function PageLinksSection({
+  page,
+  rawLinks,
+  externalLinks,
+}: {
+  page: WikiPageData;
+  rawLinks: ParsedLink[];
+  externalLinks: ParsedLink[];
+}) {
+  const hasLinks =
+    page.outgoingLinks.length > 0 ||
+    page.backlinks.length > 0 ||
+    rawLinks.length > 0 ||
+    externalLinks.length > 0 ||
+    page.unresolvedWikiLinks.length > 0;
+
+  if (!hasLinks) {
+    return null;
+  }
+
+  return (
+    <section id="page-links" className="mt-10 scroll-mt-20">
+      <h2 className="font-display mb-4 border-b border-[var(--border)] pb-2 text-xl font-light text-[var(--foreground)]">
+        Page Links
+      </h2>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {page.outgoingLinks.length > 0 && (
+          <TraceLinkGroup title="Canonical Outgoing">
+            {page.outgoingLinks.map((link) => (
+              <CanonicalTraceLink key={link.slug} link={link} />
+            ))}
+          </TraceLinkGroup>
+        )}
+
+        {page.backlinks.length > 0 && (
+          <TraceLinkGroup title="Backlinks">
+            {page.backlinks.map((link) => (
+              <CanonicalTraceLink key={link.slug} link={link} />
+            ))}
+          </TraceLinkGroup>
+        )}
+
+        {rawLinks.length > 0 && (
+          <TraceLinkGroup title="Raw Archive">
+            {rawLinks.map((link) => (
+              <SimpleTraceAnchor key={link.href} link={link} label="raw" />
+            ))}
+          </TraceLinkGroup>
+        )}
+
+        {externalLinks.length > 0 && (
+          <TraceLinkGroup title="External">
+            {externalLinks.map((link) => (
+              <SimpleTraceAnchor key={link.href} link={link} label="ext" />
+            ))}
+          </TraceLinkGroup>
+        )}
+
+        {page.unresolvedWikiLinks.length > 0 && (
+          <TraceLinkGroup title="Unresolved Wiki Links">
+            {page.unresolvedWikiLinks.map((link) => (
+              <div
+                key={`${link.slug}-${link.target}`}
+                className="flex items-center justify-between gap-3 rounded-md px-3 py-2 text-sm"
+              >
+                <span className="min-w-0 truncate text-[var(--foreground)]">{link.target}</span>
+                <span className="shrink-0 font-mono text-[0.68rem] text-[var(--muted-foreground)]">
+                  {link.count}
+                </span>
+              </div>
+            ))}
+          </TraceLinkGroup>
+        )}
+      </div>
+    </section>
+  );
 }
 
 /* ── Mini Neighborhood Graph ── */
@@ -471,7 +642,11 @@ export function Component() {
   const readTime = estimateReadingTime(page.contentMarkdown);
   const words = wordCount(page.contentMarkdown);
   const { mainContent, relatedLinks } = splitContentSections(page.contentMarkdown);
-  const peopleControlsEnabled = config.people.mode !== "off";
+  const traceLinks = useMemo(
+    () => collectPageTraceLinks(page.contentMarkdown),
+    [page.contentMarkdown],
+  );
+  const peopleControlsEnabled = false;
   const personActionBusy = isUpdatingPerson || revalidationState === "loading";
   const personPrimaryLabel =
     page.personOverride === "not-person" || (!page.isPerson && page.personOverride === null)
@@ -524,6 +699,14 @@ export function Component() {
             className="surface rounded-lg px-3.5 py-2 text-sm font-medium text-[var(--foreground)] transition-[transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] sm:px-4"
           >
             {config.navigation.graphLabel}
+          </Link>
+          <Link
+            to="/raw-archive"
+            className="surface flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-[var(--foreground)] transition-[transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] sm:px-4"
+          >
+            <Archive className="h-4.5 w-4.5 text-[var(--lavender)]" />
+            <span className="hidden sm:inline">Raw Archive</span>
+            <span className="sm:hidden">Raw</span>
           </Link>
           <Link
             to="/stats"
@@ -667,6 +850,12 @@ export function Component() {
               </div>
             </section>
           )}
+
+          <PageLinksSection
+            page={page}
+            rawLinks={traceLinks.rawLinks}
+            externalLinks={traceLinks.externalLinks}
+          />
 
           {/* Desktop sidebar — TOC + mini graph */}
           <aside className="hidden xl:block absolute -right-60 top-0 w-52">

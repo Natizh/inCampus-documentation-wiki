@@ -1,17 +1,21 @@
-import { useState, type ComponentType, type ReactNode } from "react";
-import { Clock3, FileStack, Network, Users } from "lucide-react";
+import { type ComponentType, type ReactNode } from "react";
+import { Archive, Clock3, Compass, FileStack, Network } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { useWikiConfig } from "@/client/wiki-config";
-import { usePersonImage } from "@/client/use-person-image";
 import { type HomepageData, type PageSummary } from "@/lib/wiki-shared";
 
 const categoryAccents = ["chip-teal", "chip-peach", "chip-lavender"];
 
-const personAvatarAccents = [
-  "bg-[var(--teal-soft)] text-[#d8e6db]",
-  "bg-[var(--peach-soft)] text-[#e0d6cc]",
-  "bg-[var(--lavender-soft)] text-[#d3e0d8]",
+const projectAreas = [
+  { label: "Overview", to: "/wiki/project/overview" },
+  { label: "Requirements", to: "/wiki/requirements/use-cases" },
+  { label: "Use Cases", to: "/wiki/requirements/use-case-narratives" },
+  { label: "Traceability", to: "/wiki/requirements/traceability" },
+  { label: "Architecture", to: "/wiki/architecture/overview" },
+  { label: "Decisions", to: "/wiki/project/decisions" },
+  { label: "Planning", to: "/wiki/planning/workflow" },
+  { label: "Raw Archive", to: "/raw-archive", icon: Archive },
 ];
 
 function SectionHeader({
@@ -32,45 +36,6 @@ function SectionHeader({
         {label}
       </p>
     </div>
-  );
-}
-
-function PersonCard({ person, index }: { person: PageSummary; index: number }) {
-  const imageUrl = usePersonImage(person.title);
-  const accentBg = personAvatarAccents[index % personAvatarAccents.length];
-  const [imgLoaded, setImgLoaded] = useState(false);
-
-  return (
-    <Link
-      to={`/wiki/${person.slug}`}
-      className="surface hover-lift grid grid-cols-[72px_1fr] items-center gap-4 rounded-lg px-4 py-4 text-left"
-    >
-      <span
-        className={`relative flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg ${accentBg} font-display text-2xl font-medium`}
-      >
-        <span aria-hidden={imageUrl !== null && imgLoaded}>{person.title.charAt(0)}</span>
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            onLoad={() => setImgLoaded(true)}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
-              imgLoaded ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        )}
-      </span>
-      <div className="min-w-0">
-        <p className="truncate font-display text-[1.08rem] text-[var(--foreground)]">
-          {person.title}
-        </p>
-        <p className="mt-1 text-[0.78rem] font-medium text-[var(--muted-foreground)]">
-          {person.backlinkCount} connections
-        </p>
-      </div>
-    </Link>
   );
 }
 
@@ -131,6 +96,41 @@ function PageCard({
   );
 }
 
+function ProjectAreasSection() {
+  return (
+    <section>
+      <SectionHeader
+        icon={Compass}
+        label="Project Areas"
+        colorClass="text-[var(--lavender)]"
+      />
+      <div className="surface-raised overflow-hidden rounded-lg">
+        {projectAreas.map((area, index) => {
+          const Icon = area.icon;
+
+          return (
+            <Link
+              key={area.to}
+              to={area.to}
+              className={`group flex items-center justify-between gap-3 px-4 py-3 text-sm transition-colors duration-150 hover:bg-[var(--surface-highlight)] ${
+                index > 0 ? "border-t border-[var(--border)]" : ""
+              }`}
+            >
+              <span className="flex min-w-0 items-center gap-2">
+                {Icon && <Icon className="h-4 w-4 shrink-0 text-[var(--teal)]" />}
+                <span className="truncate font-medium text-[var(--foreground)]">
+                  {area.label}
+                </span>
+              </span>
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--teal)] opacity-45 transition-opacity duration-150 group-hover:opacity-100" />
+            </Link>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 export function HomepageContent({
   homepage,
 }: {
@@ -139,7 +139,7 @@ export function HomepageContent({
   const config = useWikiConfig();
   const labels = config.homepage.labels;
 
-  const sections: Record<"featured" | "topConnected" | "people" | "recentPages", ReactNode> = {
+  const sections: Record<"featured" | "topConnected" | "recentPages", ReactNode> = {
     featured: homepage.featured.length > 0 ? (
       <section>
         <SectionHeader
@@ -168,20 +168,6 @@ export function HomepageContent({
         </div>
       </section>
     ),
-    people: homepage.people.length > 0 ? (
-      <section>
-        <SectionHeader
-          icon={Users}
-          label={labels.people}
-          colorClass="text-[var(--lavender)]"
-        />
-        <div className="grid grid-cols-1 gap-3">
-          {homepage.people.map((person, index) => (
-            <PersonCard key={person.file} person={person} index={index} />
-          ))}
-        </div>
-      </section>
-    ) : null,
     recentPages: (
       <section>
         <SectionHeader
@@ -208,7 +194,7 @@ export function HomepageContent({
         <div className="space-y-8 sm:space-y-10">{sections.recentPages}</div>
         <aside className="space-y-8 sm:space-y-10">
           {sections.topConnected}
-          {sections.people}
+          <ProjectAreasSection />
         </aside>
       </div>
     </div>

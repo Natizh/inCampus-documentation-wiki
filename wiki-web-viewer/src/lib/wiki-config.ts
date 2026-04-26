@@ -104,7 +104,7 @@ export interface WikiOsConfig {
 export const DEFAULT_WIKI_OS_CONFIG: WikiOsConfig = {
   siteTitle: "inCampus",
   tagline: "Build the product that helps students turn ordinary moments into shared ones.",
-  searchPlaceholder: "Search research, flows, architecture, notes, and people...",
+  searchPlaceholder: "Search requirements, use cases, architecture, decisions, and notes...",
   navigation: {
     graphLabel: "Map",
     statsLabel: "Pulse",

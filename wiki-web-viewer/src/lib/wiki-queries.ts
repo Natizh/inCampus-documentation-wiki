@@ -14,8 +14,10 @@ import {
   type PersonOverrideValue,
   type SearchResult,
   type WikiHeading,
+  type WikiNeighbor,
   type WikiPageData,
   type WikiStats,
+  type WikiUnresolvedLink,
   decodeSlugParts,
 } from "./wiki-shared";
 
@@ -157,6 +159,12 @@ interface PageNeighborRow {
   title: string;
   backlinkCount: number;
   categoryNamesJson: string;
+}
+
+interface UnresolvedLinkRow {
+  targetRaw: string;
+  targetSlug: string;
+  count: number;
 }
 
 interface WikiPageRow {
@@ -619,6 +627,26 @@ export async function getWikiPage(
     `)
     .all(row.slug) as PageNeighborRow[];
 
+  const unresolvedWikiLinks = db
+    .prepare(`
+      SELECT b.target_raw AS targetRaw, b.target_slug AS targetSlug, b.occurrence_count AS count
+      FROM backlinks b
+      LEFT JOIN pages p ON p.slug = b.target_slug
+      WHERE b.source_file = ? AND p.slug IS NULL
+      ORDER BY b.target_raw COLLATE NOCASE
+    `)
+    .all(row.file) as UnresolvedLinkRow[];
+
+  const toNeighbor = (neighbor: PageNeighborRow): WikiNeighbor => ({
+    slug: neighbor.slug,
+    title: neighbor.title,
+    backlinkCount: neighbor.backlinkCount,
+    categories: parseJsonArray<string>(neighbor.categoryNamesJson),
+  });
+
+  const sortNeighbors = (neighborsToSort: WikiNeighbor[]) =>
+    [...neighborsToSort].sort((a, b) => b.backlinkCount - a.backlinkCount || a.title.localeCompare(b.title));
+
   const neighborMap = new Map<string, PageNeighborRow>();
   for (const neighbor of [...outbound, ...inbound]) {
     if (neighbor.slug !== row.slug) {
@@ -626,14 +654,7 @@ export async function getWikiPage(
     }
   }
 
-  const neighbors = [...neighborMap.values()]
-    .map((neighbor) => ({
-      slug: neighbor.slug,
-      title: neighbor.title,
-      backlinkCount: neighbor.backlinkCount,
-      categories: parseJsonArray<string>(neighbor.categoryNamesJson),
-    }))
-    .sort((a, b) => b.backlinkCount - a.backlinkCount);
+  const neighbors = sortNeighbors([...neighborMap.values()].map(toNeighbor));
 
   const cache = deps.getCacheState();
 
@@ -647,6 +668,13 @@ export async function getWikiPage(
     modifiedAt: row.modifiedAt,
     categories: parseJsonArray<string>(row.categoryNamesJson),
     neighbors,
+    outgoingLinks: sortNeighbors(outbound.map(toNeighbor)),
+    backlinks: sortNeighbors(inbound.map(toNeighbor)),
+    unresolvedWikiLinks: unresolvedWikiLinks.map<WikiUnresolvedLink>((link) => ({
+      target: link.targetRaw,
+      slug: link.targetSlug,
+      count: link.count,
+    })),
     isPerson: row.isPerson === 1,
     personOverride: cache.personOverrides[row.file] ?? null,
   };
