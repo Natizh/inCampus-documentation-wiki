@@ -265,7 +265,7 @@ export function SearchBox({
               <div className="space-y-5">
                 <span className="chip-teal inline-flex items-center gap-2 rounded-md px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em]">
                   <span className="h-2 w-2 rounded-full bg-[var(--teal)]" />
-                  Shared company starts with shared context
+                  Shared campus starts with shared context
                 </span>
                 <div className="space-y-4">
                   <h1 className="font-display text-6xl leading-[0.92] text-[var(--foreground)] sm:text-7xl xl:text-[7rem]">

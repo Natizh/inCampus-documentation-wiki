@@ -4,7 +4,7 @@ import path from "node:path";
 import fastifyStatic from "@fastify/static";
 import Fastify, { type FastifyInstance, type FastifyReply } from "fastify";
 
-import { getBuiltClientRoot, getVersionInfoPath } from "./app-paths";
+import { getAppRoot, getBuiltClientRoot, getVersionInfoPath } from "./app-paths";
 import { configureServerWikiCore } from "./wiki-core-adapter";
 import { getWikiOsConfig } from "./wiki-config";
 import {
@@ -51,10 +51,231 @@ interface VersionInfo {
   deployedAt: string | null;
 }
 
+const WIKI_SOURCE_CONTENT_TYPES: Record<string, string> = {
+  ".gif": "image/gif",
+  ".jpeg": "image/jpeg",
+  ".jpg": "image/jpeg",
+  ".md": "text/markdown; charset=utf-8",
+  ".png": "image/png",
+  ".svg": "image/svg+xml",
+  ".webp": "image/webp",
+};
+const PROJECT_DOCUMENT_PREVIEW_LIMIT_BYTES = 320 * 1024;
+
 configureServerWikiCore();
 
 function errorMessage(error: unknown, fallback: string) {
   return error instanceof Error ? error.message : fallback;
+}
+
+class WikiSourceError extends Error {
+  readonly statusCode: number;
+
+  constructor(message: string, statusCode = 400) {
+    super(message);
+    this.name = "WikiSourceError";
+    this.statusCode = statusCode;
+  }
+}
+
+class ProjectDocumentError extends Error {
+  readonly statusCode: number;
+
+  constructor(message: string, statusCode = 400) {
+    super(message);
+    this.name = "ProjectDocumentError";
+    this.statusCode = statusCode;
+  }
+}
+
+function isPathInside(parentPath: string, childPath: string) {
+  const relativePath = path.relative(parentPath, childPath);
+  return (
+    relativePath === "" ||
+    (relativePath.length > 0 &&
+      !relativePath.startsWith(`..${path.sep}`) &&
+      relativePath !== ".." &&
+      !path.isAbsolute(relativePath))
+  );
+}
+
+function safeDecodePath(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+function normalizeWikiSourcePath(value: string | undefined) {
+  const decoded = safeDecodePath(value ?? "").replace(/\\/g, "/");
+  const normalized = path.posix.normalize(decoded).replace(/^\/+/, "");
+
+  if (!normalized || normalized === ".") {
+    throw new WikiSourceError("Choose a wiki source file.", 400);
+  }
+
+  if (normalized === ".." || normalized.startsWith("../")) {
+    throw new WikiSourceError("Wiki source path is outside the wiki.", 403);
+  }
+
+  const extension = path.extname(normalized).toLowerCase();
+  if (!WIKI_SOURCE_CONTENT_TYPES[extension]) {
+    throw new WikiSourceError("Only wiki markdown and image source files can be opened.", 415);
+  }
+
+  return normalized;
+}
+
+function getWikiSourceContentType(filePath: string) {
+  const extension = path.extname(filePath).toLowerCase();
+  return WIKI_SOURCE_CONTENT_TYPES[extension] ?? "application/octet-stream";
+}
+
+function getProjectRoot() {
+  return path.resolve(getAppRoot(), "..");
+}
+
+function normalizeProjectDocumentPath(value: string | undefined) {
+  const decoded = safeDecodePath(value ?? "").replace(/\\/g, "/");
+  const normalized = path.posix.normalize(decoded).replace(/^\/+/, "");
+
+  if (!normalized || normalized === ".") {
+    throw new ProjectDocumentError("Choose a project document.", 400);
+  }
+
+  if (normalized === ".." || normalized.startsWith("../")) {
+    throw new ProjectDocumentError("Project document path is outside the repository.", 403);
+  }
+
+  if (normalized === "inCampusLLMwiki/raw" || normalized.startsWith("inCampusLLMwiki/raw/")) {
+    throw new ProjectDocumentError("Raw archive files must be opened through the raw archive.", 403);
+  }
+
+  const extension = path.extname(normalized).toLowerCase();
+  if (!WIKI_SOURCE_CONTENT_TYPES[extension]) {
+    throw new ProjectDocumentError("Only project markdown and image files can be opened.", 415);
+  }
+
+  return normalized;
+}
+
+function getProjectDocumentContentType(filePath: string) {
+  const extension = path.extname(filePath).toLowerCase();
+  return WIKI_SOURCE_CONTENT_TYPES[extension] ?? "application/octet-stream";
+}
+
+async function readPreviewText(filePath: string, size: number) {
+  const handle = await fs.open(filePath, "r");
+
+  try {
+    const bytesToRead = Math.min(size, PROJECT_DOCUMENT_PREVIEW_LIMIT_BYTES + 1);
+    const buffer = Buffer.alloc(bytesToRead);
+    const { bytesRead } = await handle.read(buffer, 0, bytesToRead, 0);
+    const truncated = bytesRead > PROJECT_DOCUMENT_PREVIEW_LIMIT_BYTES;
+    const content = buffer
+      .subarray(0, Math.min(bytesRead, PROJECT_DOCUMENT_PREVIEW_LIMIT_BYTES))
+      .toString("utf8");
+
+    return { content, truncated };
+  } finally {
+    await handle.close();
+  }
+}
+
+async function resolveProjectDocumentSource(relativePathInput: string | undefined) {
+  const projectRoot = getProjectRoot();
+  const relativePath = normalizeProjectDocumentPath(relativePathInput);
+  const absolutePath = path.resolve(projectRoot, relativePath);
+
+  if (!isPathInside(projectRoot, absolutePath)) {
+    throw new ProjectDocumentError("Project document path is outside the repository.", 403);
+  }
+
+  try {
+    const realRoot = await fs.realpath(projectRoot);
+    const realPath = await fs.realpath(absolutePath);
+
+    if (!isPathInside(realRoot, realPath)) {
+      throw new ProjectDocumentError("Project document path is outside the repository.", 403);
+    }
+
+    const details = await fs.stat(realPath);
+    if (!details.isFile()) {
+      throw new ProjectDocumentError("Project document not found.", 404);
+    }
+
+    return { absolutePath: realPath, relativePath, details };
+  } catch (error) {
+    if (error instanceof ProjectDocumentError) {
+      throw error;
+    }
+
+    throw new ProjectDocumentError("Project document not found.", 404);
+  }
+}
+
+async function getProjectMarkdownDocument(relativePathInput: string | undefined) {
+  const sourceFile = await resolveProjectDocumentSource(relativePathInput);
+  const extension = path.extname(sourceFile.relativePath).toLowerCase();
+
+  if (extension !== ".md") {
+    throw new ProjectDocumentError("Only markdown files can be opened in the document viewer.", 415);
+  }
+
+  const textPreview = await readPreviewText(sourceFile.absolutePath, sourceFile.details.size);
+
+  return {
+    name: path.posix.basename(sourceFile.relativePath),
+    path: sourceFile.relativePath,
+    size: sourceFile.details.size,
+    modifiedAt: sourceFile.details.mtimeMs,
+    extension,
+    sourceUrl: `/document-source/${sourceFile.relativePath
+      .split("/")
+      .map(encodeURIComponent)
+      .join("/")}`,
+    textContent: textPreview.content,
+    truncated: textPreview.truncated,
+  };
+}
+
+async function resolveWikiSourceFile(relativePathInput: string | undefined) {
+  const wikiRoot = await getWikiRootPath();
+
+  if (!wikiRoot) {
+    throw new WikiSourceError("Wiki source is unavailable until setup is complete.", 409);
+  }
+
+  const wikiRootPath = path.resolve(wikiRoot);
+  const relativePath = normalizeWikiSourcePath(relativePathInput);
+  const absolutePath = path.resolve(wikiRootPath, relativePath);
+
+  if (!isPathInside(wikiRootPath, absolutePath)) {
+    throw new WikiSourceError("Wiki source path is outside the wiki.", 403);
+  }
+
+  try {
+    const realRoot = await fs.realpath(wikiRootPath);
+    const realPath = await fs.realpath(absolutePath);
+
+    if (!isPathInside(realRoot, realPath)) {
+      throw new WikiSourceError("Wiki source path is outside the wiki.", 403);
+    }
+
+    const details = await fs.stat(realPath);
+    if (!details.isFile()) {
+      throw new WikiSourceError("Wiki source file not found.", 404);
+    }
+
+    return { absolutePath: realPath, relativePath };
+  } catch (error) {
+    if (error instanceof WikiSourceError) {
+      throw error;
+    }
+
+    throw new WikiSourceError("Wiki source file not found.", 404);
+  }
 }
 
 async function canServeClient(clientRoot: string) {
@@ -154,6 +375,22 @@ function replyForRawArchiveError(error: unknown, reply: FastifyReply) {
   }
 
   return reply.code(500).send({ error: errorMessage(error, "Raw archive request failed") });
+}
+
+function replyForWikiSourceError(error: unknown, reply: FastifyReply) {
+  if (error instanceof WikiSourceError) {
+    return reply.code(error.statusCode).send({ error: error.message });
+  }
+
+  return reply.code(500).send({ error: errorMessage(error, "Wiki source request failed") });
+}
+
+function replyForProjectDocumentError(error: unknown, reply: FastifyReply) {
+  if (error instanceof ProjectDocumentError) {
+    return reply.code(error.statusCode).send({ error: error.message });
+  }
+
+  return reply.code(500).send({ error: errorMessage(error, "Project document request failed") });
 }
 
 export async function warmWikiSnapshot() {
@@ -427,12 +664,48 @@ export async function buildServer({
     }
   });
 
+  app.get<{ Params: { "*": string } }>("/api/document/file/*", async (request, reply) => {
+    try {
+      return await getProjectMarkdownDocument(request.params["*"]);
+    } catch (error) {
+      return replyForProjectDocumentError(error, reply);
+    }
+  });
+
   app.get<{ Params: { "*": string } }>("/api/wiki/*", async (request, reply) => {
     try {
       const slugParts = request.params["*"]?.split("/").filter(Boolean) ?? [];
       return await getWikiPage(slugParts);
     } catch (error) {
       return replyForWikiError(error, reply, "Wiki page not found", 404);
+    }
+  });
+
+  app.get<{ Params: { "*": string } }>("/wiki-source/*", async (request, reply) => {
+    try {
+      const sourceFile = await resolveWikiSourceFile(request.params["*"]);
+      const fileName = path.basename(sourceFile.relativePath).replace(/["\r\n]/g, "_");
+      reply.header("cache-control", "no-store");
+      reply.header("content-disposition", `inline; filename="${fileName}"`);
+      return reply.type(getWikiSourceContentType(sourceFile.relativePath)).send(
+        createReadStream(sourceFile.absolutePath),
+      );
+    } catch (error) {
+      return replyForWikiSourceError(error, reply);
+    }
+  });
+
+  app.get<{ Params: { "*": string } }>("/document-source/*", async (request, reply) => {
+    try {
+      const sourceFile = await resolveProjectDocumentSource(request.params["*"]);
+      const fileName = path.basename(sourceFile.relativePath).replace(/["\r\n]/g, "_");
+      reply.header("cache-control", "no-store");
+      reply.header("content-disposition", `inline; filename="${fileName}"`);
+      return reply.type(getProjectDocumentContentType(sourceFile.relativePath)).send(
+        createReadStream(sourceFile.absolutePath),
+      );
+    } catch (error) {
+      return replyForProjectDocumentError(error, reply);
     }
   });
 

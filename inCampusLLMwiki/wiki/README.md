@@ -25,15 +25,7 @@ Its main search is intentionally canonical-only. Raw source files are browsed se
 
 ## Run The Local Viewer
 
-First, install **Node.js** if it is not already installed on your computer.
-
-Then clone this repository:
-
-```bash
-git clone https://github.com/Natizh/inCampus-documentation-wiki.git
-cd inCampus-documentation-wiki
-```
-Then run:
+Install Node.js first if needed. Then run:
 
 ```bash
 cd wiki-web-viewer

@@ -7,10 +7,10 @@ import {
   useRevalidator,
   type LoaderFunctionArgs,
 } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
-import { Archive } from "lucide-react";
+import { Archive, ExternalLink } from "lucide-react";
 
 import { useWikiConfig } from "@/client/wiki-config";
 import { getTopicColor, type TopicAliasConfig } from "@/lib/wiki-config";
@@ -22,17 +22,63 @@ import { RouteErrorBoundary } from "../route-error-boundary";
 
 const remarkPlugins = [remarkGfm];
 const rehypePlugins = [rehypeHighlight];
-const markdownComponents = {
-  h1: ({ ...props }) => <h1 className="mb-4 text-3xl scroll-mt-20" {...props} />,
-  h2: ({ ...props }) => <h2 className="font-display mb-3 mt-10 text-xl font-light scroll-mt-20" {...props} />,
-  h3: ({ ...props }) => <h3 className="font-display mb-2 mt-7 text-lg font-light scroll-mt-20" {...props} />,
-  h4: ({ ...props }) => <h4 className="mb-2 mt-5 text-base font-medium scroll-mt-20" {...props} />,
-  p: ({ ...props }) => <p className="mb-4 leading-[1.8]" {...props} />,
-  ul: ({ ...props }) => <ul className="mb-4 list-disc pl-6 leading-[1.8]" {...props} />,
-  ol: ({ ...props }) => <ol className="mb-4 list-decimal pl-6 leading-[1.8]" {...props} />,
-  li: ({ ...props }) => <li className="mb-1.5" {...props} />,
-  blockquote: ({ ...props }) => <blockquote className="my-4" {...props} />,
-};
+
+function wikiSourcePathToUrl(fileName: string) {
+  return `/wiki-source/${fileName.split("/").map(encodeURIComponent).join("/")}`;
+}
+
+function normalizeWikiRelativePath(value: string) {
+  const parts: string[] = [];
+
+  for (const part of value.replace(/\\/g, "/").split("/")) {
+    if (!part || part === ".") {
+      continue;
+    }
+
+    if (part === "..") {
+      parts.pop();
+      continue;
+    }
+
+    parts.push(part);
+  }
+
+  return parts.join("/");
+}
+
+function resolveWikiSourceReference(fileName: string, value: string | undefined) {
+  const reference = value?.trim() ?? "";
+  if (!reference || reference.startsWith("#") || reference.startsWith("/")) {
+    return reference;
+  }
+
+  if (/^[a-z][a-z0-9+.-]*:/i.test(reference)) {
+    return reference;
+  }
+
+  const [, assetPath = reference, suffix = ""] = reference.match(/^([^?#]*)([?#].*)?$/) ?? [];
+  const basePath = fileName.split("/").slice(0, -1).join("/");
+  const resolvedPath = normalizeWikiRelativePath(basePath ? `${basePath}/${assetPath}` : assetPath);
+
+  return `${wikiSourcePathToUrl(resolvedPath)}${suffix}`;
+}
+
+function markdownComponentsForWikiPage(fileName: string): Components {
+  return {
+    h1: ({ ...props }) => <h1 className="scroll-mt-24" {...props} />,
+    h2: ({ ...props }) => <h2 className="scroll-mt-24" {...props} />,
+    h3: ({ ...props }) => <h3 className="scroll-mt-24" {...props} />,
+    h4: ({ ...props }) => <h4 className="scroll-mt-24" {...props} />,
+    p: ({ ...props }) => <p {...props} />,
+    ul: ({ ...props }) => <ul className="list-disc" {...props} />,
+    ol: ({ ...props }) => <ol className="list-decimal" {...props} />,
+    li: ({ ...props }) => <li {...props} />,
+    blockquote: ({ ...props }) => <blockquote className="my-4" {...props} />,
+    img: ({ src, alt, ...props }) => (
+      <img src={resolveWikiSourceReference(fileName, src)} alt={alt ?? ""} {...props} />
+    ),
+  };
+}
 
 function normalizeSplatParam(rawSplat: string | undefined) {
   const trimmed = rawSplat?.trim();
@@ -89,11 +135,11 @@ function TableOfContents({
             e.preventDefault();
             document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" });
           }}
-          className={`toc-item block text-[13px] leading-snug transition-colors duration-150 ${
+          className={`toc-item block rounded-md px-2 text-[13px] leading-snug transition-colors duration-150 ${
             h.level === 3 ? "pl-3" : h.level >= 4 ? "pl-6" : ""
           } ${
             activeId === h.id
-              ? "text-[var(--foreground)] font-medium"
+              ? "bg-[var(--surface-selected)] text-[var(--foreground)] font-medium"
               : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
           }`}
           style={{ paddingTop: "0.3rem", paddingBottom: "0.3rem" }}
@@ -482,6 +528,12 @@ function NeighborhoodGraph({
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
       ctx.scale(dpr, dpr);
+      const styles = getComputedStyle(document.documentElement);
+      const canvasBg = styles.getPropertyValue("--background").trim() || "#07120e";
+      const edgeSoft = "rgba(155,231,189,0.16)";
+      const edgeActive = "rgba(155,231,189,0.36)";
+      const labelStrong = "rgba(237,248,240,0.84)";
+      const labelSoft = "rgba(237,248,240,0.66)";
 
       const nodes = computeScatteredLayout(
         currentTitle,
@@ -494,7 +546,7 @@ function NeighborhoodGraph({
       layoutRef.current = nodes;
 
       // Background
-      ctx.fillStyle = "#0f1511";
+      ctx.fillStyle = canvasBg;
       ctx.fillRect(0, 0, w, h);
 
       const center = nodes[0];
@@ -505,7 +557,7 @@ function NeighborhoodGraph({
         ctx.beginPath();
         ctx.moveTo(center.x, center.y);
         ctx.lineTo(n.x, n.y);
-        ctx.strokeStyle = hoveredIdx === i ? "rgba(125,152,133,0.32)" : "rgba(125,152,133,0.14)";
+        ctx.strokeStyle = hoveredIdx === i ? edgeActive : edgeSoft;
         ctx.lineWidth = hoveredIdx === i ? 1 : 0.5;
         ctx.stroke();
       }
@@ -533,7 +585,7 @@ function NeighborhoodGraph({
         // Label
         if (n.isCenter || isHovered) {
           ctx.font = `${n.isCenter ? "500" : "400"} ${n.isCenter ? 9 : 8}px "Sora", -apple-system, sans-serif`;
-          ctx.fillStyle = n.isCenter ? "rgba(235,241,234,0.82)" : "rgba(235,241,234,0.62)";
+          ctx.fillStyle = n.isCenter ? labelStrong : labelSoft;
           ctx.textAlign = "center";
           ctx.fillText(
             n.title.length > 20 ? n.title.slice(0, 18) + "..." : n.title,
@@ -642,6 +694,10 @@ export function Component() {
   const readTime = estimateReadingTime(page.contentMarkdown);
   const words = wordCount(page.contentMarkdown);
   const { mainContent, relatedLinks } = splitContentSections(page.contentMarkdown);
+  const pageMarkdownComponents = useMemo(
+    () => markdownComponentsForWikiPage(page.fileName),
+    [page.fileName],
+  );
   const traceLinks = useMemo(
     () => collectPageTraceLinks(page.contentMarkdown),
     [page.contentMarkdown],
@@ -718,148 +774,170 @@ export function Component() {
       </header>
 
       <main
-        className="animate-in mx-auto w-full max-w-3xl px-4 pt-4 sm:px-6 sm:pt-8 lg:px-8"
+        className="animate-in mx-auto w-full max-w-6xl px-4 pt-4 sm:px-6 sm:pt-8 lg:px-8"
         style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 4rem)" }}
       >
         {/* Breadcrumb */}
-        <nav className="mb-6 flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
+        <nav className="mb-6 flex items-center gap-2 overflow-hidden text-sm text-[var(--muted-foreground)]">
           <Link
             to="/"
-            className="transition-colors duration-150 hover:text-[var(--foreground)]"
+            className="shrink-0 transition-colors duration-150 hover:text-[var(--foreground)]"
           >
             Home
           </Link>
-          <span className="select-none">/</span>
-          <span className="text-[var(--foreground)]">{page.title}</span>
+          <span className="shrink-0 select-none">/</span>
+          <span className="min-w-0 truncate text-[var(--foreground)]">{page.title}</span>
         </nav>
 
-        {/* Title + metadata */}
-        <div className="mb-6 flex items-start gap-4 sm:mb-10 sm:gap-5">
-          {page.isPerson && portraitUrl && (
-            <img
-              src={portraitUrl}
-              alt={page.title}
-              loading="eager"
-              decoding="async"
-              className="h-16 w-16 shrink-0 rounded-lg object-cover shadow-[0_20px_32px_-24px_rgba(0,0,0,0.92)] sm:h-24 sm:w-24"
-            />
-          )}
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,48rem)_minmax(13rem,16rem)] xl:items-start xl:justify-center">
           <div className="min-w-0">
-            <h1
-              className="font-display text-[2rem] font-light leading-[1.05] tracking-tight text-[var(--foreground)] sm:text-5xl"
-            >
-              {page.title}
-            </h1>
-            <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs text-[var(--muted-foreground)]/60">
-              <span>{readTime} min read</span>
-              <span className="select-none">·</span>
-              <span>{words.toLocaleString()} words</span>
-              {page.modifiedAt > 0 && (
-                <>
-                  <span className="select-none">·</span>
-                  <span>Updated {formatDate(page.modifiedAt)}</span>
-                </>
-              )}
-              {peopleControlsEnabled && (
-                <>
-                  <span className="select-none">·</span>
-                  <button
-                    type="button"
-                    onClick={() => void updatePersonOverride(personPrimaryTarget)}
-                    disabled={personActionBusy}
-                    className="underline decoration-[var(--muted-foreground)]/30 underline-offset-2 transition-colors duration-150 hover:text-[var(--foreground)] disabled:cursor-wait disabled:opacity-70"
+            <section className="markdown-document overflow-hidden">
+              <div className="border-b border-[var(--border)] px-4 py-5 sm:px-7 sm:py-7">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex min-w-0 gap-4 sm:gap-5">
+                    {page.isPerson && portraitUrl && (
+                      <img
+                        src={portraitUrl}
+                        alt={page.title}
+                        loading="eager"
+                        decoding="async"
+                        className="h-16 w-16 shrink-0 rounded-lg object-cover shadow-[0_20px_32px_-24px_rgba(0,0,0,0.92)] sm:h-24 sm:w-24"
+                      />
+                    )}
+                    <div className="min-w-0">
+                      <p className="break-words font-mono text-xs leading-6 text-[var(--muted-foreground)]">
+                        {page.fileName}
+                      </p>
+                      <h1 className="mt-2 break-words font-display text-[2rem] font-light leading-[1.08] text-[var(--foreground)] sm:text-5xl">
+                        {page.title}
+                      </h1>
+                    </div>
+                  </div>
+                  <a
+                    href={wikiSourcePathToUrl(page.fileName)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="surface inline-flex shrink-0 items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-[var(--foreground)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[var(--surface-highlight)] active:scale-[0.97]"
                   >
-                    {personActionBusy ? "Saving..." : personPrimaryLabel}
-                  </button>
-                  {page.personOverride !== null && (
+                    <ExternalLink className="h-4 w-4 text-[var(--teal)]" />
+                    Open
+                  </a>
+                </div>
+
+                <div className="mt-5 flex flex-wrap items-center gap-2 text-xs text-[var(--muted-foreground)]">
+                  <span className="rounded-full border border-[var(--border)] bg-[var(--surface-highlight)] px-2.5 py-1">
+                    {readTime} min read
+                  </span>
+                  <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1">
+                    {words.toLocaleString()} words
+                  </span>
+                  {page.modifiedAt > 0 && (
+                    <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1">
+                      Updated {formatDate(page.modifiedAt)}
+                    </span>
+                  )}
+                  {page.categories.slice(0, 4).map((category) => (
+                    <span
+                      key={category}
+                      className="rounded-full border border-[var(--border)] bg-[var(--surface-warm)] px-2.5 py-1 text-[var(--peach)]"
+                    >
+                      {category}
+                    </span>
+                  ))}
+                  {peopleControlsEnabled && (
                     <>
-                      <span className="select-none">·</span>
                       <button
                         type="button"
-                        onClick={() => void updatePersonOverride(null)}
+                        onClick={() => void updatePersonOverride(personPrimaryTarget)}
                         disabled={personActionBusy}
-                        className="underline decoration-[var(--muted-foreground)]/30 underline-offset-2 transition-colors duration-150 hover:text-[var(--foreground)] disabled:cursor-wait disabled:opacity-70"
+                        className="rounded-full border border-[var(--border)] px-2.5 py-1 underline decoration-[var(--muted-foreground)]/30 underline-offset-2 transition-colors duration-150 hover:text-[var(--foreground)] disabled:cursor-wait disabled:opacity-70"
                       >
-                        Clear override
+                        {personActionBusy ? "Saving..." : personPrimaryLabel}
                       </button>
+                      {page.personOverride !== null && (
+                        <button
+                          type="button"
+                          onClick={() => void updatePersonOverride(null)}
+                          disabled={personActionBusy}
+                          className="rounded-full border border-[var(--border)] px-2.5 py-1 underline decoration-[var(--muted-foreground)]/30 underline-offset-2 transition-colors duration-150 hover:text-[var(--foreground)] disabled:cursor-wait disabled:opacity-70"
+                        >
+                          Clear override
+                        </button>
+                      )}
+                      {personOverrideError && (
+                        <span className="text-red-400">{personOverrideError}</span>
+                      )}
                     </>
                   )}
-                  {personOverrideError && (
-                    <span className="text-red-600">{personOverrideError}</span>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile TOC */}
-        {filteredHeadings.length > 0 && (
-          <div className="mb-6 lg:hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3">
-            <p className="mb-2 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
-              On this page
-            </p>
-            <div className="flex flex-wrap gap-x-4 gap-y-1">
-              {filteredHeadings.filter((h) => h.level <= 2).map((h) => (
-                <a
-                  key={h.id}
-                  href={`#${h.id}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="text-sm text-[var(--muted-foreground)] transition-colors duration-150 hover:text-[var(--foreground)]"
-                >
-                  {h.text}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Article + TOC */}
-        <div className="relative">
-          <article className="prose-wiki leading-[1.8]">
-            <ReactMarkdown
-              rehypePlugins={pageRehypePlugins}
-              remarkPlugins={remarkPlugins}
-              components={markdownComponents}
-            >
-              {mainContent}
-            </ReactMarkdown>
-          </article>
-
-          {/* Related Concepts as chips */}
-          {relatedLinks.length > 0 && (
-            <section id="related-concepts" className="mt-10 scroll-mt-20">
-              <h2 className="font-display mb-4 border-b border-[var(--border)] pb-2 text-xl font-light text-[var(--foreground)]">
-                Related Concepts
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {relatedLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    to={link.href}
-                    className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-3.5 py-1.5 text-sm transition-[color,background-color,transform] duration-150 hover:bg-[var(--secondary)] active:scale-[0.97]"
-                  >
-                    <span className="font-display font-light text-[var(--foreground)]">
-                      {link.label}
-                    </span>
-                  </Link>
-                ))}
+                </div>
               </div>
-            </section>
-          )}
 
-          <PageLinksSection
-            page={page}
-            rawLinks={traceLinks.rawLinks}
-            externalLinks={traceLinks.externalLinks}
-          />
+              {filteredHeadings.length > 0 && (
+                <div className="border-b border-[var(--border)] bg-[var(--surface)] px-4 py-3 sm:px-7 xl:hidden">
+                  <p className="mb-2 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
+                    On this page
+                  </p>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1">
+                    {filteredHeadings.filter((h) => h.level <= 2).map((h) => (
+                      <a
+                        key={h.id}
+                        href={`#${h.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" });
+                        }}
+                        className="text-sm text-[var(--muted-foreground)] transition-colors duration-150 hover:text-[var(--foreground)]"
+                      >
+                        {h.text}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <article className="prose-wiki px-4 py-6 sm:px-7 sm:py-8">
+                <ReactMarkdown
+                  rehypePlugins={pageRehypePlugins}
+                  remarkPlugins={remarkPlugins}
+                  components={pageMarkdownComponents}
+                >
+                  {mainContent}
+                </ReactMarkdown>
+              </article>
+            </section>
+
+            {/* Related Concepts as chips */}
+            {relatedLinks.length > 0 && (
+              <section id="related-concepts" className="mt-10 scroll-mt-20">
+                <h2 className="font-display mb-4 border-b border-[var(--border)] pb-2 text-xl font-light text-[var(--foreground)]">
+                  Related Concepts
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {relatedLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-3.5 py-1.5 text-sm transition-[color,background-color,transform] duration-150 hover:bg-[var(--secondary)] active:scale-[0.97]"
+                    >
+                      <span className="font-display font-light text-[var(--foreground)]">
+                        {link.label}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <PageLinksSection
+              page={page}
+              rawLinks={traceLinks.rawLinks}
+              externalLinks={traceLinks.externalLinks}
+            />
+          </div>
 
           {/* Desktop sidebar — TOC + mini graph */}
-          <aside className="hidden xl:block absolute -right-60 top-0 w-52">
-            <div className="sticky top-8">
+          <aside className="hidden xl:block">
+            <div className="sticky top-8 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-4">
               {filteredHeadings.length > 0 && (
                 <TableOfContents headings={filteredHeadings} activeId={activeId} />
               )}

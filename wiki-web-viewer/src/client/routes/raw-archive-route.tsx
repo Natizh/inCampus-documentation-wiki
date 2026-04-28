@@ -149,7 +149,11 @@ function RawTreeEntry({
       <li>
         <details open={depth < 2 || selected} className="group">
           <summary
-            className="flex list-none items-center gap-2 rounded-md py-1.5 pr-2 text-sm text-[var(--muted-foreground)] transition-colors duration-150 hover:bg-[var(--surface-highlight)] hover:text-[var(--foreground)] [&::-webkit-details-marker]:hidden"
+            className={`flex list-none items-center gap-2 rounded-md py-1.5 pr-2 text-sm transition-colors duration-150 hover:bg-[var(--surface-highlight)] hover:text-[var(--foreground)] [&::-webkit-details-marker]:hidden ${
+              selected
+                ? "bg-[var(--surface-selected)] text-[var(--foreground)]"
+                : "text-[var(--muted-foreground)]"
+            }`}
             style={{ paddingLeft: `${0.5 + depth * 0.9}rem` }}
           >
             <ChevronRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-150 group-open:rotate-90" />
@@ -179,9 +183,10 @@ function RawTreeEntry({
     <li>
       <Link
         to={rawPathToViewerPath(entry.path)}
+        aria-current={selected ? "page" : undefined}
         className={`flex items-center gap-2 rounded-md py-1.5 pr-2 text-sm transition-colors duration-150 ${
           selected
-            ? "bg-[var(--surface-highlight)] text-[var(--foreground)]"
+            ? "bg-[var(--surface-selected)] text-[var(--foreground)] ring-1 ring-[var(--border-strong)]"
             : "text-[var(--muted-foreground)] hover:bg-[var(--surface-highlight)] hover:text-[var(--foreground)]"
         }`}
         style={{ paddingLeft: `${1.6 + depth * 0.9}rem` }}
@@ -244,7 +249,7 @@ function OpenRawLink({ file }: { file: RawArchiveFile }) {
       href={file.rawUrl}
       target="_blank"
       rel="noreferrer"
-      className="surface inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-[var(--foreground)] transition-[transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97]"
+      className="surface inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium text-[var(--foreground)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[var(--surface-highlight)] active:scale-[0.97]"
     >
       <ExternalLink className="h-4 w-4 text-[var(--teal)]" />
       Open
@@ -272,7 +277,7 @@ function RawPreview({ file }: { file: RawArchiveFile | null }) {
 
   return (
     <section className="space-y-4">
-      <div className="surface-raised rounded-lg px-4 py-4 sm:px-5">
+      <div className="markdown-document px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
             <p className="break-words font-mono text-xs leading-6 text-[var(--muted-foreground)]">
@@ -306,7 +311,7 @@ function RawPreview({ file }: { file: RawArchiveFile | null }) {
       )}
 
       {file.previewKind === "markdown" && file.textContent !== null && (
-        <article className="prose-wiki surface-raised rounded-lg px-4 py-5 sm:px-6">
+        <article className="prose-wiki markdown-document px-4 py-6 sm:px-7 sm:py-8">
           <ReactMarkdown
             components={markdownComponentsForRawFile(file)}
             rehypePlugins={file.textContent.includes("```") ? rehypePlugins : []}
@@ -397,7 +402,7 @@ export function Component() {
       </header>
 
       <main
-        className="mx-auto w-full max-w-7xl px-4 pt-6 sm:px-6 sm:pt-10 lg:px-8"
+        className="mx-auto w-full max-w-[92rem] px-4 pt-6 sm:px-6 sm:pt-10 lg:px-8"
         style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 4rem)" }}
       >
         <div className="animate-in space-y-6">
@@ -412,8 +417,16 @@ export function Component() {
             <p className="mt-2 text-sm text-[var(--muted-foreground)]">{totalLabel}</p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-[minmax(18rem,24rem)_minmax(0,1fr)] lg:items-start">
-            <aside className="surface-raised rounded-lg px-2 py-3">
+          <div className="grid gap-6 lg:grid-cols-[minmax(19rem,25rem)_minmax(0,1fr)] lg:items-start">
+            <aside className="surface-raised rounded-lg px-2 py-3 lg:sticky lg:top-6 lg:max-h-[calc(100vh-7rem)] lg:overflow-auto">
+              <div className="mb-3 border-b border-[var(--border)] px-3 pb-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">
+                  File tree
+                </p>
+                <p className="mt-1 truncate font-mono text-[0.72rem] text-[var(--foreground)]">
+                  {selectedPath ?? tree.rootLabel}
+                </p>
+              </div>
               {tree.available ? (
                 <RawTree entries={tree.entries} selectedPath={selectedPath} />
               ) : (
