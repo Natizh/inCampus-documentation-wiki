@@ -19,10 +19,10 @@ Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Join Activity|Join Activity]]
 - [[wiki/requirements/use-case-pages/UC - Send Message|Send Message]]
 
-Architecture note: the 2026-04-25 D&P workdoc resolves block-related access as denied when a reciprocal block relationship exists between viewer and host. The process reads `DS-HL-001`, `DS-SM-001`, and `DS-AP-002` only if profile exposure is allowed.
+Architecture note: the current D&P workdoc resolves block-related access as denied when a reciprocal block relationship exists between viewer and host. The process reads `DS-HL-001`, `DS-SM-001`, and `DS-AP-002` only if profile exposure is allowed.
 
 Open point: behavior for full activities reached through direct links remains less specified.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/View Activity Details|Raw use case narrative]]
-- [[raw/affine/25-04-2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
+- [[raw/affine/03-05-2026/updates/D&P - DFD workdoc v5|D&P architecture workdoc v5]]

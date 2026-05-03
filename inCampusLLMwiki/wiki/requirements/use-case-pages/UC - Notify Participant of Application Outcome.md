@@ -18,10 +18,10 @@ Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Manage Join Requests|Manage Join Requests]]
 - [[wiki/requirements/use-case-pages/UC - Join Activity|Join Activity]]
 
-Architecture note: the 2026-04-25 NSF workdoc models this as a notification consequence owned by NSF. H&L produces the approval/decline state change, NSF resolves recipient/context, checks block suppression, and writes `DS-NS-001` if allowed.
+Architecture note: the current NSF workdoc models this as a notification consequence owned by NSF. H&L produces the approval/decline state change, NSF resolves recipient/context, checks block suppression, and writes `DS-NS-001` if allowed.
 
 Open point: exact user-facing notification channel and notification-list UX remain unresolved. Notification opening is now modeled as a read-only current-context check.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Notify Participant of Application Outcome|Raw use case narrative]]
-- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/03-05-2026/updates/NSF - DFD workdoc v7|NSF architecture workdoc v7]]

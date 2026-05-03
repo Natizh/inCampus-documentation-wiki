@@ -2,7 +2,7 @@
 
 Status: Draft sourced use case; active MVP architecture branch.
 
-Scope: Baseline requirements postMVP; active MVP notification branch in the 2026-04-25 architecture batch.
+Scope: Baseline requirements postMVP; active MVP notification branch in the current architecture batch.
 
 Initiating actor: Student.
 
@@ -19,11 +19,12 @@ Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]]
 - [[wiki/requirements/use-case-pages/UC - View Personal Activity List|View Personal Activity List]]
 
-Architecture note: NSF workdoc `v7` and CRUD Matrix `v1.4` model the reminder as a system/time-triggered branch for students still joined in a scheduled upcoming activity. The branch is suppressed if the student is no longer joined or if the activity is cancelled.
+Architecture note: NSF workdoc `v7` and CRUD Matrix `v1.5` model the reminder as a system/time-triggered branch for students still joined in a scheduled upcoming activity. The branch is suppressed if the student is no longer joined or if the activity is cancelled. It does not need a block check by default because it concerns the recipient's own joined activity.
 
 Open point: reminder delivery channel and notification-list UX details are not specified. The current architecture model routes a tapped reminder to the relevant upcoming activity view when the context still exists.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Receive Activity Reminder|Raw use case narrative]]
-- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
-- [[raw/affine/25-04-2026/CRUD matrix (1)|CRUD matrix v1.4]]
+- [[raw/affine/03-05-2026/updates/Recent Structural modifications|Recent Structural modifications]]
+- [[raw/affine/03-05-2026/updates/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/03-05-2026/updates/CRUD matrix v1.5|CRUD matrix v1.5]]

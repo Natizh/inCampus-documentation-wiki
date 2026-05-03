@@ -17,11 +17,11 @@ Parent index: [[wiki/requirements/use-cases|Use Cases]]
 Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Update Activity Status|Update Activity Status]]
 
-Architecture note: the 2026-04-25 H&L and NSF workdocs separate cancellation from deletion. Cancellation updates activity status, exposes joined participant context to NSF, and NSF creates cancellation notifications for recipients not suppressed by block state. Deletion does not have a confirmed notification branch.
+Architecture note: the current H&L and NSF workdocs separate cancellation from deletion. Cancellation updates activity status, exposes joined participant context to NSF, and NSF creates cancellation notifications for recipients not suppressed by block state. Deletion does not have a confirmed notification branch.
 
 Open point: exact notification channel and retry/failure behavior remain unresolved.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Notify Participant of Activity Cancellation|Raw use case narrative]]
-- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
-- [[raw/affine/25-04-2026/H&L - DFD workdoc v2.1|H&L architecture workdoc v2.1]]
+- [[raw/affine/03-05-2026/updates/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/03-05-2026/updates/H&L - DFD workdoc v2.1|H&L architecture workdoc v2.1]]
