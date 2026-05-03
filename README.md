@@ -58,7 +58,7 @@ http://localhost:5211/raw-archive
 Canonical pages can link to original source material with local `/raw/...` links, for example:
 
 ```md
-[Original source](/raw/affine/25:04:2026/example.md)
+[Original source](/raw/affine/25-04-2026/example.md)
 ```
 
 ## Start Reading

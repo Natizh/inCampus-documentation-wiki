@@ -59,7 +59,7 @@ The current phase prioritizes [[wiki/requirements/use-cases|use cases]], [[wiki/
 Reason: this matches the team's current requirements phase.
 
 Later source note:
-`raw/affine/25:04:2026/Architecture workdoc/index.md` and the subgroup workdocs move the current project work into architecture analysis. Requirements/use-case traceability remains the baseline input, but current wiki priority is now [[wiki/architecture/overview|architecture]], DFDs, data stores, and CRUD consistency.
+`raw/affine/25-04-2026/Architecture workdoc/index.md` and the subgroup workdocs move the current project work into architecture analysis. Requirements/use-case traceability remains the baseline input, but current wiki priority is now [[wiki/architecture/overview|architecture]], DFDs, data stores, and CRUD consistency.
 
 ### D-20260413-007: Follow the staged use-case workflow from the AFFiNE snapshot
 
@@ -75,15 +75,15 @@ The current use-case workflow is:
 7. Decide include/extend relationships only after narratives are stable.
 8. Generate the final use case diagram at the end.
 
-Reason: this is explicitly described in `raw/affine/13:04:2026/Home.md`.
+Reason: this is explicitly described in `raw/affine/13-04-2026/Home.md`.
 
 Note: `Home.md` contains an `OUTDATED` marker, so this should be confirmed against later AFFiNE exports if the process changes.
 
 Later source note:
-`raw/affine/15:04:2026/high-level-use-case-diagram-v1.2/usecase-diag-v1.2.puml` provides a draft high-level use case diagram with candidate and confirmed relationship labels, but it does not by itself supersede the staged workflow or finalize UML relationship types.
+`raw/affine/15-04-2026/high-level-use-case-diagram-v1.2/usecase-diag-v1.2.puml` provides a draft high-level use case diagram with candidate and confirmed relationship labels, but it does not by itself supersede the staged workflow or finalize UML relationship types.
 
 Current source note:
-`raw/affine/25:04:2026/updates/usecase-diag-v1.4.puml` supersedes `v1.2` for current relationship discussion, while formal UC IDs and final implementation-contract status remain unresolved.
+`raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml` supersedes `v1.2` for current relationship discussion, while formal UC IDs and final implementation-contract status remain unresolved.
 
 ### D-20260413-008: Treat use case names as provisional identifiers until formal UC IDs are stable
 
@@ -106,7 +106,7 @@ The current architecture baseline uses six Level-1 logical process areas:
 - Safety and Moderation
 - Notifications and System Flow
 
-Reason: this structure is explicitly stabilized in `raw/affine/25:04:2026/DFD integration and Merge/index.md` and supported by the subgroup workdocs.
+Reason: this structure is explicitly stabilized in `raw/affine/25-04-2026/DFD integration and Merge/index.md` and supported by the subgroup workdocs.
 
 ### D-20260425-002: Preserve domain ownership boundaries in DFD and CRUD work
 
@@ -129,7 +129,7 @@ Deleting an activity hard-deletes the activity record in `DS-HL-001` and all lin
 
 Cancellation remains a lifecycle status that preserves cancelled context. Deletion does not have a confirmed notification branch in the current CRUD matrix.
 
-Reason: this is stabilized by `raw/affine/25:04:2026/CRUD matrix (1).md` and `raw/affine/25:04:2026/H&L - DFD workdoc v2.1.md`.
+Reason: this is stabilized by `raw/affine/25-04-2026/CRUD matrix (1).md` and `raw/affine/25-04-2026/H&L - DFD workdoc v2.1.md`.
 
 ### D-20260425-004: Treat blocking as reciprocal visibility and interaction prevention
 

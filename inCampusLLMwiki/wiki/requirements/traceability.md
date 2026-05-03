@@ -7,13 +7,13 @@ This page links user stories, functional requirements, non-functional requiremen
 Primary requirements source batch:
 
 ```text
-raw/affine/13:04:2026/
+raw/affine/13-04-2026/
 ```
 
 Current architecture source batch:
 
 ```text
-raw/affine/25:04:2026/
+raw/affine/25-04-2026/
 ```
 
 Primary sources:

@@ -21,5 +21,5 @@ Related use case links:
 Open point: the exact authentication mechanism is not fixed; the source leaves room for email verification or university identity redirection.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Sign Up with University Email|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Sign Up with University Email|Raw use case narrative]]
 

@@ -24,5 +24,5 @@ Architecture note: the 2026-04-25 D&P workdoc resolves block-related access as d
 Open point: behavior for full activities reached through direct links remains less specified.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/View Activity Details|Raw use case narrative]]
-- [[raw/affine/25:04:2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
+- [[raw/affine/13-04-2026/Use Cases/View Activity Details|Raw use case narrative]]
+- [[raw/affine/25-04-2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]

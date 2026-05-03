@@ -7,7 +7,7 @@ This page summarizes the architecture CRUD matrix and the stable business invari
 Current source:
 
 ```text
-raw/affine/25:04:2026/CRUD matrix (1).md
+raw/affine/25-04-2026/CRUD matrix (1).md
 ```
 
 Current matrix version: `1.4`, dated 2026-04-24.

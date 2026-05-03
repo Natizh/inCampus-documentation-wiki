@@ -8,19 +8,19 @@ It consolidates the current AFFiNE source snapshots without treating the use cas
 Primary requirements and narrative batch:
 
 ```text
-raw/affine/13:04:2026/
+raw/affine/13-04-2026/
 ```
 
 Previous diagram batch:
 
 ```text
-raw/affine/15:04:2026/
+raw/affine/15-04-2026/
 ```
 
 Current architecture batch:
 
 ```text
-raw/affine/25:04:2026/
+raw/affine/25-04-2026/
 ```
 
 Primary source files:
@@ -92,7 +92,7 @@ The `Priority` column below is the total score from the source table.
 The latest relationship source is:
 
 ```text
-raw/affine/25:04:2026/updates/usecase-diag-v1.4.puml
+raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml
 ```
 
 It supersedes the 2026-04-15 `v1.2` diagram for current relationship discussion. It explicitly shows:

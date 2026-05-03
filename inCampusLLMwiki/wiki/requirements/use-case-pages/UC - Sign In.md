@@ -20,5 +20,5 @@ Related use case links:
 Open point: no major narrative note was captured in the source file, but the wider onboarding order remains unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Sign In|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Sign In|Raw use case narrative]]
 

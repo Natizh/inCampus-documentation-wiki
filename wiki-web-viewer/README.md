@@ -193,7 +193,7 @@ Adjust the commit message to describe the actual ingest or update.
 Use the `Raw Archive` button in the viewer to browse raw folders, preview readable files, inspect images/PDFs, or open unsupported binaries. Canonical pages can link to raw material with local-only links:
 
 ```md
-[Original source](/raw/affine/25:04:2026/example.md)
+[Original source](/raw/affine/25-04-2026/example.md)
 ```
 
 The `/raw/...` route is served by the local Node/Fastify viewer and is constrained to `inCampusLLMwiki/raw/`; it is not a GitHub Pages or static export feature.

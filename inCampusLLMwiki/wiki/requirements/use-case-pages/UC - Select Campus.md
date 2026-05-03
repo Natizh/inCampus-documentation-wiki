@@ -21,5 +21,5 @@ Related use case links:
 Open point: the exact onboarding order and whether students can later change campus are unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Select Campus|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Select Campus|Raw use case narrative]]
 

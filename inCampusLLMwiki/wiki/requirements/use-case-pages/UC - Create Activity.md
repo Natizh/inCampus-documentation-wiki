@@ -24,5 +24,5 @@ Related use case links:
 Open point: map-based location support and the modeling of date/time as separate or internal are unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Create Activity|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Create Activity|Raw use case narrative]]
 

@@ -23,5 +23,5 @@ Related use case links:
 Open point: request ordering, batch handling, and decision states beyond approve/decline are not specified.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Manage Join Requests|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Manage Join Requests|Raw use case narrative]]
 

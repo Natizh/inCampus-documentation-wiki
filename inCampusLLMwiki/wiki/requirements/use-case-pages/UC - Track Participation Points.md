@@ -23,5 +23,5 @@ Related use case links:
 Open point: attendance verification, point values, last-minute cutoff, and balance/history views are unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Track Participation Points|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Track Participation Points|Raw use case narrative]]
 

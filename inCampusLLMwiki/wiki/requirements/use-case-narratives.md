@@ -8,13 +8,13 @@ It does not copy every raw narrative; it consolidates readiness, modeling notes,
 Primary narrative batch:
 
 ```text
-raw/affine/13:04:2026/Use Cases/
+raw/affine/13-04-2026/Use Cases/
 ```
 
 Previous relationship diagram batch:
 
 ```text
-raw/affine/15:04:2026/high-level-use-case-diagram-v1.2/
+raw/affine/15-04-2026/high-level-use-case-diagram-v1.2/
 ```
 
 This previous diagram batch is retained as source history only. Current relationship discussion should use the 2026-04-25 `v1.4` diagram source.
@@ -22,7 +22,7 @@ This previous diagram batch is retained as source history only. Current relation
 Current architecture batch:
 
 ```text
-raw/affine/25:04:2026/
+raw/affine/25-04-2026/
 ```
 
 The primary snapshot contains 31 use case narrative files.
@@ -89,7 +89,7 @@ The narratives are useful for requirements review, but they should not yet be tr
 
 ## Relationship Modeling Status
 
-Use `raw/affine/25:04:2026/updates/usecase-diag-v1.4.puml` as the latest current relationship source.
+Use `raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml` as the latest current relationship source.
 
 Do not treat it as a final implementation contract until formal UC IDs and scope-table cleanup are resolved.
 

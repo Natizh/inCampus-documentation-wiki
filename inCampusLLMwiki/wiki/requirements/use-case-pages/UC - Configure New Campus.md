@@ -22,5 +22,5 @@ Related use case links:
 Open point: exact setup fields, sequence, and validation rules are not specified.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Configure New Campus|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Configure New Campus|Raw use case narrative]]
 

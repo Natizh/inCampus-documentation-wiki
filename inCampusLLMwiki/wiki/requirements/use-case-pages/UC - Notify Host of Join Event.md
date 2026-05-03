@@ -23,5 +23,5 @@ Architecture note: the 2026-04-25 NSF workdoc models this as a notification cons
 Open point: notification channel, retry behavior, notification history, and final formal include relationship are unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Notify Host of Join Event|Raw use case narrative]]
-- [[raw/affine/25:04:2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/13-04-2026/Use Cases/Notify Host of Join Event|Raw use case narrative]]
+- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]

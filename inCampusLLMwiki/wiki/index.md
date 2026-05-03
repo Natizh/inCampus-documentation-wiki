@@ -99,13 +99,13 @@ Prioritize [[wiki/architecture/overview|architecture]], [[wiki/architecture/data
 Latest ingested raw snapshot:
 
 ```text
-raw/affine/25:04:2026/
+raw/affine/25-04-2026/
 ```
 
 Latest full requirements and narrative baseline remains:
 
 ```text
-raw/affine/13:04:2026/
+raw/affine/13-04-2026/
 ```
 
 Current sourced totals:

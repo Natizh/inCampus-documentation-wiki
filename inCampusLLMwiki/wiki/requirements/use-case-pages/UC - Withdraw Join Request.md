@@ -26,6 +26,6 @@ Open point: US-27 combines withdrawal and leaving; this page covers only pending
 Architecture note: the 2026-04-25 D&P and NSF workdocs model withdrawal as a separate flow that deletes the pending request, updates availability/count state, and emits a withdrawal trigger to NSF. NSF owns any host notification record.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Withdraw Join Request|Raw use case narrative]]
-- [[raw/affine/25:04:2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
-- [[raw/affine/25:04:2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/13-04-2026/Use Cases/Withdraw Join Request|Raw use case narrative]]
+- [[raw/affine/25-04-2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
+- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]

@@ -21,8 +21,8 @@ raw/affine/DD:MM:YYYY/
 Examples:
 
 ```text
-raw/affine/13:04:2026/
-raw/affine/25:04:2026/
+raw/affine/13-04-2026/
+raw/affine/25-04-2026/
 ```
 
 Guidelines:
@@ -52,7 +52,7 @@ The ingested AFFiNE snapshot describes the current requirements workflow as stag
 Source:
 
 ```text
-raw/affine/13:04:2026/Home.md
+raw/affine/13-04-2026/Home.md
 ```
 
 Current workflow:
@@ -77,7 +77,7 @@ The latest AFFiNE architecture batch moves current project work into architectur
 Source:
 
 ```text
-raw/affine/25:04:2026/
+raw/affine/25-04-2026/
 ```
 
 Current architecture workflow:

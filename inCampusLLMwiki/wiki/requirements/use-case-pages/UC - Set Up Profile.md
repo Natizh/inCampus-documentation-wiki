@@ -21,5 +21,5 @@ Related use case links:
 Open point: exact minimal profile fields, profile photo handling, and whether setup blocks app use are unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Set Up Profile|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Set Up Profile|Raw use case narrative]]
 

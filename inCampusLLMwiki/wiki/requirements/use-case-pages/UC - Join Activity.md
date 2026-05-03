@@ -27,6 +27,6 @@ Architecture note: the 2026-04-25 D&P and NSF workdocs resolve blocked-user hand
 Open point: implementation-level concurrency handling for join/request counts is outside the current logical DFD.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Join Activity|Raw use case narrative]]
-- [[raw/affine/25:04:2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
-- [[raw/affine/25:04:2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/13-04-2026/Use Cases/Join Activity|Raw use case narrative]]
+- [[raw/affine/25-04-2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
+- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]

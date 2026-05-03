@@ -7,7 +7,7 @@ This page summarizes the current architecture-analysis baseline derived from the
 Latest architecture batch:
 
 ```text
-raw/affine/25:04:2026/
+raw/affine/25-04-2026/
 ```
 
 Primary source files:
@@ -21,7 +21,7 @@ Primary source files:
 The architecture batch supersedes the earlier diagram-only batch for architecture modeling:
 
 ```text
-raw/affine/15:04:2026/
+raw/affine/15-04-2026/
 ```
 
 Older raw snapshots remain immutable history. Wiki pages should connect broad architecture and relationship references to the most recent grounded version. Earlier source versions should be treated as predecessors and linked only through version-history notes, not as parallel current references.
@@ -91,7 +91,7 @@ See [[wiki/architecture/data-stores|Architecture Data Stores]] for the store cat
 The latest exported use-case relationship source is:
 
 ```text
-raw/affine/25:04:2026/updates/usecase-diag-v1.4.puml
+raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml
 ```
 
 It supersedes the previous `v1.2` diagram for current relationship discussion. The diagram groups use cases by functional area and explicitly labels green arrows as include and yellow dashed arrows as extend. Because formal UC IDs remain unresolved and the broader project is still in draft modeling, the wiki records `v1.4` as the current working diagram version, not as a final implementation contract.
