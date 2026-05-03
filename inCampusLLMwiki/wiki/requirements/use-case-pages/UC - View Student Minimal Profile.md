@@ -19,11 +19,12 @@ Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Edit Profile|Edit Profile]]
 - [[wiki/requirements/use-case-pages/UC - Manage Join Requests|Manage Join Requests]]
 
-Architecture note: the 2026-04-25 AP workdoc and CRUD Matrix require a read of `DS-SM-001 Block Relationships` before minimal profile exposure. Blocked users must not view each other's profile details.
+Architecture note: the current AP workdoc and CRUD Matrix require a read of `DS-SM-001 Block Relationships` before minimal profile exposure. Blocked users must not view each other's profile details.
 
-Open point: exact profile fields and the complete set of allowed viewing contexts remain unresolved.
+Open point: exact profile fields and the complete set of allowed viewing contexts remain unresolved. The 2026-05-03 entity catalog provides candidate fields such as display name, major, date of birth, gender, interests, languages, and short bio, but marks several final field decisions as `To verify`.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/View Student Minimal Profile|Raw use case narrative]]
-- [[raw/affine/25-04-2026/AP - DFD - workdoc v1.1|AP architecture workdoc v1.1]]
-- [[raw/affine/25-04-2026/CRUD matrix (1)|CRUD matrix v1.4]]
+- [[raw/affine/03-05-2026/updates/AP - DFD - workdoc v1.2|AP architecture workdoc v1.2]]
+- [[raw/affine/03-05-2026/updates/CRUD matrix v1.5|CRUD matrix v1.5]]
+- [[raw/affine/03-05-2026/Entities & Attributes v1.1|Entities & Attributes v1.1]]

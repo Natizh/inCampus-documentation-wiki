@@ -7,10 +7,10 @@ This page summarizes the architecture CRUD matrix and the stable business invari
 Current source:
 
 ```text
-raw/affine/25-04-2026/CRUD matrix (1).md
+raw/affine/03-05-2026/updates/CRUD matrix v1.5.md
 ```
 
-Current matrix version: `1.4`, dated 2026-04-24.
+Current matrix version: `1.5`, dated 2026-05-01.
 
 Status: Draft sourced CRUD baseline.
 
@@ -43,19 +43,21 @@ Status: Draft sourced CRUD baseline.
 | Browse/Filter Activities | `DS-HL-001`, `DS-SM-001` | none | Blocked users' activities are filtered. |
 | View Activity Details | `DS-HL-001`, `DS-AP-002`, `DS-SM-001` | none | Details inaccessible when block exists. |
 | Join Activity | `DS-HL-001`, `DS-HL-002`, `DS-SM-001` | creates/reads `DS-HL-002`, updates `DS-HL-001` | Join/request trigger goes to NSF. |
-| Withdraw Join Request | `DS-HL-002` | deletes `DS-HL-002`, updates `DS-HL-001` | D&P emits trigger; NSF owns host notification creation. |
+| Withdraw Join Request | `DS-HL-002` | deletes `DS-HL-002`, updates `DS-HL-001` | CRUD Matrix `v1.5` says no host notification for pending request withdrawal; D&P/NSF workdocs conflict. |
 | Leave Joined Activity | `DS-HL-001`, `DS-HL-002` | deletes `DS-HL-002`, updates `DS-HL-001` | Host leave notification belongs to NSF. |
 | View Personal List | `DS-HL-001`, `DS-HL-002` | none | Read-only upcoming/past composition. |
 | Submit Report | `DS-AP-001`, `DS-AP-002` | creates `DS-SM-002` | Activity target validation details remain limited. |
 | Review Report | `DS-AP-001`, `DS-AP-002`, `DS-HL-001`, `DS-SM-002` | updates `DS-SM-002` | AP/HL consequences are routed to native workflows. |
 | Block User | `DS-AP-001`, `DS-AP-002`, `DS-SM-001` | creates/reads `DS-SM-001`; conditional H&L trigger | Pending-request effects remain H&L-owned. |
 | Notify: Join Event | `DS-AP-001`, `DS-HL-001`, `DS-HL-002`, `DS-SM-001` | creates `DS-NS-001` | Suppressed if block exists. |
-| Notify: Withdraw Event | `DS-AP-001`, `DS-HL-001`, `DS-HL-002`, `DS-SM-001` | creates `DS-NS-001` | Current stable interpretation: host notification after pending-request withdrawal. |
+| Notify: Withdraw Event | `DS-AP-001`, `DS-HL-001`, `DS-HL-002`, `DS-SM-001` | source-conflicting `DS-NS-001` create | The row remains in the matrix, but the `v1.5` invariant says pending request withdrawal must not notify the host. Treat as unresolved. |
 | Notify: Leave Event | `DS-AP-001`, `DS-HL-001`, `DS-HL-002`, `DS-SM-001` | creates `DS-NS-001` | Host notification after joined participant leaves. |
 | Notify: App. Outcome | `DS-AP-001`, `DS-HL-001`, `DS-HL-002`, `DS-SM-001` | creates `DS-NS-001` | Participant notification after approval/decline. |
 | Notify: Cancellation | `DS-AP-001`, `DS-HL-001`, `DS-HL-002`, `DS-SM-001` | creates `DS-NS-001` | Fan-out to joined participants not suppressed by block state. |
 | Open Notification | `DS-NS-001`, `DS-HL-001`, `DS-HL-002`, `DS-SM-001` | none | Read-only navigation/access check. |
 | Notify: Activity Reminder | `DS-AP-001`, `DS-HL-001`, `DS-HL-002` | creates `DS-NS-001` | Active MVP architecture branch; no block check by default. |
+| Update Campus Insight Consent | `DS-AP-001` | updates `DS-AP-001` | Student grants or revokes identifiable campus insight access; normal app access is unaffected. |
+| View Consent-Based Student Insights | `DS-CA-001`, `DS-AP-001`; conditionally `DS-AP-002`, `DS-HL-001`, `DS-HL-002` | none | Future campus admin insight view; identifiable reads require authorized campus scope and consent. |
 
 ## Stable Invariants
 
@@ -74,7 +76,8 @@ The current architecture uses these activity states conservatively:
 - full
 - completed
 - cancelled
-- deleted
+
+`deleted` is not a persisted activity status in the current ERD. It is the result of hard deletion from `DS-HL-001` with linked participation/request deletion from `DS-HL-002`.
 
 `Pending Approval` belongs to participation state in `DS-HL-002`, not activity lifecycle state in `DS-HL-001`.
 
@@ -101,6 +104,18 @@ Opening a notification is read-only:
 - route to the current context if available;
 - otherwise show an unavailable fallback.
 
+Pending request withdrawal notification behavior is not stable across the latest sources. CRUD Matrix `v1.5` says a pending request withdrawal must not generate a host notification and that host notification is created only when an already joined participant leaves. D&P workdoc `v5` and NSF workdoc `v7` still model a withdrawal trigger/branch. Treat this as unresolved until the team confirms whether the DFD branch should be removed or the CRUD row should be corrected.
+
+### Consent-Based Campus Insight Access
+
+`CampusInsightSharingConsent` belongs to `DS-AP-001 Student Account`.
+
+The current matrix adds two consent-related processes:
+- `Update Campus Insight Consent`: AP reads/updates the consent value on the student account.
+- `View Consent-Based Student Insights`: a future campus-admin read path that may read identifiable profile/activity/participation insight data only when campus authorization and consent checks pass.
+
+This does not confirm a full admin-insight product feature. It only stabilizes the consent attribute and the access-control rule that any future insight feature must obey.
+
 ### Moderation Consequences
 
 `Review Report` updates only `DS-SM-002` directly.
@@ -111,10 +126,10 @@ If the moderation outcome removes an activity, SM triggers the H&L-native deleti
 
 ## Internal Source Contradictions
 
-The 2026-04-25 batch contains a few leftover contradictions. The wiki uses the latest workdoc/CRUD interpretation and keeps these as cleanup items:
+The 2026-04-25 and 2026-05-03 batches contain a few leftover contradictions. The wiki uses the latest workdoc/CRUD interpretation where source priority is clear and keeps the rest as cleanup items:
 
-- The CRUD matrix row text for `Withdraw Join Request` says "No host notification", while the same matrix version includes `Notify: Withdraw Event`, the invariant section says pending request withdrawal must notify the host, and D&P/NSF workdocs model a withdrawal trigger. Stable interpretation: D&P does not write notifications, but NSF creates a host withdrawal notification if allowed.
-- The integrated DFD text still mentions deletion triggers to notifications and logically archived participation records in places. H&L workdoc `v2.1` and CRUD Matrix `v1.4` instead stabilize hard-delete behavior and no confirmed deletion notification.
+- `Withdraw Join Request` notification behavior changed from the previous wiki interpretation. The 2026-05-03 CRUD Matrix `v1.5` says pending request withdrawal must not notify the host, but D&P/NSF workdocs still model a withdrawal trigger. Stable interpretation is pending team confirmation.
+- The integrated DFD text still mentions deletion triggers to notifications and logically archived participation records in places. H&L workdoc `v2.1` and CRUD Matrix `v1.5` instead stabilize hard-delete behavior and no confirmed deletion notification.
 - Older diagrams may show direct writes from H&L/D&P to `DS-NS-001`. Current boundary: NSF alone writes notification records.
 
 ## Related Pages
@@ -122,4 +137,5 @@ The 2026-04-25 batch contains a few leftover contradictions. The wiki uses the l
 - [[wiki/architecture/overview|Architecture Overview]]
 - [[wiki/architecture/data-flow|Architecture Data Flow]]
 - [[wiki/architecture/data-stores|Architecture Data Stores]]
+- [[wiki/architecture/data-model|Architecture Data Model]]
 - [[wiki/project/decisions|Decisions]]

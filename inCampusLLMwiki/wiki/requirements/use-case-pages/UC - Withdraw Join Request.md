@@ -23,9 +23,12 @@ Related use case links:
 
 Open point: US-27 combines withdrawal and leaving; this page covers only pending request withdrawal.
 
-Architecture note: the 2026-04-25 D&P and NSF workdocs model withdrawal as a separate flow that deletes the pending request, updates availability/count state, and emits a withdrawal trigger to NSF. NSF owns any host notification record.
+Architecture note: the 2026-05-03 CRUD Matrix `v1.5` says pending request withdrawal deletes the pending request, updates availability/count state, and must not generate a host notification. This conflicts with D&P workdoc `v5` and NSF workdoc `v7`, which still model a withdrawal trigger/branch.
+
+Open point: host notification behavior after pending-request withdrawal needs team confirmation against the latest CRUD and DFD sources.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Withdraw Join Request|Raw use case narrative]]
-- [[raw/affine/25-04-2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
-- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/03-05-2026/updates/CRUD matrix v1.5|CRUD matrix v1.5]]
+- [[raw/affine/03-05-2026/updates/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
+- [[raw/affine/03-05-2026/updates/NSF - DFD workdoc v7|NSF architecture workdoc v7]]

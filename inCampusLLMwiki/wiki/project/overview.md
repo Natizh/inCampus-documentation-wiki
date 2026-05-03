@@ -33,7 +33,7 @@ The app should support ordinary social participation without making the interact
 Latest ingested snapshot:
 
 ```text
-raw/affine/25-04-2026/
+raw/affine/03-05-2026/
 ```
 
 Latest full requirements and narrative baseline:
@@ -50,11 +50,16 @@ Baseline requirements files:
 - 31 Markdown files in `Use Cases/`
 
 Latest architecture files:
-- `Architecture workdoc/index.md`
-- `DFD integration and Merge/index.md`
-- `CRUD matrix (1).md`
-- `updates/usecase-diag-v1.4.puml`
-- subgroup DFD workdocs and diagram exports for CA, AP, H&L, D&P, SM, and NSF
+- `ERD - workdoc.md`
+- `ERD V1.1.md`
+- `Entities & Attributes v1.1.md`
+- `Relationship Table.md`
+- `updates/CRUD matrix v1.5.md`
+- `updates/Databases.md`
+- updated subgroup DFD workdocs under `updates/`
+- `updates/Recent Structural modifications.md`
+
+Previous architecture baseline files from `raw/affine/25-04-2026/` remain important for the integrated DFD package, diagram exports, and `updates/usecase-diag-v1.4.puml`.
 
 Note: `Home.md` contains an `OUTDATED` marker near the top. Treat workflow, MVP scope, and ranking information from that page as useful project context, but prefer the dedicated requirements and use case files for detailed [[wiki/requirements/traceability|traceability]].
 
@@ -90,6 +95,12 @@ The 2026-04-25 architecture batch adds a current architecture-scope overlay:
 - `US-11: Receive Activity Reminder` is now modeled as an active MVP notification branch.
 - `US-08: Send Message` is excluded/postponed from the current D&P MVP model.
 
+The 2026-05-03 batch adds a data-model and structural overlay:
+- sign-up now includes university email verification plus password creation, with `PasswordHash` on `DS-AP-001 Student Account`;
+- consent-based campus insight access is introduced as a future controlled extension through `CampusInsightSharingConsent`;
+- `Set Activity Date and Time` is confirmed as internal to `Create Activity` for architecture modeling;
+- CRUD Matrix `v1.5` says pending request withdrawal should not notify the host, but D&P/NSF workdocs still conflict on that branch.
+
 The requirements tables need cleanup before these scope changes are treated as fully reconciled source counts.
 
 PostMVP user stories from the original requirements baseline:
@@ -122,13 +133,14 @@ Current sourced requirements:
 
 The team is currently in the architecture-analysis phase.
 
-The 2026-04-25 source says the use-case analysis, use-case narratives, and relationship review have been used as input for architecture analysis.
+The 2026-04-25 source says the use-case analysis, use-case narratives, and relationship review have been used as input for architecture analysis. The 2026-05-03 source extends this with ERD, entity attributes, relationship tables, CRUD Matrix `v1.5`, and consent-based access modeling.
 
 Current architecture work focuses on:
 - functional decomposition
 - subgroup DFDs
 - a unified Level-1 DFD
 - logical data stores
+- logical entities, attributes, and relationships
 - CRUD consistency
 - traceability back to use cases and requirements
 
@@ -155,15 +167,17 @@ The following points are not yet fully decided or are only partially specified i
 - exact MVP handling of map-based campus locations
 - exact minimal profile fields and whether a profile photo is included
 - whether profile completion is mandatory before app use
-- exact authentication mechanism: email verification vs university identity redirection
+- exact authentication mechanism details beyond current university email verification plus password-hash model
 - notification channels and history model
 - exact unblock behavior
 - report form fields, evidence handling, reporter feedback, and moderation action set
+- campus insight feature scope, consent UI placement, and admin authorization model
+- whether Campus Admin becomes a formal entity/store or remains an external identifier/role
 - attendance verification and point scheme for postMVP participation points
 - whether activity end time is explicit, derived, or absent
 - whether students can change campus after onboarding
-- requirements-table reconciliation for `US-08` and `US-11`
-- internal architecture-source cleanup for stale deletion/archive and withdrawal-notification wording
+- requirements-table reconciliation for `US-08`, `US-11`, and the architecture treatment of `US-25`
+- internal architecture-source cleanup for stale deletion/archive and pending-withdrawal notification wording
 
 ## Related Pages
 

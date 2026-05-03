@@ -15,7 +15,7 @@ Use `wiki/` for derived, structured knowledge.
 Recommended export path:
 
 ```text
-raw/affine/DD:MM:YYYY/
+raw/affine/DD-MM-YYYY/
 ```
 
 Examples:
@@ -72,12 +72,13 @@ Important constraint:
 
 ## Current Architecture Workflow
 
-The latest AFFiNE architecture batch moves current project work into architecture analysis.
+The architecture-analysis workflow is grounded in the 2026-04-25 DFD baseline and extended by the 2026-05-03 ERD/entity and CRUD `v1.5` batch.
 
-Source:
+Sources:
 
 ```text
 raw/affine/25-04-2026/
+raw/affine/03-05-2026/
 ```
 
 Current architecture workflow:
@@ -94,12 +95,13 @@ Current architecture pages:
 - [[wiki/architecture/overview|Architecture Overview]]
 - [[wiki/architecture/data-flow|Architecture Data Flow]]
 - [[wiki/architecture/data-stores|Architecture Data Stores]]
+- [[wiki/architecture/data-model|Architecture Data Model]]
 - [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]]
 
 Important constraint:
 - Broad wiki references should point to the latest grounded architecture version.
 - Previous raw versions remain immutable history and should be connected only through version-history notes, not treated as parallel current sources.
-- When diagrams conflict with newer workdocs or CRUD Matrix `v1.4`, use the newer workdocs/CRUD interpretation and record the conflict.
+- When diagrams conflict with newer workdocs or CRUD Matrix `v1.5`, use the newer workdocs/CRUD interpretation where source priority is clear and record unresolved same-batch conflicts.
 
 ## Query Workflow
 

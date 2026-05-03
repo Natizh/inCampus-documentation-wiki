@@ -25,6 +25,7 @@ Status labels:
 - [[wiki/architecture/overview|Architecture Overview]] - Current architecture-analysis baseline, source priority, Level-1 process areas, version handling, and major modeling decisions. Status: Draft Sourced.
 - [[wiki/architecture/data-flow|Architecture Data Flow]] - Unified DFD structure and subgroup-level logical data-flow summary. Status: Draft Sourced.
 - [[wiki/architecture/data-stores|Architecture Data Stores]] - Logical store catalog, ownership boundaries, reuse rules, and alignment issues. Status: Draft Sourced.
+- [[wiki/architecture/data-model|Architecture Data Model]] - ERD/entity catalog, relationship constraints, attribute deltas, consent-based access notes, and unresolved schema questions. Status: Draft Sourced.
 - [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]] - Current CRUD summary, deletion/blocking/notification invariants, and internal source contradictions. Status: Draft Sourced.
 
 ## Planning And Governance
@@ -94,12 +95,12 @@ The raw narrative files remain source material, not duplicate wiki pages to merg
 ## Current Focus
 
 The project is currently in the architecture-analysis phase, with requirements/use-case traceability still maintained as the baseline.
-Prioritize [[wiki/architecture/overview|architecture]], [[wiki/architecture/data-flow|DFD/data-flow modeling]], [[wiki/architecture/crud-matrix|CRUD consistency]], and updates to [[wiki/requirements/traceability|traceability]] where architecture scope has superseded older requirements-table scope.
+Prioritize [[wiki/architecture/overview|architecture]], [[wiki/architecture/data-flow|DFD/data-flow modeling]], [[wiki/architecture/data-model|data modeling]], [[wiki/architecture/crud-matrix|CRUD consistency]], and updates to [[wiki/requirements/traceability|traceability]] where architecture scope has superseded older requirements-table scope.
 
 Latest ingested raw snapshot:
 
 ```text
-raw/affine/25-04-2026/
+raw/affine/03-05-2026/
 ```
 
 Latest full requirements and narrative baseline remains:
@@ -119,5 +120,6 @@ Important current gaps:
 - `updates/usecase-diag-v1.4.puml` is the latest current use-case relationship source, but final formal UC IDs and implementation contract status remain unresolved
 - `Home.md` contains an `OUTDATED` marker
 - requirement ID formatting differs across some source files
-- older requirements tables still need cleanup for the architecture-scope swap: `Send Message` deferred, `Receive Activity Reminder` active in MVP notification modeling
-- the 2026-04-25 architecture batch contains a few stale internal leftovers around withdrawal notification wording, deletion notification triggers, and archive wording; see [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]]
+- older requirements tables still need cleanup for the architecture-scope swap: `Send Message` deferred, `Receive Activity Reminder` active in MVP notification modeling, and `Set Activity Date and Time` folded into `Create Activity` for architecture modeling
+- CRUD Matrix `v1.5` conflicts with D&P/NSF workdocs on pending-request withdrawal host notifications; see [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]]
+- campus insight access scope, admin identity modeling, and exact consent UI placement remain unresolved

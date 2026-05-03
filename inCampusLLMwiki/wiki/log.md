@@ -72,4 +72,21 @@ Use this heading format:
 
 ## [2026-05-03] maintenance | Windows-safe raw snapshot folders
 
-- Renamed raw date folders from DD:MM:YYYY to DD-MM-YYYY for Windows compatibility and updated all references.
+- Renamed raw date folders from the legacy colon-separated date format to DD-MM-YYYY for Windows compatibility and updated all references.
+
+## [2026-05-03] ingest | ERD, entity catalog, and CRUD v1.5 snapshot
+
+- Ingested `raw/affine/03-05-2026/`.
+- Source files included ERD workdocs, `Entities & Attributes v1.1.md`, `Relationship Table.md`, `updates/CRUD matrix v1.5.md`, `updates/Databases.md`, updated subgroup workdocs, and `updates/Recent Structural modifications.md`.
+- Created `wiki/architecture/data-model.md`.
+- Updated architecture overview, data flow, data stores, CRUD matrix, project overview, decisions, weekly status, requirements/use-case overlays, traceability, index, and selected use case pages.
+- Recorded ERD/entity model `v1.1`, CRUD Matrix `v1.5`, password credential alignment, consent-based campus insight access, current activity status/deletion wording, and Set Activity Date and Time as internal to Create Activity for architecture modeling.
+- Preserved unresolved points around pending-request withdrawal notification behavior, Campus Admin entity/store modeling, consent UI placement, final admin insight feature scope, exact profile fields, notification payload/delivery details, report schema, and final UC treatment for Set Activity Date and Time.
+
+## [2026-05-03] health-check | Post-03-05 wiki consistency pass
+
+- Reviewed `wiki/` for stale source references, contradictions, broken internal wikilinks/raw links, missing index/log continuity, outdated current-focus wording, and unresolved-point clarity after the `raw/affine/03-05-2026/` ingest.
+- Confirmed internal wikilinks and local raw links resolve across the current wiki pages.
+- Updated `wiki/planning/workflow.md` so the architecture workflow cites both the 2026-04-25 DFD baseline and the 2026-05-03 ERD/entity and CRUD `v1.5` extension.
+- Added `wiki/architecture/data-model.md` to the maintained architecture-page list in the workflow page to match the current wiki structure.
+- Preserved unresolved/source-conflict items around pending-request withdrawal notifications, campus-admin identity/store modeling, consent UI placement, and requirements-table reconciliation for `US-08`, `US-11`, and `US-25`.

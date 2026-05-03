@@ -9,8 +9,8 @@ Current source:
 ```text
 raw/affine/25-04-2026/DFD integration and Merge/index.md
 raw/affine/25-04-2026/Architecture workdoc/index.md
-raw/affine/25-04-2026/*DFD workdoc*.md
-raw/affine/25-04-2026/* - DFD/index.md
+raw/affine/03-05-2026/updates/*DFD workdoc*.md
+raw/affine/03-05-2026/updates/CRUD matrix v1.5.md
 ```
 
 Status: Draft sourced DFD baseline.
@@ -56,7 +56,7 @@ Open point:
 ## Access and Profile
 
 Current source:
-- `AP - DFD - workdoc v1.1.md`
+- `AP - DFD - workdoc v1.2.md`
 
 The AP diagram export is useful but has stale details. The workdoc is the current source for corrections.
 
@@ -67,14 +67,17 @@ Confirmed logical processes:
 - Set Up Minimal Profile
 - Edit Minimal Profile
 - View Student Minimal Profile
+- Update Campus Insight Sharing Consent
 
 Confirmed flows:
-- Sign Up / Verify reads `DS-AP-003` and creates/updates `DS-AP-001`.
+- Sign Up / Verify reads `DS-AP-003` and creates/updates `DS-AP-001`, including password credential state.
 - Sign In reads `DS-AP-001`.
 - Select Campus reads `DS-CA-001` and reads/updates `DS-AP-001`.
 - Set Up Minimal Profile creates `DS-AP-002`.
 - Edit Minimal Profile reads/updates `DS-AP-002`.
 - View Student Minimal Profile reads `DS-AP-002` and must read `DS-SM-001` before exposing profile data.
+- Update Campus Insight Sharing Consent reads/updates `DS-AP-001.CampusInsightSharingConsent`; refusal does not block normal app use.
+- Any future campus insight view must check consent and campus scope before reading identifiable profile or participation insight data.
 
 Open points:
 - exact university verification mechanism
@@ -82,6 +85,8 @@ Open points:
 - onboarding order between campus selection and profile setup
 - all allowed profile-viewing contexts
 - selected-campus storage wording mismatch between `DS-AP-001` and `DS-AP-002`
+- UI placement for campus insight consent
+- exact admin insight feature, if one is added later
 
 ## Hosting and Lifecycle
 
@@ -126,7 +131,7 @@ Confirmed flows:
 - Browse reads `DS-HL-001` and `DS-SM-001`; blocked users' activities are filtered from discovery.
 - View Activity Details reads `DS-HL-001`, `DS-SM-001`, and `DS-AP-002`; blocked host/viewer combinations cannot open details.
 - Join Activity reads `DS-HL-001`, `DS-HL-002`, and `DS-SM-001`; it creates participation or pending-request state and updates activity availability/count state.
-- Withdraw Join Request reads/deletes pending request state in `DS-HL-002`, updates availability/count state in `DS-HL-001`, and emits a withdrawal trigger to NSF.
+- Withdraw Join Request reads/deletes pending request state in `DS-HL-002` and updates availability/count state in `DS-HL-001`.
 - Leave Joined Activity reads/deletes joined participation state in `DS-HL-002`, updates `DS-HL-001`, and emits a leave trigger to NSF.
 - View Personal Activity List reads `DS-HL-002` and `DS-HL-001`.
 
@@ -137,6 +142,7 @@ Open points:
 - exact personal-list UI grouping
 - user-facing message for blocked or inaccessible activity details
 - implementation-level concurrency handling for join/request counts
+- whether pending request withdrawal should emit a notification trigger remains inconsistent across the 2026-05-03 batch
 
 ## Safety and Moderation
 
@@ -182,12 +188,14 @@ Confirmed logical processes:
 
 Current active notification branches:
 - Notify host of join / join request
-- Notify host of pending request withdrawal
 - Notify host of joined participant leave
 - Notify participant of application approval / decline
 - Notify participant of activity cancellation
 - Notify participant of activity reminder
 - Open notification context
+
+Disputed branch:
+- Pending request withdrawal is still present as a branch in D&P/NSF workdocs, but CRUD Matrix `v1.5` says no host notification should be generated for pending request withdrawal. Keep this unresolved until the team confirms source priority.
 
 Confirmed flows:
 - NSF reads `DS-AP-001` for recipient account validity.
@@ -209,10 +217,12 @@ Open points:
 - notification payload schema
 - notification-list UX parity
 - retry/failure handling
+- pending request withdrawal notification behavior
 
 ## Related Pages
 
 - [[wiki/architecture/overview|Architecture Overview]]
 - [[wiki/architecture/data-stores|Architecture Data Stores]]
+- [[wiki/architecture/data-model|Architecture Data Model]]
 - [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]]
 - [[wiki/requirements/use-case-narratives|Use Case Narratives]]

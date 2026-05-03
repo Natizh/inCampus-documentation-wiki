@@ -20,7 +20,7 @@ raw/affine/15-04-2026/
 Current architecture batch:
 
 ```text
-raw/affine/25-04-2026/
+raw/affine/03-05-2026/
 ```
 
 Primary source files:
@@ -37,10 +37,14 @@ Previous diagram source files:
 Previous diagram files are retained as source history only. Current relationship discussion should use `updates/usecase-diag-v1.4.puml`.
 
 Current architecture source files:
-- `updates/usecase-diag-v1.4.puml`
-- `Architecture workdoc/index.md`
-- `DFD integration and Merge/index.md`
-- subgroup DFD workdocs and `CRUD matrix (1).md`
+- `updates/CRUD matrix v1.5.md`
+- updated subgroup DFD workdocs under `updates/`
+- `ERD - workdoc.md`
+- `Entities & Attributes v1.1.md`
+- `Relationship Table.md`
+- `updates/Recent Structural modifications.md`
+
+The current relationship diagram source remains `raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml`.
 
 Note: `Home.md` contains an `OUTDATED` marker. The use case inventory below is grounded primarily in the dedicated use case and requirements files, with ranking and priority data taken from `Home.md`. The 2026-04-15 diagram batch is used only for actor grouping and relationship-status notes where the diagram is explicit.
 
@@ -110,9 +114,15 @@ Current `v1.4` relationships:
 | Include | `Configure New Campus` to `Manage Campus Structured Options`; `Create Activity` to `Set Activity Date and Time`; `Join Activity` to `Notify Host of Join Event`; `Manage Join Requests` to `View Student Minimal Profile`; `Browse and Filter Activities` to `View Activity Details`; `Notify Host of Join Event` to `Manage Join Requests`; `Manage Join Requests` to `Notify Participant of Application Outcome`; `Report User or Activity` to `Review Report`; `Block User` to `Join Activity` |
 | Extend | `View Activity Details` to deferred friends/social indicators; `View Personal Activity List` to activity reminder and participation points; `View Activity Details` to activity photo upload |
 
-Architecture-scope notes from the same 2026-04-25 batch:
+Architecture-scope notes from the 2026-04-25 and 2026-05-03 batches:
 - `Send Message` is excluded from the current D&P MVP model and does not appear in `usecase-diag-v1.4`.
-- `Receive Activity Reminder` appears in the deferred package in the diagram, but NSF workdoc `v7` and CRUD Matrix `v1.4` model it as an active MVP notification branch. This scope mismatch needs requirements-table cleanup.
+- `Receive Activity Reminder` appears in the deferred package in the diagram, but NSF workdoc `v7` and CRUD Matrix `v1.5` model it as an active MVP notification branch. This scope mismatch needs requirements-table cleanup.
+
+Additional architecture-scope notes from the 2026-05-03 batch:
+- `Set Activity Date and Time` is no longer treated as a standalone H&L DFD process; date/time selection and validation are internal to `Create Activity` for architecture modeling.
+- Sign-up includes university email verification plus password creation; `PasswordHash` belongs to `DS-AP-001 Student Account`.
+- Consent-based campus insight access is introduced as a controlled future extension through `CampusInsightSharingConsent`, but no complete user-facing/admin feature is confirmed.
+- Pending request withdrawal host notification behavior is inconsistent: CRUD Matrix `v1.5` says no host notification, while D&P/NSF workdocs still model a withdrawal trigger/branch.
 
 ## Use Case Inventory
 
@@ -125,7 +135,7 @@ Architecture-scope notes from the same 2026-04-25 batch:
 | [[wiki/requirements/use-case-pages/UC - Edit Profile|Edit Profile]] | MVP | Student | US-14 | FR-1402; NFR-27 | 11 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - View Student Minimal Profile|View Student Minimal Profile]] | MVP | Student | US-22 | FR-1403, FR-0501; NFR-28, NFR-36 | 14 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]] | MVP | Student host | US-03 | FR-0301, FR-0302, FR-0303, FR-0304, FR-0305; NFR-10, NFR-11, NFR-13 | 20 | Draft narrative exists |
-| [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]] | MVP | Student host | US-25 | FR-2501, FR-2502, FR-0402, FR-0404; NFR-10, NFR-41 | 14 | Draft narrative exists; DFD modeling clarified, formal UC treatment unresolved |
+| [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]] | MVP | Student host | US-25 | FR-2501, FR-2502, FR-0402, FR-0404; NFR-10, NFR-41 | 14 | Draft narrative exists; internal to Create Activity for H&L DFD/CRUD, formal UC treatment unresolved |
 | [[wiki/requirements/use-case-pages/UC - Browse and Filter Activities|Browse and Filter Activities]] | MVP | Student guest | US-04 | FR-0401, FR-0402, FR-0403, FR-0404, FR-0405, FR-0406; NFR-11, NFR-16, NFR-17 | 21 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - View Activity Details|View Activity Details]] | MVP | Student guest or participant | US-21 | FR-0302, FR-0402; NFR-35 | 18 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Join Activity|Join Activity]] | MVP | Student guest | US-20 | FR-0305, FR-2001, FR-2002, FR-0502; NFR-13, NFR-34 | 23 | Draft narrative exists |
@@ -138,7 +148,7 @@ Architecture-scope notes from the same 2026-04-25 batch:
 | [[wiki/requirements/use-case-pages/UC - Notify Participant of Application Outcome|Notify Participant of Application Outcome]] | MVP | Activity host | US-07 | FR-0701, FR-0702, FR-0703, FR-0704, FR-2002; NFR-18, NFR-19 | 16 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Notify Participant of Activity Cancellation|Notify Participant of Activity Cancellation]] | MVP | Student participant | US-28 | FR-0503, FR-2801, FR-2802, FR-2803, FR-2804; NFR-44, NFR-19 | 15 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - View Personal Activity List|View Personal Activity List]] | MVP | Student | US-09 | FR-0901, FR-0902; NFR-22 | 11 | Draft narrative exists |
-| [[wiki/requirements/use-case-pages/UC - Send Message|Send Message]] | Baseline MVP; deferred in current architecture model | Student | US-08 | FR-0801, FR-0802, FR-0803; NFR-20, NFR-21 | 18 | Draft narrative exists; deferred by 2026-04-25 D&P workdoc |
+| [[wiki/requirements/use-case-pages/UC - Send Message|Send Message]] | Baseline MVP; deferred in current architecture model | Student | US-08 | FR-0801, FR-0802, FR-0803; NFR-20, NFR-21 | 18 | Draft narrative exists; deferred by D&P workdoc `v5` |
 | [[wiki/requirements/use-case-pages/UC - View Community Rules|View Community Rules]] | MVP | Student | US-19 | FR-1901; NFR-33 | 13 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Report User or Activity|Report User or Activity]] | MVP | Student | US-17 | FR-1701, FR-0201, FR-0202, FR-0203; NFR-31, NFR-06, NFR-08 | 15 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Review Report|Review Report]] | MVP | Campus admin | US-02 | FR-0201, FR-0202, FR-0203; NFR-06, NFR-07, NFR-08, NFR-09 | 15 | Draft narrative exists |
@@ -146,7 +156,7 @@ Architecture-scope notes from the same 2026-04-25 batch:
 | [[wiki/requirements/use-case-pages/UC - Configure New Campus|Configure New Campus]] | MVP | Campus admin | US-23 | FR-2301, FR-2302; NFR-37, NFR-38 | 22 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Manage Campus Structured Options|Manage Campus Structured Options]] | MVP | Campus admin | US-24 | FR-0301, FR-0304, FR-2302; NFR-39, NFR-40 | 20 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - View Friends and Social Indicators|View Friends and Social Indicators]] | postMVP | Student | US-10 | FR-1001, FR-1002; NFR-23 | 13 | Draft narrative exists; deferred |
-| [[wiki/requirements/use-case-pages/UC - Receive Activity Reminder|Receive Activity Reminder]] | MVP architecture branch; baseline postMVP | Student | US-11 | FR-1101; NFR-24 | 13 | Draft narrative exists; active NSF reminder branch in 2026-04-25 architecture batch |
+| [[wiki/requirements/use-case-pages/UC - Receive Activity Reminder|Receive Activity Reminder]] | MVP architecture branch; baseline postMVP | Student | US-11 | FR-1101; NFR-24 | 13 | Draft narrative exists; active NSF reminder branch in current architecture batch |
 | [[wiki/requirements/use-case-pages/UC - Track Participation Points|Track Participation Points]] | postMVP | System | US-12 | FR-1201; NFR-25 | 15 | Draft narrative exists; deferred |
 | [[wiki/requirements/use-case-pages/UC - Upload Activity Photo|Upload Activity Photo]] | postMVP | Student | US-13 | FR-1301; NFR-26 | 11 | Draft narrative exists; deferred |
 
@@ -176,7 +186,7 @@ The sourced MVP can be read as this rough flow:
 5. Other students [[wiki/requirements/use-case-pages/UC - Browse and Filter Activities|browse and filter activities]] and [[wiki/requirements/use-case-pages/UC - View Activity Details|view activity details]].
 6. Student [[wiki/requirements/use-case-pages/UC - Join Activity|joins directly or requests to join]].
 7. Host [[wiki/requirements/use-case-pages/UC - Manage Join Requests|manages join requests]] when approval is required.
-8. [[wiki/requirements/use-case-pages/UC - Notify Host of Join Event|Host notifications]], withdrawal/leave notifications, [[wiki/requirements/use-case-pages/UC - Notify Participant of Application Outcome|application outcome notifications]], [[wiki/requirements/use-case-pages/UC - Notify Participant of Activity Cancellation|cancellation notifications]], and [[wiki/requirements/use-case-pages/UC - Receive Activity Reminder|activity reminders]] inform people of important participation changes in the current architecture model.
+8. [[wiki/requirements/use-case-pages/UC - Notify Host of Join Event|Host notifications]], joined-participant leave notifications, [[wiki/requirements/use-case-pages/UC - Notify Participant of Application Outcome|application outcome notifications]], [[wiki/requirements/use-case-pages/UC - Notify Participant of Activity Cancellation|cancellation notifications]], and [[wiki/requirements/use-case-pages/UC - Receive Activity Reminder|activity reminders]] inform people of important participation changes in the current architecture model. Pending-request withdrawal notification behavior is unresolved in the 2026-05-03 sources.
 9. Students [[wiki/requirements/use-case-pages/UC - Withdraw Join Request|withdraw requests]], [[wiki/requirements/use-case-pages/UC - Leave Joined Activity|leave joined activities]], and [[wiki/requirements/use-case-pages/UC - View Personal Activity List|view personal activity lists]].
 10. [[wiki/requirements/use-case-pages/UC - View Community Rules|Rules]], [[wiki/requirements/use-case-pages/UC - Report User or Activity|reports]], [[wiki/requirements/use-case-pages/UC - Block User|blocking]], and [[wiki/requirements/use-case-pages/UC - Review Report|admin report review]] support basic trust and safety.
 
@@ -185,6 +195,7 @@ The sourced MVP can be read as this rough flow:
 - Formal numeric UC IDs are not assigned.
 - [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]] is modeled as part of [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]] for DFD purposes, but its final formal UC treatment is still unresolved.
 - Host and participant notification use cases remain formal use case inventory items, while NSF owns notification consequences in the DFD model.
+- Pending-request withdrawal host notification behavior is unresolved between CRUD Matrix `v1.5` and D&P/NSF workdocs.
 - `updates/usecase-diag-v1.4.puml` is the latest current relationship source, but final formal UC IDs and implementation-contract status remain unresolved.
 - The activity state vocabulary is clearer in the architecture batch, but a full state-transition diagram is not final.
 - Some source traceability uses inconsistent requirement ID formatting, such as `FR-301` vs `FR-0301`.

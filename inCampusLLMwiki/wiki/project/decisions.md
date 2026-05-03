@@ -158,9 +158,9 @@ Notifications and System Flow owns:
 - delivery output;
 - read-only notification opening.
 
-Current active notification branches include join/request, pending-request withdrawal, joined-participant leave, approval/decline outcome, cancellation, and activity reminder.
+Current active notification branches include join/request, joined-participant leave, approval/decline outcome, cancellation, and activity reminder. Pending-request withdrawal notification behavior is now unresolved because the 2026-05-03 CRUD Matrix `v1.5` conflicts with the D&P/NSF workdocs.
 
-Reason: this is stabilized by NSF workdoc `v7`, D&P workdoc `v5`, H&L workdoc `v2.1`, and CRUD Matrix `v1.4`.
+Reason: NSF ownership is stabilized by NSF workdoc `v7`, D&P workdoc `v5`, H&L workdoc `v2.1`, and the CRUD matrix line. The pending-withdrawal branch needs confirmation against CRUD Matrix `v1.5`.
 
 ### D-20260425-006: Apply current architecture-scope changes for Send Message and Activity Reminder
 
@@ -170,7 +170,47 @@ The 2026-04-25 architecture batch changes current modeling scope in two places:
 - `Send Message` is excluded from the current D&P MVP model and postponed.
 - `Receive Activity Reminder` is included as an active MVP notification branch in NSF.
 
-Reason: D&P workdoc `v5` explicitly excludes Send Message from the MVP model, while NSF workdoc `v7` and CRUD Matrix `v1.4` explicitly include activity reminder as an active notification branch.
+Reason: D&P workdoc `v5` explicitly excludes Send Message from the MVP model, while NSF workdoc `v7` and CRUD Matrix `v1.5` explicitly include activity reminder as an active notification branch.
+
+### D-20260503-001: Use the 2026-05-03 ERD/entity catalog as the current logical data model
+
+Status: Source-derived working rule.
+
+The current logical data model uses the 2026-05-03 ERD/entity set for entity names, relationship constraints, and attribute-level discussion.
+
+It remains a logical model, not a physical database schema. It does not define SQL types, indexes, migrations, API contracts, provider integrations, or final weak-reference mechanics.
+
+Reason: `raw/affine/03-05-2026/ERD - workdoc.md`, `ERD V1.1.md`, `Entities & Attributes v1.1.md`, and `Relationship Table.md` provide the first explicit entity/relationship package layered over the previous DFD/store work.
+
+### D-20260503-002: Store password credential state on Student Account
+
+Status: Source-derived working rule.
+
+Sign-up includes university email verification plus password creation. The password must be stored as a secure hash on `DS-AP-001 Student Account` as `PasswordHash` and used for later email/password sign-in.
+
+Reason: this is recorded in `raw/affine/03-05-2026/updates/Recent Structural modifications.md` and reflected in `Entities & Attributes v1.1.md`.
+
+### D-20260503-003: Require explicit consent before identifiable campus insight access
+
+Status: Source-derived working rule; feature scope still future-facing.
+
+Identifiable student interests and activity-participation insight data may be exposed to authorized campus staff only when the student has explicitly consented.
+
+The consent state belongs to `DS-AP-001 Student Account` as `CampusInsightSharingConsent`. Future campus insight views must enforce campus scope, consent checks, and least-privilege access before reading identifiable profile, activity, or participation data.
+
+This does not confirm a complete admin-insight feature; it confirms the consent and access-control rule that such a feature must obey.
+
+Reason: this is recorded in `raw/affine/03-05-2026/updates/Recent Structural modifications.md`, `AP - DFD - workdoc v1.2.md`, `Entities & Attributes v1.1.md`, and CRUD Matrix `v1.5`.
+
+### D-20260503-004: Treat Set Activity Date and Time as internal to Create Activity for architecture modeling
+
+Status: Source-derived working rule; formal UC treatment still unresolved.
+
+For H&L DFD and CRUD purposes, `Set Activity Date and Time` is part of `Create Activity`, not a separate H&L process and not a separate data store driver.
+
+The use case inventory still preserves the sourced narrative and include-style relationship history until the team decides whether to merge it in final UC documentation.
+
+Reason: this structural change is recorded in `raw/affine/03-05-2026/updates/Recent Structural modifications.md` and matches H&L workdoc `v2.1`.
 
 ## Unresolved Decisions
 
@@ -178,14 +218,17 @@ Reason: D&P workdoc `v5` explicitly excludes Send Message from the MVP model, wh
 - Final implementation-contract status of the latest `v1.4` use-case relationship diagram.
 - Whether [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]] remains a separate formal use case even though it is modeled as part of [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]] for DFD purposes.
 - Whether host and participant notification behaviors remain separate formal use cases even though NSF owns notification consequences in the DFD.
+- Whether pending request withdrawal should notify the host. CRUD Matrix `v1.5` says no; D&P workdoc `v5` and NSF workdoc `v7` still model a withdrawal trigger/branch.
 - Requirement ID normalization where source files differ on leading zeroes, such as `FR-101` vs `FR-0101`.
 - Exact state-transition diagram beyond the current architecture vocabulary.
 - Safety and moderation details beyond report, review, rules, block, and native AP/HL moderation triggers.
 - Privacy and data retention requirements.
+- Exact campus insight feature scope, admin authorization model, consent UI placement, and least-privilege rules beyond the current consent attribute.
+- Whether `Campus Admin` becomes a formal entity/store, remains an external identifier, or is modeled as a role.
 - Scope of first Tongji University, Jiading Campus rollout beyond the current MVP feature list.
 - Technical implementation stack.
 - Requirements-table reconciliation for `US-08` and `US-11`.
-- Cleanup of stale wording inside the 2026-04-25 architecture batch, especially withdrawal notification text and deletion/archive leftovers.
+- Cleanup of stale wording across architecture batches, especially pending-withdrawal notification text and deletion/archive leftovers.
 
 Resolve these from future AFFiNE snapshots or explicit team decisions.
 
