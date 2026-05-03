@@ -23,5 +23,5 @@ Related use case links:
 Open point: the source includes a gender filter, but does not expand the policy or product treatment around it.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Browse and Filter _Activities|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Browse and Filter _Activities|Raw use case narrative]]
 

@@ -7,9 +7,9 @@ This page records the current logical store catalog for architecture analysis.
 Current source:
 
 ```text
-raw/affine/25:04:2026/CRUD matrix (1).md
-raw/affine/25:04:2026/DFD integration and Merge/index.md
-raw/affine/25:04:2026/*DFD workdoc*.md
+raw/affine/25-04-2026/CRUD matrix (1).md
+raw/affine/25-04-2026/DFD integration and Merge/index.md
+raw/affine/25-04-2026/*DFD workdoc*.md
 ```
 
 Status: Draft sourced data-store baseline.

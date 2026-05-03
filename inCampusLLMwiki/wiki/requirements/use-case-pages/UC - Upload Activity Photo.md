@@ -17,5 +17,5 @@ Parent index: [[wiki/requirements/use-cases|Use Cases]]
 Open point: photo rules, moderation, visibility, and retention are not specified.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Upload Activity Photo|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Upload Activity Photo|Raw use case narrative]]
 

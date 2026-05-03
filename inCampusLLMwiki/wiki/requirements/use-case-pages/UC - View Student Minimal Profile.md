@@ -24,6 +24,6 @@ Architecture note: the 2026-04-25 AP workdoc and CRUD Matrix require a read of `
 Open point: exact profile fields and the complete set of allowed viewing contexts remain unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/View Student Minimal Profile|Raw use case narrative]]
-- [[raw/affine/25:04:2026/AP - DFD - workdoc v1.1|AP architecture workdoc v1.1]]
-- [[raw/affine/25:04:2026/CRUD matrix (1)|CRUD matrix v1.4]]
+- [[raw/affine/13-04-2026/Use Cases/View Student Minimal Profile|Raw use case narrative]]
+- [[raw/affine/25-04-2026/AP - DFD - workdoc v1.1|AP architecture workdoc v1.1]]
+- [[raw/affine/25-04-2026/CRUD matrix (1)|CRUD matrix v1.4]]

@@ -7,10 +7,10 @@ This page summarizes the current logical DFD baseline from the architecture batc
 Current source:
 
 ```text
-raw/affine/25:04:2026/DFD integration and Merge/index.md
-raw/affine/25:04:2026/Architecture workdoc/index.md
-raw/affine/25:04:2026/*DFD workdoc*.md
-raw/affine/25:04:2026/* - DFD/index.md
+raw/affine/25-04-2026/DFD integration and Merge/index.md
+raw/affine/25-04-2026/Architecture workdoc/index.md
+raw/affine/25-04-2026/*DFD workdoc*.md
+raw/affine/25-04-2026/* - DFD/index.md
 ```
 
 Status: Draft sourced DFD baseline.

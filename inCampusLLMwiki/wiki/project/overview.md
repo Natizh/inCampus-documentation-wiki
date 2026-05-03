@@ -33,13 +33,13 @@ The app should support ordinary social participation without making the interact
 Latest ingested snapshot:
 
 ```text
-raw/affine/25:04:2026/
+raw/affine/25-04-2026/
 ```
 
 Latest full requirements and narrative baseline:
 
 ```text
-raw/affine/13:04:2026/
+raw/affine/13-04-2026/
 ```
 
 Baseline requirements files:

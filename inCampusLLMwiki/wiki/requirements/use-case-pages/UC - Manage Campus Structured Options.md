@@ -21,5 +21,5 @@ Related use case links:
 Open point: CRUD details and whether this is only initial setup or ongoing maintenance are unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Manage Campus Structured Options|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Manage Campus Structured Options|Raw use case narrative]]
 

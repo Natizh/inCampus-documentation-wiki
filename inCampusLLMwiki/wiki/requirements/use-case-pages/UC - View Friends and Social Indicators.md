@@ -17,5 +17,5 @@ Parent index: [[wiki/requirements/use-cases|Use Cases]]
 Open point: adding/removing friends and chat/profile transitions are not specified.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/View Friends and Social Indicators|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/View Friends and Social Indicators|Raw use case narrative]]
 

@@ -20,7 +20,7 @@ Use this heading format:
 
 ## [2026-04-13] ingest | First AFFiNE requirements and use cases snapshot
 
-- Ingested `raw/affine/13:04:2026/`.
+- Ingested `raw/affine/13-04-2026/`.
 - Source files included `Home.md`, three requirements tables, and 31 use case narrative files.
 - Consolidated project overview, MVP scope, actors, requirements counts, use case inventory, narrative status, and traceability.
 - Sourced totals: 28 user stories, 65 functional requirements, 44 non-functional requirements, 31 use case narratives.
@@ -45,7 +45,7 @@ Use this heading format:
 
 ## [2026-04-15] ingest | High-level use case diagram draft snapshot
 
-- Ingested `raw/affine/15:04:2026/`.
+- Ingested `raw/affine/15-04-2026/`.
 - Source files included `high-level-use-case-diagram-v1.2/usecase-diag-v1.2.puml` and `high-level-use-case-diagram-v1.2/usecase-diag-v1.2.svg`.
 - Treated this batch as a partial diagram-only export layered on top of the existing 2026-04-13 requirements and narrative baseline.
 - Updated `wiki/index.md`, `wiki/project/weekly-status.md`, `wiki/project/decisions.md`, `wiki/requirements/use-cases.md`, and `wiki/requirements/use-case-narratives.md`.
@@ -54,7 +54,7 @@ Use this heading format:
 
 ## [2026-04-25] ingest | Architecture DFD and CRUD baseline
 
-- Ingested `raw/affine/25:04:2026/`.
+- Ingested `raw/affine/25-04-2026/`.
 - Source files included architecture workflow notes, subgroup DFD workdocs and diagrams, `DFD integration and Merge/index.md`, `CRUD matrix (1).md`, and `updates/usecase-diag-v1.4.puml`.
 - Created `wiki/architecture/overview.md`, `wiki/architecture/data-flow.md`, `wiki/architecture/data-stores.md`, and `wiki/architecture/crud-matrix.md`.
 - Updated project overview, decisions, weekly status, workflow, requirements use-case pages, use case narratives, traceability, and index.
@@ -65,7 +65,11 @@ Use this heading format:
 ## [2026-04-25] health-check | Post-ingest wiki consistency pass
 
 - Reviewed `wiki/` for stale claims, contradictions, orphan coverage, suspicious wikilinks, and architecture-scope alignment after the 2026-04-25 AFFiNE ingest.
-- Confirmed broad current architecture references point to `raw/affine/25:04:2026/`, while `raw/affine/13:04:2026/` remains the baseline requirements snapshot and `raw/affine/15:04:2026/` is treated as diagram history.
+- Confirmed broad current architecture references point to `raw/affine/25-04-2026/`, while `raw/affine/13-04-2026/` remains the baseline requirements snapshot and `raw/affine/15-04-2026/` is treated as diagram history.
 - Aligned `Send Message` wording in the use-case inventory and narrative summary with the rest of the wiki: baseline MVP in requirements, deferred in the current architecture model.
 - Updated workflow export examples to match the repository's current dated snapshot convention.
 - Preserved unresolved health items around requirements-table reconciliation for `US-08`/`US-11`, selected-campus store wording, and stale withdrawal/deletion/archive wording inside the 2026-04-25 architecture source batch.
+
+## [2026-05-03] maintenance | Windows-safe raw snapshot folders
+
+- Renamed raw date folders from DD:MM:YYYY to DD-MM-YYYY for Windows compatibility and updated all references.

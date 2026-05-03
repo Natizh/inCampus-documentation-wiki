@@ -20,4 +20,4 @@ Related use case links:
 Open point: moderation action set, reporter feedback, reported-party notification, and evidence fields are unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Review Report|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Review Report|Raw use case narrative]]

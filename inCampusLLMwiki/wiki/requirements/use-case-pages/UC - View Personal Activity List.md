@@ -23,5 +23,5 @@ Related use case links:
 Open point: the source does not further define what counts as past events associated with the student.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/View Personal Activity List|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/View Personal Activity List|Raw use case narrative]]
 

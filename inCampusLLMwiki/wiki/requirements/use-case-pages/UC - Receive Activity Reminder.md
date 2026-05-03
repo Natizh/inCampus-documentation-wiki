@@ -24,6 +24,6 @@ Architecture note: NSF workdoc `v7` and CRUD Matrix `v1.4` model the reminder as
 Open point: reminder delivery channel and notification-list UX details are not specified. The current architecture model routes a tapped reminder to the relevant upcoming activity view when the context still exists.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Receive Activity Reminder|Raw use case narrative]]
-- [[raw/affine/25:04:2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
-- [[raw/affine/25:04:2026/CRUD matrix (1)|CRUD matrix v1.4]]
+- [[raw/affine/13-04-2026/Use Cases/Receive Activity Reminder|Raw use case narrative]]
+- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/25-04-2026/CRUD matrix (1)|CRUD matrix v1.4]]

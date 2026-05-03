@@ -22,6 +22,6 @@ Architecture note: the 2026-04-25 H&L and NSF workdocs separate cancellation fro
 Open point: exact notification channel and retry/failure behavior remain unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Notify Participant of Activity Cancellation|Raw use case narrative]]
-- [[raw/affine/25:04:2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
-- [[raw/affine/25:04:2026/H&L - DFD workdoc v2.1|H&L architecture workdoc v2.1]]
+- [[raw/affine/13-04-2026/Use Cases/Notify Participant of Activity Cancellation|Raw use case narrative]]
+- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/25-04-2026/H&L - DFD workdoc v2.1|H&L architecture workdoc v2.1]]

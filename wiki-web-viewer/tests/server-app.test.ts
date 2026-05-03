@@ -171,15 +171,15 @@ describe("server app", () => {
     const rawRoot = path.join(tempDir, "raw");
 
     try {
-      await mkdir(path.join(rawRoot, "affine", "25:04:2026", "assets"), { recursive: true });
+      await mkdir(path.join(rawRoot, "affine", "25-04-2026", "assets"), { recursive: true });
       await mkdir(root, { recursive: true });
       await writeFile(path.join(root, "Alpha.md"), "# Alpha\n\nCanonical page.\n");
       await writeFile(
-        path.join(rawRoot, "affine", "25:04:2026", "example.md"),
+        path.join(rawRoot, "affine", "25-04-2026", "example.md"),
         "# Raw Example\n\nraw-only-token stays outside canonical search.\n",
       );
       await writeFile(
-        path.join(rawRoot, "affine", "25:04:2026", "assets", "pixel.png"),
+        path.join(rawRoot, "affine", "25-04-2026", "assets", "pixel.png"),
         Buffer.from("iVBORw0KGgo=", "base64"),
       );
       await writeFile(path.join(tempDir, "outside.txt"), "do not expose");
@@ -192,11 +192,11 @@ describe("server app", () => {
       const tree = await app.inject({ method: "GET", url: "/api/raw/tree" });
       const file = await app.inject({
         method: "GET",
-        url: "/api/raw/file/affine/25%3A04%3A2026/example.md",
+        url: "/api/raw/file/affine/25-04-2026/example.md",
       });
       const image = await app.inject({
         method: "GET",
-        url: "/raw/affine/25%3A04%3A2026/assets/pixel.png",
+        url: "/raw/affine/25-04-2026/assets/pixel.png",
       });
       const traversal = await app.inject({
         method: "GET",
@@ -216,9 +216,9 @@ describe("server app", () => {
 
       expect(file.statusCode).toBe(200);
       expect(file.json()).toMatchObject({
-        path: "affine/25:04:2026/example.md",
+        path: "affine/25-04-2026/example.md",
         previewKind: "markdown",
-        rawUrl: "/raw/affine/25%3A04%3A2026/example.md",
+        rawUrl: "/raw/affine/25-04-2026/example.md",
       });
       expect(file.json().textContent).toContain("raw-only-token");
 

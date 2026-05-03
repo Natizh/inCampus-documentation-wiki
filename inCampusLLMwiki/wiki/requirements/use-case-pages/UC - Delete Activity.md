@@ -26,6 +26,6 @@ Architecture note: H&L workdoc `v2.1` and CRUD Matrix `v1.4` resolve deletion as
 Open point: whether future requirements should add deletion notification remains unresolved; it is not confirmed in the current CRUD matrix.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Delete Activity|Raw use case narrative]]
-- [[raw/affine/25:04:2026/H&L - DFD workdoc v2.1|H&L architecture workdoc v2.1]]
-- [[raw/affine/25:04:2026/CRUD matrix (1)|CRUD matrix v1.4]]
+- [[raw/affine/13-04-2026/Use Cases/Delete Activity|Raw use case narrative]]
+- [[raw/affine/25-04-2026/H&L - DFD workdoc v2.1|H&L architecture workdoc v2.1]]
+- [[raw/affine/25-04-2026/CRUD matrix (1)|CRUD matrix v1.4]]

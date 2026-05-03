@@ -21,5 +21,5 @@ Related use case links:
 Open point: exact editable minimal profile fields are unresolved.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Edit Profile|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Edit Profile|Raw use case narrative]]
 

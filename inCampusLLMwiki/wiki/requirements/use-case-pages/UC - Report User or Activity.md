@@ -20,4 +20,4 @@ Related use case links:
 Open point: report fields, evidence support, and launch contexts are not specified.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Report User or Activity|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/Report User or Activity|Raw use case narrative]]

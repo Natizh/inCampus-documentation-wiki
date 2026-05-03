@@ -10,7 +10,7 @@ Date: 2026-04-25
 Latest ingested source batch:
 
 ```text
-raw/affine/25:04:2026/
+raw/affine/25-04-2026/
 ```
 
 Batch contents:
@@ -23,7 +23,7 @@ Batch contents:
 Latest full requirements and narrative baseline remains:
 
 ```text
-raw/affine/13:04:2026/
+raw/affine/13-04-2026/
 ```
 
 Phase: Architecture-analysis phase.

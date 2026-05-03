@@ -21,8 +21,8 @@ Related use case links:
 
 Open point: threads, read receipts, delivery status, edit/delete, attachments, and recipient eligibility are not specified.
 
-Architecture note: `raw/affine/25:04:2026/D&P - DFD workdoc v5.md` excludes Send Message from the current D&P MVP model. The older requirements table still marks US-08 as MVP, so source-table scope reconciliation is needed.
+Architecture note: `raw/affine/25-04-2026/D&P - DFD workdoc v5.md` excludes Send Message from the current D&P MVP model. The older requirements table still marks US-08 as MVP, so source-table scope reconciliation is needed.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Send Message|Raw use case narrative]]
-- [[raw/affine/25:04:2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
+- [[raw/affine/13-04-2026/Use Cases/Send Message|Raw use case narrative]]
+- [[raw/affine/25-04-2026/D&P - DFD workdoc v5|D&P architecture workdoc v5]]

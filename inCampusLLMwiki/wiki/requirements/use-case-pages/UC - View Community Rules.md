@@ -17,4 +17,4 @@ Parent index: [[wiki/requirements/use-cases|Use Cases]]
 Open point: rule content, acknowledgment, versioning, and violation linkage are not specified.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/View Community Rules|Raw use case narrative]]
+- [[raw/affine/13-04-2026/Use Cases/View Community Rules|Raw use case narrative]]

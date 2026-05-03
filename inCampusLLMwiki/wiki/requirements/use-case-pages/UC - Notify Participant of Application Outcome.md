@@ -23,5 +23,5 @@ Architecture note: the 2026-04-25 NSF workdoc models this as a notification cons
 Open point: exact user-facing notification channel and notification-list UX remain unresolved. Notification opening is now modeled as a read-only current-context check.
 
 Source:
-- [[raw/affine/13:04:2026/Use Cases/Notify Participant of Application Outcome|Raw use case narrative]]
-- [[raw/affine/25:04:2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/13-04-2026/Use Cases/Notify Participant of Application Outcome|Raw use case narrative]]
+- [[raw/affine/25-04-2026/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
