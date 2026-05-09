@@ -18,8 +18,10 @@ Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Configure New Campus|Configure New Campus]]
 - [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]]
 
+Architecture note: the 2026-05-09 CA UCR keeps this flow campus-authorized through runtime `AuthenticatedAdminContext`. Campus Administration reads `DS-CA-001` for scope and performs campus-scoped CRUD on `DS-CA-002`; it remains the sole owner of structured options and does not mutate downstream student, activity, moderation, or notification stores.
+
 Open point: CRUD details and whether this is only initial setup or ongoing maintenance are unresolved.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Manage Campus Structured Options|Raw use case narrative]]
-
+- [[raw/affine/09-05-2026/use case realizations/UCR - C&A v1.1|UCR - C&A v1.1]]

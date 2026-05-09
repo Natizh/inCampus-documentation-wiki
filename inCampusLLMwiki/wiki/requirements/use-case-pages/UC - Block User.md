@@ -19,9 +19,9 @@ Related use case links:
 
 Open point: block scope, mutuality, unblock, passive visibility, and existing participation effects are unresolved.
 
-Architecture note: the current architecture batch resolves the main block scope as reciprocal visibility and interaction prevention. Blocked users cannot see each other's activities in discovery, open each other's activity details, view each other's minimal profiles, or start new join/request interactions. Cross-user notifications are suppressed when a block relationship exists. Unblock behavior and exact pending-request representation remain open.
+Architecture note: the 2026-05-09 SM UCR and CRUD sources resolve the main block scope as reciprocal visibility and interaction prevention. Blocked users cannot see each other's activities in discovery, open each other's activity details, view each other's minimal profiles, or start new join/request interactions. Cross-user notifications are suppressed when a block relationship exists. If block creation affects a pending join request, SM delegates the consequence to H&L through native workflow rather than mutating `DS-HL-002` directly. Unblock behavior and the exact H&L mutation remain open.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Block User|Raw use case narrative]]
-- [[raw/affine/03-05-2026/updates/SM - DFD workdoc v2.1|SM architecture workdoc v2.1]]
-- [[raw/affine/03-05-2026/updates/CRUD matrix v1.5|CRUD matrix v1.5]]
+- [[raw/affine/09-05-2026/use case realizations/UCR - S&M v1.3|UCR - S&M v1.3]]
+- [[raw/affine/09-05-2026/updates/CRUD matrix v1.6|CRUD matrix v1.6]]

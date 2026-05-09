@@ -22,11 +22,12 @@ Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Withdraw Join Request|Withdraw Join Request]]
 - [[wiki/requirements/use-case-pages/UC - Leave Joined Activity|Leave Joined Activity]]
 
-Architecture note: the current D&P and NSF workdocs resolve blocked-user handling as a mandatory block check that prevents join/request interaction. Join/request events emit a trigger to NSF; D&P does not write notification records directly.
+Architecture note: the 2026-05-09 D&P UCR and Join Activity sequence make block checks, activity status/capacity checks, and duplicate active-record checks mandatory before any write. Inside the write transaction, the flow re-checks capacity and existing active state, creates either `RecordType=participation, Status=confirmed` or `RecordType=request, Status=pending`, updates counters transactionally, and emits `DirectJoinCompleted` or `JoinRequestSubmitted` for later NSF handling. D&P does not write notification records directly.
 
 Open point: implementation-level concurrency handling for join/request counts is outside the current logical DFD.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Join Activity|Raw use case narrative]]
-- [[raw/affine/03-05-2026/updates/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
-- [[raw/affine/03-05-2026/updates/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/09-05-2026/use case realizations/UCR - D&P v1.2|UCR - D&P v1.2]]
+- [[raw/affine/09-05-2026/sequence diagrams/Join Activity — Sequence Diagram v1.1/index|Join Activity sequence diagram v1.1]]
+- [[raw/affine/09-05-2026/updates/CRUD matrix v1.6|CRUD matrix v1.6]]

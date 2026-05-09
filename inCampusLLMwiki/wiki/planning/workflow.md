@@ -23,6 +23,8 @@ Examples:
 ```text
 raw/affine/13-04-2026/
 raw/affine/25-04-2026/
+raw/affine/08-05-2026/
+raw/affine/09-05-2026/
 ```
 
 Guidelines:
@@ -53,6 +55,8 @@ Source:
 
 ```text
 raw/affine/13-04-2026/Home.md
+raw/affine/09-05-2026/updates/Use cases v1.2.md
+raw/affine/09-05-2026/updates/use-case-diagram-v1.7.md
 ```
 
 Current workflow:
@@ -69,16 +73,19 @@ Important constraint:
 - Do not finalize include/extend relationships too early.
 - Do not treat current textual use case names as final numeric UC IDs.
 - `Home.md` is marked `OUTDATED`, so confirm this workflow against later snapshots if a newer process appears.
+- The 2026-05-09 `v1.7` diagram export is the normative MVP first-skeleton diagram source. It excludes deferred/postMVP use cases, includes Activity Reminder and the consent/insight use cases, and folds Set Activity Date and Time into Create Activity for the first skeleton.
 
 ## Current Architecture Workflow
 
-The architecture-analysis workflow is grounded in the 2026-04-25 DFD baseline and extended by the 2026-05-03 ERD/entity and CRUD `v1.5` batch.
+The architecture-analysis workflow is grounded in the 2026-04-25 DFD baseline, extended by the 2026-05-03 ERD/entity and CRUD `v1.5` batch, connected back to the 2026-05-08 requirements/use-case table refresh, and superseded for first-skeleton planning by the 2026-05-09 final pre-skeleton alignment package.
 
 Sources:
 
 ```text
 raw/affine/25-04-2026/
 raw/affine/03-05-2026/
+raw/affine/08-05-2026/
+raw/affine/09-05-2026/
 ```
 
 Current architecture workflow:
@@ -90,9 +97,11 @@ Current architecture workflow:
 6. Merge subgroup DFDs into a six-area Level-1 DFD.
 7. Check consistency with the CRUD matrix and data-store catalog.
 8. Record unresolved contradictions rather than silently choosing unsupported behavior.
+9. Use the first-skeleton architecture page when implementation planning needs the accepted modular-monolith, event, admin-context, and store-boundary contract.
 
 Current architecture pages:
 - [[wiki/architecture/overview|Architecture Overview]]
+- [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]]
 - [[wiki/architecture/data-flow|Architecture Data Flow]]
 - [[wiki/architecture/data-stores|Architecture Data Stores]]
 - [[wiki/architecture/data-model|Architecture Data Model]]
@@ -101,7 +110,7 @@ Current architecture pages:
 Important constraint:
 - Broad wiki references should point to the latest grounded architecture version.
 - Previous raw versions remain immutable history and should be connected only through version-history notes, not treated as parallel current sources.
-- When diagrams conflict with newer workdocs or CRUD Matrix `v1.5`, use the newer workdocs/CRUD interpretation where source priority is clear and record unresolved same-batch conflicts.
+- When diagrams conflict with newer workdocs or CRUD Matrix `v1.6`, use the newer workdocs/CRUD interpretation where source priority is clear and record unresolved same-batch conflicts.
 
 ## Query Workflow
 

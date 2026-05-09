@@ -83,7 +83,10 @@ Later source note:
 `raw/affine/15-04-2026/high-level-use-case-diagram-v1.2/usecase-diag-v1.2.puml` provides a draft high-level use case diagram with candidate and confirmed relationship labels, but it does not by itself supersede the staged workflow or finalize UML relationship types.
 
 Current source note:
-`raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml` supersedes `v1.2` for current relationship discussion, while formal UC IDs and final implementation-contract status remain unresolved.
+`raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml` supersedes `v1.2` as relationship history, but it is no longer the latest diagram export.
+
+Later source note:
+`raw/affine/08-05-2026/use-case-diagram-v1.6.md` is the latest diagram export, but its version log and embedded diagram body are internally inconsistent. Treat it as current source evidence for intended cleanup, not as a final implementation contract, while preserving the `v1.4` mismatch as unresolved history rather than silently resolved.
 
 ### D-20260413-008: Treat use case names as provisional identifiers until formal UC IDs are stable
 
@@ -158,19 +161,19 @@ Notifications and System Flow owns:
 - delivery output;
 - read-only notification opening.
 
-Current active notification branches include join/request, joined-participant leave, approval/decline outcome, cancellation, and activity reminder. Pending-request withdrawal notification behavior is now unresolved because the 2026-05-03 CRUD Matrix `v1.5` conflicts with the D&P/NSF workdocs.
+Current active notification branches include join/request, joined-participant leave, approval/decline outcome, cancellation, and activity reminder. Pending-request withdrawal is non-notifying for the first skeleton: no host notification, no NSF handler, and no `DS-NS-001` record.
 
-Reason: NSF ownership is stabilized by NSF workdoc `v7`, D&P workdoc `v5`, H&L workdoc `v2.1`, and the CRUD matrix line. The pending-withdrawal branch needs confirmation against CRUD Matrix `v1.5`.
+Reason: NSF ownership is stabilized by NSF workdoc `v7`, D&P workdoc `v5`, H&L workdoc `v2.1`, and the CRUD matrix line. The 2026-05-09 final pre-skeleton batch resolves the older pending-withdrawal conflict through CRUD Matrix `v1.6`, sequence diagrams, collaboration diagrams, and state-chart notes.
 
 ### D-20260425-006: Apply current architecture-scope changes for Send Message and Activity Reminder
 
-Status: Source-derived working rule; requirements tables need cleanup.
+Status: Source-derived working rule.
 
 The 2026-04-25 architecture batch changes current modeling scope in two places:
-- `Send Message` is excluded from the current D&P MVP model and postponed.
-- `Receive Activity Reminder` is included as an active MVP notification branch in NSF.
+- `Send Message` is excluded from the current D&P MVP model and postponed. The 2026-05-08 requirements table now also marks `US-08` as postMVP.
+- `Receive Activity Reminder` is included as an active MVP notification branch in NSF. The 2026-05-09 batch updates `User Story v1.3`, `Use cases v1.2`, and `use-case-diagram-v1.7.md` so this is no longer a source-scope conflict.
 
-Reason: D&P workdoc `v5` explicitly excludes Send Message from the MVP model, while NSF workdoc `v7` and CRUD Matrix `v1.5` explicitly include activity reminder as an active notification branch.
+Reason: D&P workdoc `v5` explicitly excludes Send Message from the MVP model, while NSF workdoc `v7`, CRUD Matrix `v1.6`, and the final pre-skeleton requirements/diagram sources include activity reminder as an active notification branch.
 
 ### D-20260503-001: Use the 2026-05-03 ERD/entity catalog as the current logical data model
 
@@ -192,15 +195,91 @@ Reason: this is recorded in `raw/affine/03-05-2026/updates/Recent Structural mod
 
 ### D-20260503-003: Require explicit consent before identifiable campus insight access
 
-Status: Source-derived working rule; feature scope still future-facing.
+Status: Source-derived working rule; detailed feature behavior still unresolved.
 
 Identifiable student interests and activity-participation insight data may be exposed to authorized campus staff only when the student has explicitly consented.
 
-The consent state belongs to `DS-AP-001 Student Account` as `CampusInsightSharingConsent`. Future campus insight views must enforce campus scope, consent checks, and least-privilege access before reading identifiable profile, activity, or participation data.
+The consent state belongs to `DS-AP-001 Student Account` as `CampusInsightSharingConsent`. Campus insight views must enforce campus scope, consent checks, and least-privilege access before reading identifiable profile, activity, or participation data.
 
-This does not confirm a complete admin-insight feature; it confirms the consent and access-control rule that such a feature must obey.
+The 2026-05-09 final pre-skeleton batch keeps the feature in MVP and clarifies that admin identity is runtime `AuthenticatedAdminContext`, not a first-skeleton persisted store. Detailed narratives, exact insight fields, exact admin authentication implementation, and consent UI placement remain unresolved.
 
 Reason: this is recorded in `raw/affine/03-05-2026/updates/Recent Structural modifications.md`, `AP - DFD - workdoc v1.2.md`, `Entities & Attributes v1.1.md`, and CRUD Matrix `v1.5`.
+
+### D-20260508-001: Model campus insight consent and admin insight access as separate use cases
+
+Status: Source-derived working rule; narratives still missing.
+
+The updated use-case table separates:
+- [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] for the Student actor.
+- [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]] for the Campus Admin actor.
+
+This separation preserves actor responsibility and access-control boundaries: students control consent, while authorized campus admins consume only consent-gated insight data within their campus scope.
+
+Reason: `raw/affine/08-05-2026/Use cases v1.1.md`, `User Story v1.2.md`, `Functional Requirements v1.2.md`, and `Non-Functional Requirements v1.1.md` explicitly add these rows and tie them to `US-29`, `US-30`, `FR-2901` through `FR-3001`, and `NFR-45` through `NFR-47`.
+
+Later source note:
+`raw/affine/09-05-2026/updates/Use cases v1.2.md` and `use-case-diagram-v1.7.md` keep both use cases in MVP first-skeleton scope. The sequence and collaboration diagrams add a read-only, consent-gated Admin Insights flow over existing AP/H&L stores.
+
+### D-20260509-001: Adopt the first-skeleton modular monolith architecture
+
+Status: Source-derived working rule.
+
+The first code skeleton uses a multi-tenant modular monolith with event-driven internal flows.
+
+`CampusID` is the tenant boundary, and the backend is divided into six internal modules:
+- Access and Profile
+- Campus Administration
+- Hosting and Lifecycle
+- Discovery and Participation
+- Safety and Moderation
+- Notifications and System Flow
+
+The internal event dispatcher is an implementation abstraction inside the monolith. It is not a public API contract.
+
+Reason: `raw/affine/09-05-2026/system architecture/01 Design Scope and Architectural Choice v1.1.md` states this as the accepted first-skeleton architecture decision.
+
+### D-20260509-002: Keep Campus Admin identity as runtime context for the first skeleton
+
+Status: Source-derived working rule.
+
+The first skeleton does not introduce `DS-CA-003`, a Campus Admin Store, an Admin Account Store, or a separate Campus Admin database.
+
+Campus Admin identity is represented by runtime `AuthenticatedAdminContext`:
+- `adminId`
+- `email`
+- `role`
+- `authorizedCampusIds`
+- `selectedCampusId`
+
+Reason: the 2026-05-09 system architecture, CRUD Matrix `v1.6`, entity catalog `v1.2`, and CA/SM sequence/collaboration diagrams all reaffirm this boundary.
+
+### D-20260509-003: Treat pending-request withdrawal as non-notifying
+
+Status: Source-derived working rule.
+
+Pending request withdrawal removes or deactivates `RecordType=request, Status=pending` participation/request state and updates availability transactionally, but it does not notify the host.
+
+For the first skeleton:
+- no host notification is generated;
+- no NSF handler exists for this branch;
+- no `DS-NS-001 Notification Record` is created;
+- any optional `PendingRequestWithdrawn` implementation event must be marked internal and non-notifying.
+
+Reason: CRUD Matrix `v1.6`, the updated sequence/collaboration diagrams, and `ActivityParticipation SCD v1.1` resolve the previous 2026-05-03 same-batch conflict.
+
+### D-20260509-004: Use `use-case-diagram-v1.7.md` as the normative first-skeleton use-case diagram
+
+Status: Source-derived working rule.
+
+`use-case-diagram-v1.7.md` supersedes the internally inconsistent `v1.6` export for the first skeleton.
+
+Current diagram implications:
+- `Receive Activity Reminder` is MVP.
+- `Update Campus Insight Consent` and `View Consent-Based Student Insights` are MVP.
+- `Set Activity Date and Time` is not represented as a standalone use case; date/time remains part of `Create Activity`.
+- Deferred/postMVP use cases are excluded from the MVP first-skeleton diagram.
+
+Reason: `raw/affine/09-05-2026/updates/use-case-diagram-v1.7.md` explicitly labels itself the normative MVP first-skeleton diagram source.
 
 ### D-20260503-004: Treat Set Activity Date and Time as internal to Create Activity for architecture modeling
 
@@ -215,20 +294,17 @@ Reason: this structural change is recorded in `raw/affine/03-05-2026/updates/Rec
 ## Unresolved Decisions
 
 - Final formal use case ID scheme.
-- Final implementation-contract status of the latest `v1.4` use-case relationship diagram.
-- Whether [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]] remains a separate formal use case even though it is modeled as part of [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]] for DFD purposes.
+- Final formal use-case documentation treatment for [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]], which is preserved as a sourced card but merged into [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]] for first-skeleton diagram and architecture purposes.
 - Whether host and participant notification behaviors remain separate formal use cases even though NSF owns notification consequences in the DFD.
-- Whether pending request withdrawal should notify the host. CRUD Matrix `v1.5` says no; D&P workdoc `v5` and NSF workdoc `v7` still model a withdrawal trigger/branch.
 - Requirement ID normalization where source files differ on leading zeroes, such as `FR-101` vs `FR-0101`.
-- Exact state-transition diagram beyond the current architecture vocabulary.
+- True `Activity` lifecycle state chart source; the 2026-05-09 SCD package provided `ActivityParticipation`, `StudentProfile`, and `ReportRecord` charts.
 - Safety and moderation details beyond report, review, rules, block, and native AP/HL moderation triggers.
 - Privacy and data retention requirements.
-- Exact campus insight feature scope, admin authorization model, consent UI placement, and least-privilege rules beyond the current consent attribute.
-- Whether `Campus Admin` becomes a formal entity/store, remains an external identifier, or is modeled as a role.
+- Exact campus insight narrative detail, consent UI placement, insight fields, aggregation/identifiability rules, and least-privilege UI content beyond the current table entries.
+- Exact admin authentication implementation behind runtime `AuthenticatedAdminContext`.
+- Whether a future post-skeleton release needs a persisted Campus Admin entity/store.
 - Scope of first Tongji University, Jiading Campus rollout beyond the current MVP feature list.
 - Technical implementation stack.
-- Requirements-table reconciliation for `US-08` and `US-11`.
-- Cleanup of stale wording across architecture batches, especially pending-withdrawal notification text and deletion/archive leftovers.
 
 Resolve these from future AFFiNE snapshots or explicit team decisions.
 

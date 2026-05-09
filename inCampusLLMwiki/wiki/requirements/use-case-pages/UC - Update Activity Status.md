@@ -19,11 +19,11 @@ Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Notify Participant of Activity Cancellation|Notify Participant of Activity Cancellation]]
 - [[wiki/requirements/use-case-pages/UC - Delete Activity|Delete Activity]]
 
-Architecture note: the current H&L workdoc and ERD use the conservative persisted status vocabulary `open`, `full`, `completed`, and `cancelled`. `deleted` is hard-delete behavior, not a persisted activity status. `Pending Approval` is not an activity state; it is a participation state in `DS-HL-002`.
+Architecture note: the 2026-05-09 H&L UCR keeps the persisted status vocabulary `open`, `full`, `completed`, and `cancelled`. `deleted` is hard-delete behavior, not a persisted activity status; `Pending Approval` is not an activity state, but a participation state in `DS-HL-002`; and cancellation emits `ActivityCancelled` for NSF while invalid status transitions remain rejected.
 
 Open point: a full state-transition diagram and exact transition permissions are not finalized.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Update Activity Status|Raw use case narrative]]
-- [[raw/affine/03-05-2026/updates/H&L - DFD workdoc v2.1|H&L architecture workdoc v2.1]]
-- [[raw/affine/03-05-2026/updates/CRUD matrix v1.5|CRUD matrix v1.5]]
+- [[raw/affine/09-05-2026/use case realizations/UCR - H&L v1.4|UCR - H&L v1.4]]
+- [[raw/affine/09-05-2026/updates/CRUD matrix v1.6|CRUD matrix v1.6]]

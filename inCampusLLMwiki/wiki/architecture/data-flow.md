@@ -10,7 +10,10 @@ Current source:
 raw/affine/25-04-2026/DFD integration and Merge/index.md
 raw/affine/25-04-2026/Architecture workdoc/index.md
 raw/affine/03-05-2026/updates/*DFD workdoc*.md
-raw/affine/03-05-2026/updates/CRUD matrix v1.5.md
+raw/affine/09-05-2026/updates/CRUD matrix v1.6.md
+raw/affine/09-05-2026/system architecture/01 Design Scope and Architectural Choice v1.1.md
+raw/affine/09-05-2026/sequence diagrams/
+raw/affine/09-05-2026/collaboration diagrams/
 ```
 
 Status: Draft sourced DFD baseline.
@@ -32,6 +35,8 @@ The stable modeling principle is separation of ownership:
 - SM owns trust-and-safety truth.
 - NSF owns notification consequences.
 
+The 2026-05-09 final pre-skeleton batch adds an implementation-facing architecture layer over this logical DFD baseline: a multi-tenant modular monolith, `CampusID` tenant boundary, internal event dispatcher, runtime `AuthenticatedAdminContext`, and accepted first-skeleton event catalog. See [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]].
+
 ## Campus Administration
 
 Current sources:
@@ -51,7 +56,11 @@ Confirmed flows:
 - D&P depends on active campus context from `DS-CA-001`.
 
 Open point:
-- exact admin authorization mechanism is not specified.
+- exact admin authentication implementation is not specified.
+- exact campus setup fields and validation rules are not fully specified.
+
+First-skeleton addition:
+- `View Consent-Based Student Insights` belongs to the Campus Administration/admin-portal side and performs read-only, consent-gated, campus-scoped reads over existing AP/H&L stores. It does not create a new store.
 
 ## Access and Profile
 
@@ -76,8 +85,8 @@ Confirmed flows:
 - Set Up Minimal Profile creates `DS-AP-002`.
 - Edit Minimal Profile reads/updates `DS-AP-002`.
 - View Student Minimal Profile reads `DS-AP-002` and must read `DS-SM-001` before exposing profile data.
-- Update Campus Insight Sharing Consent reads/updates `DS-AP-001.CampusInsightSharingConsent`; refusal does not block normal app use.
-- Any future campus insight view must check consent and campus scope before reading identifiable profile or participation insight data.
+- Update Campus Insight Sharing Consent reads/updates `DS-AP-001.CampusInsightSharingConsent`; refusal does not block normal app use. The 2026-05-08 requirements table traces this to `US-29`.
+- Consent-based campus insight views must check consent and campus scope before reading identifiable profile or participation insight data. The 2026-05-09 sequence/collaboration diagrams place the admin-side flow behind runtime `AuthenticatedAdminContext` and keep AP/H&L reads conditional and read-only.
 
 Open points:
 - exact university verification mechanism
@@ -86,7 +95,7 @@ Open points:
 - all allowed profile-viewing contexts
 - selected-campus storage wording mismatch between `DS-AP-001` and `DS-AP-002`
 - UI placement for campus insight consent
-- exact admin insight feature, if one is added later
+- exact admin insight view content
 
 ## Hosting and Lifecycle
 
@@ -136,13 +145,12 @@ Confirmed flows:
 - View Personal Activity List reads `DS-HL-002` and `DS-HL-001`.
 
 Current scope note:
-- `Send Message` is excluded from the D&P MVP model and postponed, even though older requirements traceability still lists US-08 as MVP.
+- `Send Message` is excluded from the D&P MVP model and postponed. The 2026-05-08 requirements table now also marks `US-08` as postMVP.
 
 Open points:
 - exact personal-list UI grouping
 - user-facing message for blocked or inaccessible activity details
 - implementation-level concurrency handling for join/request counts
-- whether pending request withdrawal should emit a notification trigger remains inconsistent across the 2026-05-03 batch
 
 ## Safety and Moderation
 
@@ -194,8 +202,8 @@ Current active notification branches:
 - Notify participant of activity reminder
 - Open notification context
 
-Disputed branch:
-- Pending request withdrawal is still present as a branch in D&P/NSF workdocs, but CRUD Matrix `v1.5` says no host notification should be generated for pending request withdrawal. Keep this unresolved until the team confirms source priority.
+Excluded branch:
+- Pending request withdrawal is non-notifying in the first skeleton. It has no user-facing NSF handler and creates no `DS-NS-001` record.
 
 Confirmed flows:
 - NSF reads `DS-AP-001` for recipient account validity.
@@ -217,7 +225,6 @@ Open points:
 - notification payload schema
 - notification-list UX parity
 - retry/failure handling
-- pending request withdrawal notification behavior
 
 ## Related Pages
 
