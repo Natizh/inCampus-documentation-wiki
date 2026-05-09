@@ -160,13 +160,13 @@ If a source is partial, ambiguous, or inconsistent, state that clearly in the wi
 
 ## Current Project Phase
 
-The team is currently in the use-case phase.
+The team is currently in the implementation phase.
 
 Current documentation priorities:
-- use cases
-- use case narratives
-- traceability among user stories, functional requirements, non-functional requirements, and use cases
-- requirements coherence
+- first-skeleton architecture and implementation boundary clarity
+- traceability between implementation work and the documented requirements/use cases
+- architecture, data model, data-store, and CRUD coherence during implementation
+- unresolved points that still need explicit team decisions
 - project decisions
 - weekly status continuity
 

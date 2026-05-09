@@ -128,3 +128,10 @@ Use this heading format:
 - Aligned use-case cards with the available 09-05 UCR, sequence, collaboration, and state-chart sources where those sources materially clarified first-skeleton behavior.
 - Confirmed current internal `wiki/...` links and current `raw/affine/09-05-2026/...` links resolve across the wiki after the recovery pass.
 - Preserved unresolved points rather than guessing where the 09-05 sources still remain provisional, especially around admin authentication, insight detail scope, consent UX, and the missing true `Activity` lifecycle SCD.
+
+## [2026-05-09] update | Mark wiki current phase as implementation
+
+- Updated `inCampusLLMwiki/README.md`, `inCampusLLMwiki/AGENTS.md`, `wiki/index.md`, `wiki/project/overview.md`, `wiki/project/weekly-status.md`, and `wiki/architecture/overview.md`.
+- Replaced stale current-phase wording that still described the project as use-case or architecture-analysis work.
+- Marked the 2026-05-09 first-skeleton documentation package as the baseline for implementation and current wiki maintenance.
+- Kept unresolved design details visible instead of implying they were fully specified.

@@ -13,7 +13,7 @@ It helps students find low-pressure opportunities to share ordinary campus momen
 
 The current rollout focus is Tongji University, Jiading Campus.
 
-The project is being developed by a student team and is expected to evolve from requirements analysis to full app design and development.
+The project is being developed by a student team. The current documentation pass is complete enough to serve as the baseline for the first implementation skeleton.
 
 ## Product Stance
 
@@ -153,19 +153,16 @@ Current sourced requirements:
 
 ## Current Phase
 
-The team is currently in the architecture-analysis phase.
+The team is currently in the implementation phase.
 
-The 2026-04-25 source says the use-case analysis, use-case narratives, and relationship review have been used as input for architecture analysis. The 2026-05-03 source extends this with ERD, entity attributes, relationship tables, CRUD Matrix `v1.5`, and consent-based access modeling. The 2026-05-08 source refreshes the requirements/use-case tables around consent-based insight access and current diagram cleanup. The 2026-05-09 batch turns that material into a first-skeleton architecture package with CRUD Matrix `v1.6`, entity catalog `v1.2`, use-case diagram `v1.7`, system architecture `v1.1`, and behavioral/state diagrams.
+The 2026-04-25 source moved the project from use-case work into architecture analysis. The 2026-05-03 and 2026-05-08 batches extended and refreshed that package. The 2026-05-09 batch closes the current documentation cycle as a first-skeleton implementation baseline with CRUD Matrix `v1.6`, entity catalog `v1.2`, use-case diagram `v1.7`, system architecture `v1.1`, and behavioral/state diagrams.
 
-Current architecture work focuses on:
-- functional decomposition
-- subgroup DFDs
-- a unified Level-1 DFD
-- logical data stores
-- logical entities, attributes, and relationships
-- CRUD consistency
-- first-skeleton module/event boundaries
-- traceability back to use cases and requirements
+Current implementation work focuses on:
+- the first code skeleton aligned with the documented modular-monolith baseline
+- module and store boundaries consistent with the documented ownership model
+- event handling and notification consequences aligned with the first-skeleton event catalog
+- persistence and lifecycle behavior aligned with the current data model and CRUD invariants
+- traceability from implementation back to use cases and requirements
 
 See [[wiki/architecture/overview|Architecture Overview]] for the current architecture baseline.
 

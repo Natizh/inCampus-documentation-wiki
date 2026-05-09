@@ -51,20 +51,23 @@ It links to the main project pages and should stay short enough to scan.
 
 The most important current pages are:
 - [[wiki/project/overview|Project Overview]]
+- [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]]
+- [[wiki/architecture/overview|Architecture Overview]]
 - [[wiki/requirements/use-cases|Use Cases]]
-- [[wiki/requirements/use-case-narratives|Use Case Narratives]]
 - [[wiki/requirements/traceability|Traceability]]
 - [[wiki/planning/workflow|Workflow]]
 
 ## Current Phase
 
-The project is currently in the use-case phase.
+The project is currently in the implementation phase.
+
+The requirements, use-case, and first-skeleton architecture documentation now serve as the baseline for implementation.
 
 Current priorities:
-- use cases
-- use case narratives
-- traceability among user stories, functional requirements, non-functional requirements, and use cases
-- preserving decisions and unresolved points across weekly iterations
+- implementing the first code skeleton against the documented baseline
+- preserving traceability back to requirements and use cases
+- keeping architecture, data-model, and CRUD documentation aligned with implementation decisions
+- recording unresolved points and implementation clarifications without rewriting raw history
 
 ## Ground Rules
 

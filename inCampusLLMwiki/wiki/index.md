@@ -97,8 +97,8 @@ The raw narrative files remain source material, not duplicate wiki pages to merg
 
 ## Current Focus
 
-The project is currently in the architecture-analysis phase, with requirements/use-case traceability still maintained as the baseline.
-Prioritize [[wiki/architecture/overview|architecture]], [[wiki/architecture/data-flow|DFD/data-flow modeling]], [[wiki/architecture/data-model|data modeling]], [[wiki/architecture/crud-matrix|CRUD consistency]], and updates to [[wiki/requirements/traceability|traceability]] where architecture scope has superseded older requirements-table scope.
+The project is currently in the implementation phase. The requirements, use-case, and first-skeleton architecture pages now act as the implementation baseline.
+Prioritize [[wiki/architecture/first-skeleton-architecture|first-skeleton architecture]], [[wiki/architecture/data-model|data modeling]], [[wiki/architecture/data-stores|store ownership]], [[wiki/architecture/crud-matrix|CRUD consistency]], and [[wiki/requirements/traceability|traceability]] as implementation support pages.
 
 Latest ingested raw snapshot:
 
