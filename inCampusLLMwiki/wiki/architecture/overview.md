@@ -1,6 +1,6 @@
 # Architecture Overview
 
-This page summarizes the current architecture-analysis baseline derived from the latest AFFiNE architecture batch.
+This page summarizes the current first-skeleton architecture baseline derived from the latest AFFiNE architecture batch.
 
 ## Source Snapshot
 
@@ -45,11 +45,11 @@ Older raw snapshots remain immutable history. Wiki pages should connect broad ar
 
 ## Phase
 
-Status: Draft sourced first-skeleton architecture baseline.
+Status: Sourced first-skeleton implementation baseline.
 
-The batch states that the team has moved from use-case/narrative review into a Lecture 9 architecture-analysis phase. The current work product is a logical modeling package, not implementation architecture.
+The 2026-05-09 batch is the final pre-skeleton documentation package. The team is now in the implementation phase, and this page captures the architecture baseline that the first code skeleton should follow.
 
-The architecture work is centered on:
+The implementation-facing architecture baseline is centered on:
 - functional decomposition
 - business events
 - logical data stores

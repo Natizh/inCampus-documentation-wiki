@@ -54,16 +54,15 @@ Latest full narrative baseline remains:
 raw/affine/13-04-2026/
 ```
 
-Phase: Architecture-analysis phase.
+Phase: Implementation phase.
 
 Current priorities:
-- [[wiki/architecture/overview|architecture-analysis baseline]]
-- [[wiki/architecture/first-skeleton-architecture|first-skeleton architecture contract]]
-- [[wiki/architecture/data-flow|DFD/data-flow modeling]]
+- [[wiki/architecture/first-skeleton-architecture|first-skeleton implementation contract]]
+- [[wiki/architecture/data-model|logical data model and relationships]]
 - [[wiki/architecture/data-stores|logical store ownership]]
-- [[wiki/architecture/data-model|logical ERD and entity relationships]]
-- [[wiki/architecture/crud-matrix|CRUD consistency]]
-- requirements and use-case traceability cleanup where architecture scope supersedes older source tables
+- [[wiki/architecture/crud-matrix|CRUD consistency and invariants]]
+- [[wiki/requirements/traceability|requirements and use-case traceability during implementation]]
+- recording implementation clarifications and unresolved decisions back into the wiki
 
 ## Latest Stable Understanding
 
@@ -118,14 +117,13 @@ Resolved first-skeleton notification point:
 
 ## Active Work Areas
 
-- Review [[wiki/architecture/data-flow|the unified DFD structure]] against subgroup workdocs.
 - Use [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]] as the current first-skeleton implementation contract.
-- Keep [[wiki/architecture/data-stores|store ownership]] and CRUD behavior aligned.
-- Preserve pending-request withdrawal as non-notifying in implementation notes.
-- Draft or confirm narratives for the two new consent/insight use cases if the team treats them as full current use cases.
+- Keep [[wiki/architecture/data-stores|store ownership]] and CRUD behavior aligned while implementing.
+- Preserve pending-request withdrawal as non-notifying in code and documentation notes.
+- Record implementation-driven clarifications back into the wiki instead of silently drifting from the documented baseline.
 - Keep Campus Admin as runtime `AuthenticatedAdminContext` for the first skeleton; exact admin authentication remains provisional.
-- Decide whether a true Activity lifecycle state chart is needed, since the delivered SCD package modeled `ActivityParticipation` instead.
-- Keep [[wiki/requirements/traceability|traceability]] aligned across US, FR, NFR, use cases, and architecture processes.
+- Resolve the true Activity lifecycle state chart only if implementation needs it; do not invent persisted states beyond the current docs.
+- Keep [[wiki/requirements/traceability|traceability]] aligned across US, FR, NFR, use cases, architecture processes, and implementation decisions.
 
 ## New Since Initial Wiki Setup
 
