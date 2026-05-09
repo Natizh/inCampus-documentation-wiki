@@ -4,33 +4,36 @@ This page links user stories, functional requirements, non-functional requiremen
 
 ## Source Snapshot
 
-Primary requirements source batch:
+Current requirements source batch:
 
 ```text
-raw/affine/13-04-2026/
+raw/affine/09-05-2026/
 ```
 
 Current architecture source batch:
 
 ```text
-raw/affine/03-05-2026/
+raw/affine/09-05-2026/
 ```
 
 Primary sources:
-- `Requirements/User Story.md`
-- `Requirements/Functional Requirements.md`
-- `Requirements/Non-Functional Requirements.md`
+- `updates/User Story v1.3.md`
+- `updates/Functional Requirements v1.3.md`
+- `updates/Non-Functional Requirements v1.2.md`
+- `updates/Use cases v1.2.md`
+- `updates/use-case-diagram-v1.7.md`
 - `Use Cases/*.md`
 - `Home.md` for use case ranking and source-US mapping
-- `updates/CRUD matrix v1.5.md`, updated subgroup DFD workdocs, ERD/entity sources, and `raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml` for architecture-scope overlays
+- `updates/CRUD matrix v1.6.md`, updated entity/store/relationship sources, first-skeleton system architecture, and behavioral/state diagrams for architecture-scope overlays
 
 ## Source Counts
 
 | Artifact type | Count | Source |
 | --- | ---: | --- |
-| User stories | 28 | `Requirements/User Story.md` |
-| Functional requirements | 65 | `Requirements/Functional Requirements.md` |
-| Non-functional requirements | 44 | `Requirements/Non-Functional Requirements.md` |
+| User stories | 30 | `User Story v1.3.md` |
+| Functional requirements | 69 | `Functional Requirements v1.3.md` |
+| Non-functional requirements | 47 | `Non-Functional Requirements v1.2.md` |
+| Current use-case table entries | 33 | `Use cases v1.2.md` |
 | Use case narrative files | 31 | `Use Cases/` |
 
 ## ID Normalization Note
@@ -38,8 +41,8 @@ Primary sources:
 The source files are inconsistent about leading zeroes in requirement IDs.
 
 Examples:
-- `User Story.md` and `Home.md` sometimes use `FR-101`, `FR-301`, or `FR-501`.
-- `Functional Requirements.md` uses `FR-0101`, `FR-0301`, and `FR-0501`.
+- `User Story v1.2.md`, `Use cases v1.1.md`, and older `Home.md` references sometimes use `FR-101`, `FR-301`, or `FR-501`.
+- `Functional Requirements v1.2.md` uses `FR-0101`, `FR-0301`, and `FR-0501`.
 
 In the matrix below, IDs are shown in the zero-padded form used by `Functional Requirements.md` when the mapping is direct and unambiguous.
 This is a normalization for readability, not a change to the raw source.
@@ -48,16 +51,15 @@ This is a normalization for readability, not a change to the raw source.
 
 The original requirements tables still provide the baseline traceability.
 
-The architecture batches add scope overlays that need source-table cleanup:
-- `US-08 / Send Message` is excluded from the current D&P MVP model and postponed.
-- `US-11 / Receive Activity Reminder` is included as an active MVP notification branch in NSF and CRUD Matrix `v1.5`.
-- `US-25 / Set Activity Date and Time` is treated as internal to `Create Activity` for H&L DFD/CRUD modeling, while the sourced narrative remains in the use case inventory.
+The later requirements and architecture batches add current first-skeleton overlays:
+- `US-08 / Send Message` is now postMVP in the updated requirements table and remains postponed in the current D&P model.
+- `US-11 / Receive Activity Reminder` is MVP in `User Story v1.3`, `Use cases v1.2`, `use-case-diagram-v1.7.md`, and active NSF/CRUD architecture modeling.
+- `US-25 / Set Activity Date and Time` is preserved for traceability, but the current diagram notes and H&L DFD/CRUD modeling treat it as internal to `Create Activity`.
 - `US-01 / Sign Up with University Email` now includes password creation and `PasswordHash` on `DS-AP-001 Student Account`.
+- `US-29 / Update Campus Insight Consent` and `US-30 / View Consent-Based Student Insights` now provide explicit student/admin traceability for consent-based insight access.
+- Pending request withdrawal is non-notifying in first-skeleton sources.
 
-Until the requirements tables are updated, the matrix preserves the original source story IDs and marks these scope differences explicitly.
-
-Additional structural overlay without a confirmed user story:
-- Consent-based campus insight access adds `CampusInsightSharingConsent` to `DS-AP-001` and a conditional future admin insight read path. No dedicated baseline user story or use case has been confirmed for that feature.
+The matrix preserves the original source story IDs and marks first-skeleton architecture differences explicitly.
 
 ## User Story Traceability Matrix
 
@@ -70,10 +72,10 @@ Additional structural overlay without a confirmed user story:
 | US-05 | MVP | Host reviews join requests and manages activity status. | FR-0305, FR-0501, FR-0502, FR-0503, FR-1403, FR-2001, FR-2002 | NFR-12, NFR-13 | [[wiki/requirements/use-case-pages/UC - Manage Join Requests|Manage Join Requests]]; [[wiki/requirements/use-case-pages/UC - Update Activity Status|Update Activity Status]] | Draft traced |
 | US-06 | MVP | Host receives notification when someone requests to join or directly joins. | FR-0601, FR-0602, FR-0603, FR-2001 | NFR-14, NFR-15 | [[wiki/requirements/use-case-pages/UC - Notify Host of Join Event|Notify Host of Join Event]] | Draft traced |
 | US-07 | MVP | Participant receives approval or decline notification. | FR-0701, FR-0702, FR-0703, FR-0704, FR-2002 | NFR-18, NFR-19 | [[wiki/requirements/use-case-pages/UC - Notify Participant of Application Outcome|Notify Participant of Application Outcome]] | Draft traced |
-| US-08 | Baseline MVP; deferred in current architecture model | Student sends messages and may share activity links. | FR-0801, FR-0802, FR-0803 | NFR-20, NFR-21 | [[wiki/requirements/use-case-pages/UC - Send Message|Send Message]] | Draft traced; postponed by D&P workdoc `v5` |
+| US-08 | postMVP; deferred in current architecture model | Student sends messages and may share activity links. | FR-0801, FR-0802, FR-0803 | NFR-20, NFR-21 | [[wiki/requirements/use-case-pages/UC - Send Message|Send Message]] | Draft traced; postMVP in 2026-05-08 requirements table and postponed by D&P workdoc `v5` |
 | US-09 | MVP | Student sees upcoming participation and past events. | FR-0901, FR-0902 | NFR-22 | [[wiki/requirements/use-case-pages/UC - View Personal Activity List|View Personal Activity List]] | Draft traced |
 | US-10 | postMVP | Student views friends/connections and friend participation indicators. | FR-1001, FR-1002 | NFR-23 | [[wiki/requirements/use-case-pages/UC - View Friends and Social Indicators|View Friends and Social Indicators]] | Draft traced; deferred |
-| US-11 | Baseline postMVP; active MVP architecture branch | Student receives a reminder before a joined activity starts. | FR-1101 | NFR-24 | [[wiki/requirements/use-case-pages/UC - Receive Activity Reminder|Receive Activity Reminder]] | Draft traced; active NSF reminder branch in current architecture batch |
+| US-11 | MVP | Student receives a reminder before a joined activity starts. | FR-1101 | NFR-24 | [[wiki/requirements/use-case-pages/UC - Receive Activity Reminder|Receive Activity Reminder]] | Draft traced; active NSF reminder branch in first-skeleton sources |
 | US-12 | postMVP | Student receives or loses participation points based on attendance. | FR-1201 | NFR-25 | [[wiki/requirements/use-case-pages/UC - Track Participation Points|Track Participation Points]] | Draft traced; deferred |
 | US-13 | postMVP | Student uploads a photo after attending an activity. | FR-1301 | NFR-26 | [[wiki/requirements/use-case-pages/UC - Upload Activity Photo|Upload Activity Photo]] | Draft traced; deferred |
 | US-14 | MVP | Student creates and edits a minimal profile after registration. | FR-1401, FR-1402, FR-1403 | NFR-27, NFR-28 | [[wiki/requirements/use-case-pages/UC - Set Up Profile|Set Up Profile]]; [[wiki/requirements/use-case-pages/UC - Edit Profile|Edit Profile]]; related downstream: [[wiki/requirements/use-case-pages/UC - View Student Minimal Profile|View Student Minimal Profile]] | Draft traced |
@@ -87,21 +89,23 @@ Additional structural overlay without a confirmed user story:
 | US-22 | MVP | Student views another student's minimal profile in activity contexts. | FR-0501, FR-1403 | NFR-28, NFR-36 | [[wiki/requirements/use-case-pages/UC - View Student Minimal Profile|View Student Minimal Profile]] | Draft traced |
 | US-23 | MVP | Campus admin configures a new campus through guided steps. | FR-2301, FR-2302 | NFR-37, NFR-38 | [[wiki/requirements/use-case-pages/UC - Configure New Campus|Configure New Campus]] | Draft traced |
 | US-24 | MVP | Campus admin manages campus-specific structured options. | FR-0301, FR-0304, FR-2302 | NFR-39, NFR-40 | [[wiki/requirements/use-case-pages/UC - Manage Campus Structured Options|Manage Campus Structured Options]] | Draft traced |
-| US-25 | MVP | Student host sets activity date and time during creation. | FR-0402, FR-0404, FR-2501, FR-2502 | NFR-10, NFR-41 | [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]] | Draft traced; H&L DFD/CRUD treats date/time as part of [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]], formal UC treatment unresolved |
+| US-25 | Merged into Create Activity for first skeleton | Student host sets activity date and time during creation. | FR-0402, FR-0404, FR-2501, FR-2502 | NFR-10, NFR-41 | [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]]; first-skeleton parent: [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]] | Draft traced; H&L DFD/CRUD and `use-case-diagram-v1.7.md` treat date/time as part of Create Activity |
 | US-26 | MVP | Host deletes an activity before it starts. | FR-2601, FR-2602, FR-2603 | NFR-12, NFR-42 | [[wiki/requirements/use-case-pages/UC - Delete Activity|Delete Activity]] | Draft traced |
 | US-27 | MVP | Student withdraws a pending request or leaves a joined activity before start. | FR-0901, FR-2701, FR-2702, FR-2703, FR-2704 | NFR-13, NFR-22, NFR-43 | [[wiki/requirements/use-case-pages/UC - Withdraw Join Request|Withdraw Join Request]]; [[wiki/requirements/use-case-pages/UC - Leave Joined Activity|Leave Joined Activity]] | Draft traced |
 | US-28 | MVP | Participant receives notification when a joined activity is cancelled. | FR-0503, FR-2801, FR-2802, FR-2803, FR-2804 | NFR-19, NFR-44 | [[wiki/requirements/use-case-pages/UC - Notify Participant of Activity Cancellation|Notify Participant of Activity Cancellation]]; related trigger: [[wiki/requirements/use-case-pages/UC - Update Activity Status|Update Activity Status]] | Draft traced |
+| US-29 | MVP | Student controls whether profile-interest and activity-participation data may be shared with authorized campus staff. | FR-2901, FR-2902, FR-2903 | NFR-45, NFR-46, NFR-47 | [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] | Draft traced from first-skeleton table/diagram; narrative file missing |
+| US-30 | MVP | Authorized campus admin views consent-based student interest and activity-participation insights within authorized campus scope. | FR-2902, FR-2903, FR-3001 | NFR-45, NFR-46, NFR-47 | [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]] | Draft traced from first-skeleton table/diagram; sequence/collaboration diagrams exist; narrative file missing |
 
 ## Functional Areas
 
 | Area | User stories |
 | --- | --- |
-| Access and Identity | US-01, US-15, US-16 |
+| Access and Identity | US-01, US-15, US-16, US-29 |
 | Activity Management | US-03, US-04, US-05, US-06, US-07, US-11, US-20, US-21, US-25, US-26, US-27, US-28 |
 | Personal and Social Area | US-08, US-09, US-10, US-12, US-13 |
 | Safety and Moderation | US-02, US-17, US-18, US-19 |
 | User Profile | US-14, US-22 |
-| Campus Config and Scalability | US-23, US-24 |
+| Campus Config and Scalability | US-23, US-24, US-30 |
 
 ## Traceability Gaps And Ambiguities
 
@@ -110,14 +114,14 @@ Additional structural overlay without a confirmed user story:
 - `Home.md` includes an `OUTDATED` marker, so use its ranking table carefully.
 - Story points, estimated duration, and backlog order are blank in `User Story.md`.
 - `Phase` is blank for all rows in `Functional Requirements.md` and `Non-Functional Requirements.md`.
-- US-25 through US-28 and FR-2501 through FR-2804 have missing creator/date fields in the current source.
-- NFR-41 through NFR-44 have missing creator/date fields in the current source.
+- US-25 through US-30 and FR-2501 through FR-3001 have missing creator/date fields in the current source.
+- NFR-41 through NFR-47 have missing creator/date fields in the current source.
 - Several use case narratives contain conservative assumptions that need team confirmation before implementation.
 - The postMVP stories have narratives, but the source still marks them as postMVP.
-- `US-08` and `US-11` need requirements-table reconciliation against the current architecture batch.
-- `US-25` needs final UC treatment confirmation because architecture modeling folds date/time into Create Activity.
-- Consent-based campus insight access needs a confirmed user story/use case if the team wants to model it beyond the current structural consent attribute.
-- Pending request withdrawal host notification behavior conflicts between CRUD Matrix `v1.5` and D&P/NSF workdocs; see [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]].
+- `US-25` needs final documentation treatment confirmation because first-skeleton modeling folds date/time into Create Activity while the sourced card remains useful for traceability.
+- `Update Campus Insight Consent` and `View Consent-Based Student Insights` need dedicated narrative files if the team treats them as full current use cases.
+- `use-case-diagram-v1.7.md` is the normative MVP first-skeleton diagram, but final formal UC IDs remain unresolved.
+- A true Activity lifecycle state chart source is missing from the 2026-05-09 state-chart package.
 - Some architecture artifacts still contain stale wording around deletion notification triggers and archive behavior; see [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]].
 
 ## Gap Checks

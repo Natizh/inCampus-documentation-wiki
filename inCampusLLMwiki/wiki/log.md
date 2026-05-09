@@ -90,3 +90,41 @@ Use this heading format:
 - Updated `wiki/planning/workflow.md` so the architecture workflow cites both the 2026-04-25 DFD baseline and the 2026-05-03 ERD/entity and CRUD `v1.5` extension.
 - Added `wiki/architecture/data-model.md` to the maintained architecture-page list in the workflow page to match the current wiki structure.
 - Preserved unresolved/source-conflict items around pending-request withdrawal notifications, campus-admin identity/store modeling, consent UI placement, and requirements-table reconciliation for `US-08`, `US-11`, and `US-25`.
+
+## [2026-05-08] ingest | Requirements and consent insight refresh
+
+- Ingested `raw/affine/08-05-2026/`.
+- Source files included `User Story v1.2.md`, `Functional Requirements v1.2.md`, `Non-Functional Requirements v1.1.md`, `Use cases v1.1.md`, and `use-case-diagram-v1.6.md`.
+- Updated requirements counts to 30 user stories, 69 functional requirements, 47 non-functional requirements, 33 current use-case table entries, and 31 narrative files.
+- Added derived use-case cards for `Update Campus Insight Consent` and `View Consent-Based Student Insights`.
+- Updated project overview, weekly status, decisions, workflow, use cases, use case narratives, traceability, architecture notes, and index.
+- Recorded that consent-based insight access now has explicit student/admin user stories and use-case table entries, while detailed narratives, admin identity/authorization modeling, exact insight fields, and consent UI placement remain unresolved.
+- Preserved internal source contradictions around `use-case-diagram-v1.6.md`, `Receive Activity Reminder` scope, `Set Activity Date and Time` formal UC treatment, and pending-request withdrawal notification behavior.
+
+## [2026-05-08] health-check | Post-08-05 wiki consistency pass
+
+- Reviewed `wiki/` for stale counts, source-priority claims, new consent/insight use-case links, and post-ingest traceability after the `raw/affine/08-05-2026/` refresh.
+- Confirmed 30 user stories, 69 functional requirements, 47 non-functional requirements, 33 current use-case table entries, and 31 narrative files against the current raw and derived sources.
+- Confirmed `raw/affine/08-05-2026/` is treated as the latest requirements/use-case table source, `raw/affine/13-04-2026/` remains the full narrative baseline, and `raw/affine/03-05-2026/` remains the latest ERD/CRUD architecture source.
+- Confirmed the new use-case cards and main hub pages resolve their current internal wikilinks, and that `US-29`, `US-30`, `FR-2901` through `FR-3001`, and `NFR-45` through `NFR-47` remain traced.
+- Corrected a stale decisions-page note so `usecase-diag-v1.4` is kept as relationship history while `use-case-diagram-v1.6.md` remains the latest but internally inconsistent export.
+- Preserved unresolved points around `use-case-diagram-v1.6.md`, `US-11`, `US-25`, and the missing dedicated narratives for the two new consent/insight use cases.
+
+## [2026-05-09] ingest | Final pre-skeleton alignment batch
+
+- Ingested `raw/affine/09-05-2026/`.
+- Source files included `User Story v1.3.md`, `Functional Requirements v1.3.md`, `Non-Functional Requirements v1.2.md`, `Use cases v1.2.md`, `use-case-diagram-v1.7.md`, `CRUD matrix v1.6.md`, `Entities & Attributes v1.2.md`, `Databases v1.1.md`, `Relationship Table v1.1.md`, `01 Design Scope and Architectural Choice v1.1.md`, the UCR package, and the first-skeleton sequence/collaboration/state-chart diagrams.
+- Created `wiki/architecture/first-skeleton-architecture.md`.
+- Updated architecture, project, requirements, and workflow hub pages so `raw/affine/09-05-2026/` is the current first-skeleton architecture and requirements/use-case table source.
+- Recorded the modular-monolith architecture choice, `CampusID` tenant boundary, runtime `AuthenticatedAdminContext`, canonical ten-store model, event catalog, atomic participation/capacity rules, `use-case-diagram-v1.7.md` as the normative first-skeleton diagram source, and pending-request withdrawal as non-notifying.
+- Updated affected `UC - ...` cards to align with the 09-05 UCR and sequence/collaboration sources for onboarding, campus setup, participation, notifications, reporting/review, and consent-based insights.
+- Preserved unresolved points around exact admin authentication implementation, exact consent UI placement, exact insight fields and least-privilege view content, exact campus setup fields/validation rules, final UC treatment for `Set Activity Date and Time`, and the missing true `Activity` lifecycle state chart source.
+
+## [2026-05-09] health-check | Post-09-05 recovery consistency pass
+
+- Resumed and completed an interrupted 09-05 ingest without restarting from scratch; treated the dirty wiki pages as partial progress and preserved valid prior edits.
+- Re-read the modified wiki pages, compared them against the 09-05 raw batch, and continued the ingest in conservative batches instead of rewriting the previous pass.
+- Corrected stale source/version references that still pointed at the 08-05 or 03-05 current-state assumptions where the 09-05 batch had already superseded them.
+- Aligned use-case cards with the available 09-05 UCR, sequence, collaboration, and state-chart sources where those sources materially clarified first-skeleton behavior.
+- Confirmed current internal `wiki/...` links and current `raw/affine/09-05-2026/...` links resolve across the wiki after the recovery pass.
+- Preserved unresolved points rather than guessing where the 09-05 sources still remain provisional, especially around admin authentication, insight detail scope, consent UX, and the missing true `Activity` lifecycle SCD.

@@ -16,13 +16,14 @@ Status labels:
 
 ## Requirements Hub
 
-- [[wiki/requirements/use-cases|Use Cases]] - Sourced inventory of 31 draft use cases, actors, requirement links, scope, current diagram version, and architecture-scope updates. Status: Draft Sourced.
-- [[wiki/requirements/use-case-narratives|Use Case Narratives]] - Narrative readiness, modeling notes, relationship notes, and unresolved questions from the 31 use case files. Status: Draft Sourced.
-- [[wiki/requirements/traceability|Traceability]] - Matrix linking 28 user stories, 65 FRs, 44 NFRs, draft use cases, and current architecture-scope overlays. Status: Draft Sourced.
+- [[wiki/requirements/use-cases|Use Cases]] - Sourced inventory of 33 current use-case table entries, 31 narrative-backed cards, actors, requirement links, scope, current diagram notes, and architecture-scope updates. Status: Draft Sourced.
+- [[wiki/requirements/use-case-narratives|Use Case Narratives]] - Narrative readiness, modeling notes, relationship notes, and unresolved questions from the 31 use case files plus two table-only consent/insight use cases. Status: Draft Sourced.
+- [[wiki/requirements/traceability|Traceability]] - Matrix linking 30 user stories, 69 FRs, 47 NFRs, current use-case table entries, and architecture-scope overlays. Status: Draft Sourced.
 
 ## Architecture Hub
 
 - [[wiki/architecture/overview|Architecture Overview]] - Current architecture-analysis baseline, source priority, Level-1 process areas, version handling, and major modeling decisions. Status: Draft Sourced.
+- [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]] - First-skeleton modular-monolith choice, tenant boundary, event catalog, canonical stores, runtime admin context, and behavioral/state-model highlights. Status: Draft Sourced.
 - [[wiki/architecture/data-flow|Architecture Data Flow]] - Unified DFD structure and subgroup-level logical data-flow summary. Status: Draft Sourced.
 - [[wiki/architecture/data-stores|Architecture Data Stores]] - Logical store catalog, ownership boundaries, reuse rules, and alignment issues. Status: Draft Sourced.
 - [[wiki/architecture/data-model|Architecture Data Model]] - ERD/entity catalog, relationship constraints, attribute deltas, consent-based access notes, and unresolved schema questions. Status: Draft Sourced.
@@ -45,6 +46,7 @@ The raw narrative files remain source material, not duplicate wiki pages to merg
 - [[wiki/requirements/use-case-pages/UC - Sign Up with University Email|Sign Up with University Email]]
 - [[wiki/requirements/use-case-pages/UC - Sign In|Sign In]]
 - [[wiki/requirements/use-case-pages/UC - Select Campus|Select Campus]]
+- [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]]
 
 ### Profile
 
@@ -83,6 +85,7 @@ The raw narrative files remain source material, not duplicate wiki pages to merg
 
 - [[wiki/requirements/use-case-pages/UC - Configure New Campus|Configure New Campus]]
 - [[wiki/requirements/use-case-pages/UC - Manage Campus Structured Options|Manage Campus Structured Options]]
+- [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]]
 
 ### Deferred Or Architecture-Scope Updated
 
@@ -100,26 +103,33 @@ Prioritize [[wiki/architecture/overview|architecture]], [[wiki/architecture/data
 Latest ingested raw snapshot:
 
 ```text
-raw/affine/03-05-2026/
+raw/affine/09-05-2026/
 ```
 
-Latest full requirements and narrative baseline remains:
+Latest requirements table source:
+
+```text
+raw/affine/09-05-2026/
+```
+
+Latest full narrative baseline remains:
 
 ```text
 raw/affine/13-04-2026/
 ```
 
 Current sourced totals:
-- 28 user stories
-- 65 functional requirements
-- 44 non-functional requirements
+- 30 user stories
+- 69 functional requirements
+- 47 non-functional requirements
+- 33 current use-case table entries
 - 31 use case narrative files
 
 Important current gaps:
 - formal UC IDs are unresolved
-- `updates/usecase-diag-v1.4.puml` is the latest current use-case relationship source, but final formal UC IDs and implementation contract status remain unresolved
+- `use-case-diagram-v1.7.md` is the normative MVP first-skeleton diagram source; final formal UC IDs remain unresolved
 - `Home.md` contains an `OUTDATED` marker
 - requirement ID formatting differs across some source files
-- older requirements tables still need cleanup for the architecture-scope swap: `Send Message` deferred, `Receive Activity Reminder` active in MVP notification modeling, and `Set Activity Date and Time` folded into `Create Activity` for architecture modeling
-- CRUD Matrix `v1.5` conflicts with D&P/NSF workdocs on pending-request withdrawal host notifications; see [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]]
-- campus insight access scope, admin identity modeling, and exact consent UI placement remain unresolved
+- `Set Activity Date and Time` remains preserved as a derived card/table row, but the first-skeleton diagram and architecture model fold it into `Create Activity`
+- consent-based campus insight now has dedicated student/admin user stories and use cases, but detailed narratives, exact insight fields, admin authentication implementation, and exact consent UI placement remain unresolved
+- a true `Activity` lifecycle state chart was not found in the 2026-05-09 batch; the delivered corrected SCD models `ActivityParticipation`

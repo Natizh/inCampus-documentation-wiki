@@ -7,18 +7,17 @@ This page summarizes the current architecture-analysis baseline derived from the
 Latest architecture/data-model batch:
 
 ```text
-raw/affine/03-05-2026/
+raw/affine/09-05-2026/
 ```
 
 Primary source files:
-- `ERD - workdoc.md`
-- `ERD V1.1.md`
-- `Entities & Attributes v1.1.md`
-- `Relationship Table.md`
-- `updates/CRUD matrix v1.5.md`
-- `updates/Databases.md`
-- updated subgroup workdocs under `updates/`
-- `updates/Recent Structural modifications.md`
+- `system architecture/01 Design Scope and Architectural Choice v1.1.md`
+- `system architecture/System Architecture Diagram/index v1.1.md`
+- `updates/Entities & Attributes v1.2.md`
+- `updates/Relationship Table v1.1.md`
+- `updates/CRUD matrix v1.6.md`
+- `updates/Databases v1.1.md`
+- sequence, collaboration, and state-chart diagram workdocs under `raw/affine/09-05-2026/`
 
 Previous architecture baseline:
 
@@ -26,7 +25,15 @@ Previous architecture baseline:
 raw/affine/25-04-2026/
 ```
 
-That batch remains the source for the integrated DFD package and `usecase-diag-v1.4`. The 2026-05-03 batch supersedes it for the ERD/entity catalog, CRUD Matrix `v1.5`, consent-based access notes, and updated subgroup-workdoc details.
+That batch remains the source for the integrated DFD package and `usecase-diag-v1.4`. The 2026-05-03 batch remains ERD history, while the 2026-05-09 batch supersedes it for the first-skeleton entity catalog, CRUD Matrix `v1.6`, relationship table, system architecture, and behavioral/state-model notes.
+
+Latest requirements/use-case table refresh:
+
+```text
+raw/affine/09-05-2026/
+```
+
+The 2026-05-09 batch includes `User Story v1.3`, `Functional Requirements v1.3`, `Non-Functional Requirements v1.2`, `Use cases v1.2`, and the normative `use-case-diagram-v1.7.md` for the MVP first skeleton.
 
 The architecture/data-model batch also supersedes the earlier diagram-only batch for architecture modeling:
 
@@ -38,7 +45,7 @@ Older raw snapshots remain immutable history. Wiki pages should connect broad ar
 
 ## Phase
 
-Status: Draft sourced architecture-analysis baseline.
+Status: Draft sourced first-skeleton architecture baseline.
 
 The batch states that the team has moved from use-case/narrative review into a Lecture 9 architecture-analysis phase. The current work product is a logical modeling package, not implementation architecture.
 
@@ -51,6 +58,9 @@ The architecture work is centered on:
 - context and Level-1 DFD preparation
 - CRUD consistency
 - data-flow mergeability across subgroups
+- first-skeleton module, event, tenant, and authorization boundaries
+
+The first code skeleton adopts a multi-tenant modular monolith with event-driven internal flows. `CampusID` is the tenant boundary. The event dispatcher is an internal implementation abstraction, not a public API contract. See [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]] for the current first-skeleton contract.
 
 ## Level-1 Process Structure
 
@@ -92,37 +102,38 @@ See [[wiki/architecture/data-stores|Architecture Data Stores]] for the store cat
 
 - `Pending Approval` is not an activity status. It is a guest participation state in `DS-HL-002 Activity Participations`.
 - Activity status vocabulary should use `open`, `full`, `completed`, and `cancelled`. Deletion is hard-delete behavior, not a persisted activity status in the current ERD.
-- `Set Activity Date and Time` is treated for DFD purposes as a required part of `Create Activity`, not a separate H&L process.
+- `Set Activity Date and Time` is treated for DFD and first-skeleton diagram purposes as a required part of `Create Activity`, not a separate H&L process.
 - Activity deletion is distinct from cancellation. Deletion is hard deletion of `DS-HL-001` and linked `DS-HL-002` records; cancellation preserves cancelled activity context.
 - H&L and D&P do not create notification records. They expose or emit event triggers consumed by NSF.
-- `Receive Activity Reminder` is now active MVP architecture scope for NSF, despite older requirements tables marking US-11 as postMVP.
-- `Send Message` is excluded/postponed from the current D&P MVP model, despite older requirements tables marking US-08 as MVP.
+- `Receive Activity Reminder` is active MVP architecture scope for NSF and is now MVP in `User Story v1.3`, `Use cases v1.2`, and `use-case-diagram-v1.7.md`.
+- `Send Message` is excluded/postponed from the current D&P MVP model and is now postMVP in the 2026-05-08 requirements table.
 - Block behavior is reciprocal for visibility and interaction: blocked users cannot see each other's activities in discovery, open each other's activity details, view each other's minimal profiles, or start new join/request interactions.
 - Cross-user notifications must be suppressed when a block relationship exists between the trigger user and the recipient.
 - Sign-up now includes university email verification plus password creation; password storage belongs to `DS-AP-001 Student Account` as `PasswordHash`.
-- Consent-based campus insight access is a future controlled extension. `CampusInsightSharingConsent` belongs to `DS-AP-001`; identifiable insight access must check campus scope, consent, and least privilege before reading student profile or participation data.
+- Consent-based campus insight access now has explicit student/admin requirements rows. `CampusInsightSharingConsent` belongs to `DS-AP-001`; identifiable insight access must check campus scope, consent, and least privilege before reading student profile or participation data.
+- Campus Admin identity is runtime `AuthenticatedAdminContext`, not a canonical first-skeleton data store.
+- Pending request withdrawal is non-notifying: no host notification, no NSF handler, and no `DS-NS-001` record.
 
 ## Use Case Relationship Snapshot
 
 The latest exported use-case relationship source is:
 
 ```text
-raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml
+raw/affine/09-05-2026/updates/use-case-diagram-v1.7.md
 ```
 
-It supersedes the previous `v1.2` diagram for current relationship discussion. The diagram groups use cases by functional area and explicitly labels green arrows as include and yellow dashed arrows as extend. Because formal UC IDs remain unresolved and the broader project is still in draft modeling, the wiki records `v1.4` as the current working diagram version, not as a final implementation contract.
+It supersedes the internally inconsistent `v1.6` export and is the normative MVP first-skeleton diagram source. Because formal UC IDs remain unresolved across the broader project, the wiki still uses textual use-case names and derived `UC -` pages for navigation.
 
-Current `v1.4` relationship highlights:
-- Include-style working links: campus configuration to structured options, activity creation to date/time, join to host notification, manage requests to profile view, browse to activity details, notification handoffs, report to review report, block to join.
-- Extend-style working links: activity details to deferred social/photo features, personal activity list to reminder and points.
-- Deferred package: friends/social indicators, activity reminder, participation points, and activity photo. Note that the architecture workdoc separately brings activity reminder into MVP notification modeling scope.
+Current relationship highlights:
+- `Set Activity Date and Time` is internal to `Create Activity` for DFD/CRUD and first-skeleton diagram purposes.
+- `Receive Activity Reminder` is active MVP notification scope.
+- `Update Campus Insight Consent` and `View Consent-Based Student Insights` are MVP use cases; detailed narratives remain missing, but sequence/collaboration diagrams now exist.
 
 ## Source Priority Notes
 
 The 2026-04-25 batch contains a few internal leftovers from earlier versions.
 
-The 2026-05-03 batch clears several earlier data-model gaps but introduces one important same-batch conflict:
-- CRUD Matrix `v1.5` says pending request withdrawal must not generate a host notification, while the updated D&P and NSF workdocs still describe a withdrawal trigger / branch. The wiki treats this as unresolved until the team confirms the intended notification behavior.
+The 2026-05-03 batch introduced a pending-withdrawal notification conflict, and the 2026-05-08 `v1.6` diagram export conflicted with itself. The 2026-05-09 final pre-skeleton batch supersedes both issues: pending request withdrawal is non-notifying, and `use-case-diagram-v1.7.md` is the normative MVP first-skeleton diagram source.
 
 Use the current workdocs and CRUD matrix for stable derived knowledge when they conflict with older diagrams:
 - AP workdoc `v1.2` and the 2026-05-03 entity catalog supersede older AP wording for password credential state, campus insight consent, selected-campus association, and profile-view block checks.
@@ -130,11 +141,13 @@ Use the current workdocs and CRUD matrix for stable derived knowledge when they 
 - SM workdoc `v2.1` supersedes the SM diagram note that only D&P is a concrete adjacent block-state consumer.
 - NSF workdoc `v7` and NSF diagram `V4.0` are the current notification baseline.
 - D&P workdoc `v5` and D&P diagram `V3.0` are the current discovery/participation baseline.
-- CRUD Matrix `v1.5` supersedes `v1.4` for consent-based access rows and current CRUD summaries, while the pending-withdrawal notification contradiction remains unresolved.
+- CRUD Matrix `v1.6` supersedes `v1.5` for first-skeleton CRUD summaries, notification boundaries, admin context, and concurrency notes.
+- `User Story v1.3`, `Functional Requirements v1.3`, `Non-Functional Requirements v1.2`, and `Use cases v1.2` supersede older requirements tables for counts and first-skeleton scope.
 
 ## Related Pages
 
 - [[wiki/architecture/data-flow|Architecture Data Flow]]
+- [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]]
 - [[wiki/architecture/data-stores|Architecture Data Stores]]
 - [[wiki/architecture/data-model|Architecture Data Model]]
 - [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]]

@@ -5,23 +5,40 @@ It summarizes the latest stable project state without replacing [[wiki/log|Wiki 
 
 ## Current Snapshot
 
-Date: 2026-05-03
+Date: 2026-05-09
 
 Latest ingested source batch:
 
 ```text
-raw/affine/03-05-2026/
+raw/affine/09-05-2026/
 ```
 
 Batch contents:
-- `ERD - workdoc.md`
-- `ERD V1.1.md`
-- `Entities & Attributes v1.1.md`
-- `Relationship Table.md`
-- `updates/CRUD matrix v1.5.md`
-- `updates/Databases.md`
-- updated AP, H&L, D&P, SM, NSF, and old SM workdocs under `updates/`
-- `updates/Recent Structural modifications.md`
+- `updates/User Story v1.3.md`
+- `updates/Functional Requirements v1.3.md`
+- `updates/Non-Functional Requirements v1.2.md`
+- `updates/Use cases v1.2.md`
+- `updates/use-case-diagram-v1.7.md`
+- `updates/CRUD matrix v1.6.md`
+- `updates/Entities & Attributes v1.2.md`
+- `updates/Databases v1.1.md`
+- `updates/Relationship Table v1.1.md`
+- system architecture, sequence, collaboration, and state-chart diagrams
+
+Latest architecture/data-model batch:
+
+```text
+raw/affine/09-05-2026/
+```
+
+Architecture/data-model contents:
+- `system architecture/01 Design Scope and Architectural Choice v1.1.md`
+- `system architecture/System Architecture Diagram/index v1.1.md`
+- `updates/Entities & Attributes v1.2.md`
+- `updates/Relationship Table v1.1.md`
+- `updates/CRUD matrix v1.6.md`
+- `updates/Databases v1.1.md`
+- first-skeleton sequence, collaboration, and state-chart diagram packages
 
 Previous architecture baseline:
 
@@ -29,9 +46,9 @@ Previous architecture baseline:
 raw/affine/25-04-2026/
 ```
 
-The previous batch remains the source for the integrated DFD package, subgroup diagram exports, and the current `usecase-diag-v1.4` relationship source.
+The previous batch remains the source for the integrated DFD package, subgroup diagram exports, and the previous `usecase-diag-v1.4` relationship source. The latest use-case relationship export is `raw/affine/09-05-2026/updates/use-case-diagram-v1.7.md`, which is the normative MVP first-skeleton diagram source.
 
-Latest full requirements and narrative baseline remains:
+Latest full narrative baseline remains:
 
 ```text
 raw/affine/13-04-2026/
@@ -41,6 +58,7 @@ Phase: Architecture-analysis phase.
 
 Current priorities:
 - [[wiki/architecture/overview|architecture-analysis baseline]]
+- [[wiki/architecture/first-skeleton-architecture|first-skeleton architecture contract]]
 - [[wiki/architecture/data-flow|DFD/data-flow modeling]]
 - [[wiki/architecture/data-stores|logical store ownership]]
 - [[wiki/architecture/data-model|logical ERD and entity relationships]]
@@ -62,69 +80,77 @@ The MVP centers on:
 
 See [[wiki/requirements/use-cases|Use Cases]] for the canonical use case inventory.
 
-The current use case source set contains 31 use case narrative files.
-The requirements set contains 28 user stories, 65 functional requirements, and 44 non-functional requirements.
+The current use case table contains 33 entries, with 31 use case narrative files.
+The requirements set contains 30 user stories, 69 functional requirements, and 47 non-functional requirements.
 
 The 2026-04-25 architecture export added the architecture-analysis baseline.
-It stabilized six Level-1 process areas, ten logical data stores, current subgroup DFD interpretations, CRUD invariants, and a newer `usecase-diag-v1.4` relationship source.
+It stabilized six Level-1 process areas, ten logical data stores, current subgroup DFD interpretations, CRUD invariants, and the previous `usecase-diag-v1.4` relationship source.
 
 The 2026-05-03 export adds the current logical data model and CRUD Matrix `v1.5`.
-It introduces ERD v1.1, entity attributes v1.1, relationship IDs, `PasswordHash` on Student Account, `CampusInsightSharingConsent`, and consent-gated future campus insight access.
+It introduces ERD v1.1, entity attributes v1.1, relationship IDs, `PasswordHash` on Student Account, `CampusInsightSharingConsent`, and consent-gated campus insight access.
+
+The 2026-05-08 export refreshes requirements and use-case tables. It adds `US-29`, `US-30`, `FR-2901` through `FR-3001`, `NFR-45` through `NFR-47`, and two consent/insight use-case table entries.
+
+The 2026-05-09 export is the final pre-skeleton alignment package. It confirms the first-skeleton architecture as a multi-tenant modular monolith with event-driven internal flows, `CampusID` as the tenant boundary, ten canonical stores, runtime `AuthenticatedAdminContext`, CRUD Matrix `v1.6`, entity catalog `v1.2`, use-case diagram `v1.7`, and first-skeleton behavioral/state diagrams.
 
 ## Scope Snapshot
 
-Original baseline MVP user stories:
-- US-01 through US-09
-- US-14 through US-28
+Current requirements-table MVP user stories:
+- US-01 through US-07
+- US-09
+- US-11
+- US-14 through US-30
 
-Original baseline postMVP user stories:
+Current requirements-table postMVP user stories:
+- US-08: send messages and share activity links
 - US-10: friends/connections and social indicators
-- US-11: activity reminders
 - US-12: participation points
 - US-13: activity photo upload
 
 Current architecture-scope overlay:
-- US-08 / Send Message is excluded from the current D&P MVP model and postponed.
-- US-11 / Receive Activity Reminder is active in MVP notification modeling.
-- US-25 / Set Activity Date and Time is treated as internal to Create Activity for H&L DFD/CRUD modeling, while final UC documentation treatment remains unresolved.
-- The requirements tables need cleanup before the baseline scope labels are fully reconciled.
+- US-08 / Send Message is postMVP in the 2026-05-08 requirements table and excluded from the current D&P MVP model.
+- US-11 / Receive Activity Reminder is MVP in `User Story v1.3`, `Use cases v1.2`, `use-case-diagram-v1.7.md`, and NSF/CRUD architecture modeling.
+- US-25 / Set Activity Date and Time is treated as internal to Create Activity for H&L DFD/CRUD and first-skeleton use-case diagram modeling, while the sourced derived card remains for traceability.
+- US-29 / Update Campus Insight Consent and US-30 / View Consent-Based Student Insights now ground the consent-based insight direction in explicit user stories and use-case table entries.
 
-Current same-batch conflict:
-- CRUD Matrix `v1.5` says pending request withdrawal must not generate a host notification.
-- D&P workdoc `v5` and NSF workdoc `v7` still model a withdrawal trigger/branch.
-- Treat the pending-withdrawal notification branch as unresolved until the team confirms source priority.
+Resolved first-skeleton notification point:
+- Pending request withdrawal must not generate a host notification, must not have an NSF handler, and must not create a `DS-NS-001` record.
 
 ## Active Work Areas
 
 - Review [[wiki/architecture/data-flow|the unified DFD structure]] against subgroup workdocs.
+- Use [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]] as the current first-skeleton implementation contract.
 - Keep [[wiki/architecture/data-stores|store ownership]] and CRUD behavior aligned.
-- Reconcile source-table scope labels for Send Message and Activity Reminder.
-- Confirm pending-request withdrawal notification behavior against CRUD Matrix `v1.5` and the D&P/NSF workdocs.
-- Decide how far the consent-based campus insight access model should go in MVP or postMVP.
-- Decide whether Campus Admin needs a formal entity/store or remains a role/external identifier.
-- Decide whether `usecase-diag-v1.4` is a final relationship model or still a current working diagram.
+- Preserve pending-request withdrawal as non-notifying in implementation notes.
+- Draft or confirm narratives for the two new consent/insight use cases if the team treats them as full current use cases.
+- Keep Campus Admin as runtime `AuthenticatedAdminContext` for the first skeleton; exact admin authentication remains provisional.
+- Decide whether a true Activity lifecycle state chart is needed, since the delivered SCD package modeled `ActivityParticipation` instead.
 - Keep [[wiki/requirements/traceability|traceability]] aligned across US, FR, NFR, use cases, and architecture processes.
 
 ## New Since Initial Wiki Setup
 
 - First real AFFiNE snapshot ingested.
 - [[wiki/requirements/use-cases|Use case inventory]] now contains the sourced use case list, actors, source user stories, related requirements, scope, and priority scores.
-- [[wiki/requirements/traceability|Traceability]] now links the 28 user stories to sourced use case names and requirement IDs.
+- [[wiki/requirements/traceability|Traceability]] now links the 30 user stories to sourced use case names and requirement IDs.
 - [[wiki/requirements/use-case-narratives|Narrative page]] now records modeling status and major unresolved narrative questions.
 - A partial 2026-04-15 AFFiNE export added a draft high-level use case diagram with explicit candidate and confirmed relationship labels.
 - The 2026-04-25 AFFiNE export added architecture workdocs, current subgroup DFD corrections, CRUD Matrix `v1.4`, and `usecase-diag-v1.4`.
 - New [[wiki/architecture/overview|architecture wiki pages]] now summarize the current DFD, store, and CRUD baseline.
 - The 2026-05-03 AFFiNE export added ERD/entity/relationship modeling, CRUD Matrix `v1.5`, consent-based campus insight access, and recent structural modifications.
+- The 2026-05-08 AFFiNE export added explicit consent/insight user stories, FR/NFR rows, two use-case table entries, and a `v1.6` diagram export with internal cleanup still needed.
+- The 2026-05-09 AFFiNE export added the final pre-skeleton alignment package: modular-monolith architecture, system architecture diagram, CRUD Matrix `v1.6`, entity catalog `v1.2`, use-case diagram `v1.7`, sequence/collaboration diagrams, and state charts.
 
 ## Important Ambiguities
 
 - `Home.md` contains an `OUTDATED` marker; use it as context and prefer dedicated requirement/use case files for detailed traceability.
 - Requirement IDs are inconsistent across source files in some places, especially leading zeroes such as `FR-101` vs `FR-0101`.
 - Use case names are currently the practical identifiers; a final numeric UC-ID scheme is not established.
-- `usecase-diag-v1.4` is the latest current relationship source, but formal UC IDs and final implementation-contract status remain unresolved.
+- `use-case-diagram-v1.7.md` is the latest relationship export and the normative MVP first-skeleton diagram; formal UC IDs remain unresolved.
 - Some narrative files include explicit open questions that need team decisions before implementation.
-- The 2026-05-03 batch still contains an unresolved conflict around pending-withdrawal host notification behavior.
+- The 2026-05-09 batch resolves the earlier pending-withdrawal host notification conflict as non-notifying.
 - The 2026-04-25 batch contains stale internal leftovers around deletion notification triggers and archive wording. The wiki follows the latest workdocs and CRUD Matrix when those conflicts are clear.
+- The two new consent/insight use cases are table-only in the 2026-05-08 batch; dedicated narratives are still missing.
+- The 2026-05-09 state-chart batch did not provide a true Activity lifecycle SCD; the corrected delivered chart models ActivityParticipation.
 
 ## Next Update Pattern
 

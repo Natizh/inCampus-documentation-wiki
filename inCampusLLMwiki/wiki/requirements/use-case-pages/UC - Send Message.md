@@ -2,7 +2,7 @@
 
 Status: Draft sourced use case; deferred in current architecture model.
 
-Scope: Baseline requirements MVP; postponed by D&P workdoc `v5`.
+Scope: postMVP in `User Story v1.3` and `Use cases v1.2`; postponed by D&P workdoc `v5`.
 
 Initiating actor: Student.
 
@@ -21,8 +21,10 @@ Related use case links:
 
 Open point: threads, read receipts, delivery status, edit/delete, attachments, and recipient eligibility are not specified.
 
-Architecture note: `raw/affine/03-05-2026/updates/D&P - DFD workdoc v5.md` excludes Send Message from the current D&P MVP model. The older requirements table still marks US-08 as MVP, so source-table scope reconciliation is needed.
+Architecture note: `raw/affine/03-05-2026/updates/D&P - DFD workdoc v5.md` excludes Send Message from the current D&P MVP model. `raw/affine/09-05-2026/updates/User Story v1.3.md` and `raw/affine/09-05-2026/updates/Use cases v1.2.md` also mark US-08 as postMVP, so this scope point is aligned between the latest requirements table and the current D&P model.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Send Message|Raw use case narrative]]
+- [[raw/affine/09-05-2026/updates/User Story v1.3|User Story v1.3]]
+- [[raw/affine/09-05-2026/updates/Use cases v1.2|Use cases v1.2]]
 - [[raw/affine/03-05-2026/updates/D&P - DFD workdoc v5|D&P architecture workdoc v5]]

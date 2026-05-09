@@ -21,11 +21,12 @@ Related use case links:
 - [[wiki/requirements/use-case-pages/UC - Join Activity|Join Activity]]
 - [[wiki/requirements/use-case-pages/UC - Delete Activity|Delete Activity]]
 
-Architecture note: the 2026-05-03 structural update closes the DFD question: scheduled date/time selection and validation are modeled as internal parts of Create Activity for H&L architecture work, not as a separate H&L process.
+Architecture note: the 2026-05-09 H&L UCR keeps scheduled date/time selection and validation inside Create Activity, not as a separate H&L process. Create Activity reads campus-structured options, creates a campus-scoped `DS-HL-001` record with `Activity.Status = open`, and leaves later notification consequences to NSF rather than writing `DS-NS-001` directly.
 
 Open point: map-based location support remains unresolved, and the team still needs to decide whether Set Activity Date and Time remains a separate formal use case in final UC documentation.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Create Activity|Raw use case narrative]]
 - [[raw/affine/03-05-2026/updates/Recent Structural modifications|Recent Structural modifications]]
-- [[raw/affine/03-05-2026/updates/H&L - DFD workdoc v2.1|H&L architecture workdoc v2.1]]
+- [[raw/affine/09-05-2026/use case realizations/UCR - H&L v1.4|UCR - H&L v1.4]]
+- [[raw/affine/09-05-2026/updates/Entities & Attributes v1.2|Entities & Attributes v1.2]]

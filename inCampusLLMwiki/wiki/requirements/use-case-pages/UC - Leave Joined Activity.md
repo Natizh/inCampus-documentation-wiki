@@ -21,10 +21,10 @@ Related use case links:
 
 Open point: this use case is sourced as separate from pending-request withdrawal, but both derive from US-27.
 
-Architecture note: the 2026-05-03 CRUD Matrix `v1.5` keeps leave separate from pending-request withdrawal. It applies to an already joined participant before start, updates H&L stores, and requires a host notification through NSF if not suppressed by block state.
+Architecture note: the 2026-05-09 D&P and NSF sources keep leave separate from pending-request withdrawal. Leave applies only to an already joined participant with `RecordType=participation, Status=confirmed`, re-checks participation state inside the write transaction, updates H&L availability/count state transactionally, and may trigger the host notification flow through NSF if not suppressed by block state.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Leave Joined Activity|Raw use case narrative]]
-- [[raw/affine/03-05-2026/updates/CRUD matrix v1.5|CRUD matrix v1.5]]
-- [[raw/affine/03-05-2026/updates/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
-- [[raw/affine/03-05-2026/updates/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/09-05-2026/use case realizations/UCR - D&P v1.2|UCR - D&P v1.2]]
+- [[raw/affine/09-05-2026/use case realizations/UCR - N&S v1.2|UCR - N&S v1.2]]
+- [[raw/affine/09-05-2026/updates/CRUD matrix v1.6|CRUD matrix v1.6]]

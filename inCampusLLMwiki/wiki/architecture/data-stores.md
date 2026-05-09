@@ -7,10 +7,11 @@ This page records the current logical store catalog for architecture analysis.
 Current source:
 
 ```text
-raw/affine/03-05-2026/updates/CRUD matrix v1.5.md
-raw/affine/03-05-2026/updates/Databases.md
-raw/affine/03-05-2026/Entities & Attributes v1.1.md
-raw/affine/03-05-2026/ERD - workdoc.md
+raw/affine/09-05-2026/updates/CRUD matrix v1.6.md
+raw/affine/09-05-2026/updates/Databases v1.1.md
+raw/affine/09-05-2026/updates/Entities & Attributes v1.2.md
+raw/affine/09-05-2026/updates/Relationship Table v1.1.md
+raw/affine/09-05-2026/system architecture/01 Design Scope and Architectural Choice v1.1.md
 ```
 
 Status: Draft sourced data-store baseline.
@@ -22,7 +23,7 @@ Status: Draft sourced data-store baseline.
 | `DS-CA-001` | CampusStore / Campus Configuration | Campus Administration | Stores core campus configuration, university association, and activation status. |
 | `DS-CA-002` | CampusOptionsStore / Campus Structured Options | Campus Administration | Stores campus-specific options such as categories and valid meeting locations. |
 | `DS-AP-001` | UserAccountStore / Student Account | Access and Profile | Stores account identity, password hash, university email, verification state, platform access state, selected campus association, and campus insight consent according to the current process-level CRUD row. |
-| `DS-AP-002` | UserProfileStore / Student Minimal Profile | Access and Profile | Stores minimal student profile data used for setup, edit, and controlled profile viewing. |
+| `DS-AP-002` | StudentProfileStore / Student Profile | Access and Profile | Stores Student Profile data used for setup, edit, controlled profile viewing, and consent-gated insight reads. Only minimal public profile data is exposed in ordinary student contexts. |
 | `DS-AP-003` | DomainRulesStore / University Identity Rules | Access and Profile | Stores supported university-domain rules used during sign-up/verification. |
 | `DS-HL-001` | ActivityStore / Activities | Hosting and Lifecycle | Stores activity details, host reference, campus/category/location choices, schedule, limits, participation mode, lifecycle status, and visibility-relevant state. |
 | `DS-HL-002` | ParticipationStore / Activity Participations | Hosting and Lifecycle | Stores join requests, participation states, approval/decline outcomes, and headcount/request tracking. |
@@ -30,9 +31,9 @@ Status: Draft sourced data-store baseline.
 | `DS-SM-002` | ReportStore / Report Records | Safety and Moderation | Stores reports, report reasons/details, review status, review outcomes, and moderation-action trace. |
 | `DS-NS-001` | NotificationStore / Notification Records | Notifications and System Flow | Stores notification consequences and references to upstream business context. It must not duplicate activity, participation, account, or block truth. |
 
-The 2026-05-03 entity catalog also models `Campus Location` and `Activity Category` as entity-level structures, but both are typed uses of `DS-CA-002 Campus Structured Options`, not separate confirmed stores.
+The entity catalog also models `Campus Location` and `Activity Category` as entity-level structures, but both are typed uses of `DS-CA-002 Campus Structured Options`, not separate confirmed stores.
 
-The same catalog proposes a `Campus Admin` entity and possible administrative identity model. The ERD workdoc intentionally excludes `Campus Admin` / `Admin Account`, so no `DS-CA-003` store is confirmed yet.
+No `DS-CA-003`, Campus Admin Store, Admin Account Store, or separate Campus Admin database is introduced for the first skeleton. Campus Admin identity is runtime `AuthenticatedAdminContext`.
 
 ## Reuse Rules
 
@@ -46,7 +47,7 @@ Access and Profile exports identity and profile truth:
 - D&P reads `DS-AP-002` for host minimal profile when activity details are accessible.
 - SM reads AP stores for reporter/target validation and identity context.
 - NSF reads `DS-AP-001` for recipient account validity.
-- Future campus-insight processes may read AP/H&L data only after checking `DS-AP-001.CampusInsightSharingConsent`, campus authorization scope, and least-privilege constraints.
+- Consent-based campus-insight processes may read AP/H&L data only after checking `DS-AP-001.CampusInsightSharingConsent`, campus authorization scope, and least-privilege constraints.
 
 Hosting and Lifecycle owns activity and participation truth:
 - D&P reads `DS-HL-001` and `DS-HL-002` for feed, details, join, withdrawal, leave, and personal lists.
@@ -79,26 +80,22 @@ Activity reminder uses:
 - `DS-HL-002` for still-joined participation truth
 - `DS-NS-001` only for the notification consequence
 
-Do not add a duplicate store for campus insight access until a future source confirms a concrete admin-insight feature. The current model adds a consent attribute and conditional read rule, not a new store.
+Do not add a duplicate store for campus insight access. The 2026-05-09 source confirms student/admin use-case rows and a consent-gated admin insight flow, but the current model still uses a consent attribute plus conditional read-only access over existing AP/H&L stores, not a new store.
 
 ## Alignment Issues
 
-Selected campus storage still has a wording mismatch:
-- the AP process-level CRUD row says `Select Campus` reads `DS-CA-001` and reads/updates `DS-AP-001`;
-- one store definition says `DS-AP-002` stores campus selection.
+Selected campus storage is treated as account/onboarding state on `DS-AP-001 Student Account`. Older wording that implied profile-owned campus selection is superseded for the first skeleton.
 
-The current AP workdoc follows the process-level CRUD behavior and treats selected campus association as account/onboarding state in `DS-AP-001` until the team cleans up the store definition.
+Campus admin identity for the first skeleton is resolved as runtime context:
+- `AuthenticatedAdminContext` carries `adminId`, `email`, `role`, `authorizedCampusIds`, and `selectedCampusId`;
+- it is not a canonical data store;
+- exact admin authentication implementation remains provisional;
+- any future persisted admin store remains out of scope unless a later source confirms it.
 
-Campus admin identity remains unresolved:
-- the entity catalog proposes a `Campus Admin` entity for configuration ownership and report review identity;
-- the ERD workdoc intentionally excludes a `Campus Admin` / `Admin Account` entity;
-- admin authentication, campus authorization, and any future admin store should stay open until confirmed.
-
-Pending request withdrawal notification behavior is internally inconsistent in the 2026-05-03 batch:
-- CRUD Matrix `v1.5` says pending request withdrawal must not generate a host notification;
-- D&P workdoc `v5` and NSF workdoc `v7` still model a withdrawal trigger/branch.
-
-Treat the store-level impact as unresolved for now: D&P still deletes the pending request from `DS-HL-002` and updates `DS-HL-001`, but whether NSF should create `DS-NS-001` for that event needs confirmation.
+Pending request withdrawal is non-notifying in the first skeleton:
+- D&P still removes or deactivates the pending request from `DS-HL-002` and updates `DS-HL-001` availability transactionally;
+- NSF has no user-facing handler for pending request withdrawal;
+- no `DS-NS-001` record is created.
 
 ## Related Pages
 

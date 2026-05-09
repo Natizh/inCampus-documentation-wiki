@@ -23,12 +23,11 @@ Related use case links:
 
 Open point: US-27 combines withdrawal and leaving; this page covers only pending request withdrawal.
 
-Architecture note: the 2026-05-03 CRUD Matrix `v1.5` says pending request withdrawal deletes the pending request, updates availability/count state, and must not generate a host notification. This conflicts with D&P workdoc `v5` and NSF workdoc `v7`, which still model a withdrawal trigger/branch.
-
-Open point: host notification behavior after pending-request withdrawal needs team confirmation against the latest CRUD and DFD sources.
+Architecture note: the 2026-05-09 first-skeleton sources resolve pending-request withdrawal as non-notifying. Withdrawal removes or deactivates `RecordType=request, Status=pending`, re-checks the current request state inside the write transaction, updates availability/count state transactionally, and creates no host notification, no NSF handler, and no `DS-NS-001` record.
 
 Source:
 - [[raw/affine/13-04-2026/Use Cases/Withdraw Join Request|Raw use case narrative]]
-- [[raw/affine/03-05-2026/updates/CRUD matrix v1.5|CRUD matrix v1.5]]
-- [[raw/affine/03-05-2026/updates/D&P - DFD workdoc v5|D&P architecture workdoc v5]]
-- [[raw/affine/03-05-2026/updates/NSF - DFD workdoc v7|NSF architecture workdoc v7]]
+- [[raw/affine/09-05-2026/use case realizations/UCR - D&P v1.2|UCR - D&P v1.2]]
+- [[raw/affine/09-05-2026/updates/CRUD matrix v1.6|CRUD matrix v1.6]]
+- [[raw/affine/09-05-2026/state chart diagrams/ActivityParticipation SCD v1.1/index|ActivityParticipation SCD v1.1]]
+- [[raw/affine/09-05-2026/sequence diagrams/H&L-D&P - SDiagram WorkDoc v1.1|H&L-D&P sequence workdoc v1.1]]
