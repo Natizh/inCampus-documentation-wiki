@@ -115,7 +115,7 @@ The 2026-05-08 requirements refresh adds:
 - `US-30`: authorized campus admin viewing of consent-based student insights within campus scope;
 - `FR-2901` through `FR-3001`;
 - `NFR-45` through `NFR-47`;
-- two table-only use cases: [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] and [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]].
+- two table/diagram-only use cases, retained in the 2026-05-09 first-skeleton package until dedicated narrative source files exist: [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] and [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]].
 
 The 2026-05-09 final pre-skeleton batch supersedes the previous scope conflicts:
 - the first code skeleton uses a multi-tenant modular monolith with event-driven internal flows; see [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]];

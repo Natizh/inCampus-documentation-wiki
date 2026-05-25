@@ -147,7 +147,7 @@ Resolved first-skeleton notification point:
 - Some narrative files include explicit open questions that need team decisions before implementation.
 - The 2026-05-09 batch resolves the earlier pending-withdrawal host notification conflict as non-notifying.
 - The 2026-04-25 batch contains stale internal leftovers around deletion notification triggers and archive wording. The wiki follows the latest workdocs and CRUD Matrix when those conflicts are clear.
-- The two new consent/insight use cases are table-only in the 2026-05-08 batch; dedicated narratives are still missing.
+- The consent/insight use cases introduced in the 2026-05-08 batch and retained in the 2026-05-09 first-skeleton package are intentionally table/diagram-only until dedicated narrative source files exist.
 - The 2026-05-09 state-chart batch did not provide a true Activity lifecycle SCD; the corrected delivered chart models ActivityParticipation.
 
 ## Next Update Pattern

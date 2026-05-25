@@ -135,3 +135,11 @@ Use this heading format:
 - Replaced stale current-phase wording that still described the project as use-case or architecture-analysis work.
 - Marked the 2026-05-09 first-skeleton documentation package as the baseline for implementation and current wiki maintenance.
 - Kept unresolved design details visible instead of implying they were fully specified.
+
+## [2026-05-26] health-check | Resolve wiki sanity findings
+
+- Retargeted custom agent instructions from the retired `inCampus/` path to `inCampusLLMwiki/`.
+- Removed the placeholder use-case template from the canonical `wiki/requirements/use-cases.md` inventory so fake IDs cannot be mistaken for project traceability.
+- Rephrased the `use-case-diagram-v1.6.md` decision note as pre-alignment history superseded by `use-case-diagram-v1.7.md`.
+- Added `wiki/README.md` to the wiki index as support documentation and marked it accordingly.
+- Standardized the two consent/insight use cases as table/diagram-only until dedicated narrative source files exist.

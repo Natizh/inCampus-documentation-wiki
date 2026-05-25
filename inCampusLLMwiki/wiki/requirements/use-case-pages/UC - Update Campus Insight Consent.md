@@ -1,6 +1,6 @@
 # Update Campus Insight Consent
 
-Status: Draft sourced use case; MVP first-skeleton entry.
+Status: Draft sourced use case; table/diagram-only MVP first-skeleton entry until a dedicated source narrative exists.
 
 Scope: MVP in `User Story v1.3`, `Use cases v1.2`, and `use-case-diagram-v1.7.md`.
 
@@ -20,7 +20,7 @@ Related use case links:
 
 Architecture note: the current data model stores consent on `DS-AP-001 Student Account` as `CampusInsightSharingConsent`. Refusing or revoking consent must not block ordinary app use, and authorized campus insight access must stop when consent is not granted. The first-skeleton AP UCR and Sign Up and Select Campus sequence/collaboration diagrams show consent as AP-owned, capturable during onboarding, and updateable later through account/profile settings; exact UI placement remains unresolved.
 
-Open points: the source has not provided a dedicated narrative file, exact consent UI placement, consent-change timing, or user-facing explanation copy.
+Open points: this is intentionally tracked as a table/diagram-only use case until the team provides a dedicated narrative source. Exact consent UI placement, consent-change timing, and user-facing explanation copy remain unresolved.
 
 Source:
 - [[raw/affine/09-05-2026/updates/User Story v1.3|User Story v1.3]]

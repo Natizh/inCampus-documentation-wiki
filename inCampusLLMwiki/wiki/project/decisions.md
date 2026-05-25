@@ -85,8 +85,8 @@ Later source note:
 Current source note:
 `raw/affine/25-04-2026/updates/usecase-diag-v1.4.puml` supersedes `v1.2` as relationship history, but it is no longer the latest diagram export.
 
-Later source note:
-`raw/affine/08-05-2026/use-case-diagram-v1.6.md` is the latest diagram export, but its version log and embedded diagram body are internally inconsistent. Treat it as current source evidence for intended cleanup, not as a final implementation contract, while preserving the `v1.4` mismatch as unresolved history rather than silently resolved.
+Pre-alignment source note:
+`raw/affine/08-05-2026/use-case-diagram-v1.6.md` was the latest diagram export during the 2026-05-08 pass, but its version log and embedded diagram body were internally inconsistent. It is now immediate pre-alignment history, superseded for first-skeleton planning by `raw/affine/09-05-2026/updates/use-case-diagram-v1.7.md`; preserve the `v1.4`/`v1.6` mismatch as unresolved history rather than silently resolved.
 
 ### D-20260413-008: Treat use case names as provisional identifiers until formal UC IDs are stable
 

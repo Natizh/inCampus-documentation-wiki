@@ -138,7 +138,7 @@ Additional architecture-scope notes from the 2026-05-03 batch:
 | [[wiki/requirements/use-case-pages/UC - Sign Up with University Email|Sign Up with University Email]] | MVP | Student | US-01 | FR-0101, FR-0102, FR-0103, FR-0104, FR-0105; NFR-01, NFR-02, NFR-03, NFR-04, NFR-05 | 21 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Sign In|Sign In]] | MVP | Student | US-15 | FR-1501; NFR-29 | 19 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Select Campus|Select Campus]] | MVP | Student | US-16 | FR-0105, FR-1601; NFR-30 | 20 | Draft narrative exists |
-| [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] | MVP | Student | US-29 | FR-2901, FR-2902, FR-2903; NFR-45, NFR-46, NFR-47 | 19 | First-skeleton table/diagram entry exists; dedicated narrative file missing |
+| [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] | MVP | Student | US-29 | FR-2901, FR-2902, FR-2903; NFR-45, NFR-46, NFR-47 | 19 | Table/diagram-only until a dedicated narrative source exists |
 | [[wiki/requirements/use-case-pages/UC - Set Up Profile|Set Up Profile]] | MVP | Student | US-14 | FR-1401; NFR-27 | 15 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Edit Profile|Edit Profile]] | MVP | Student | US-14 | FR-1402; NFR-27 | 11 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - View Student Minimal Profile|View Student Minimal Profile]] | MVP | Student | US-22 | FR-1403, FR-0501; NFR-28, NFR-36 | 14 | Draft narrative exists |
@@ -163,7 +163,7 @@ Additional architecture-scope notes from the 2026-05-03 batch:
 | [[wiki/requirements/use-case-pages/UC - Block User|Block User]] | MVP | Student | US-18 | FR-1801, FR-1802; NFR-32 | 14 | Draft narrative exists; reciprocal block effects partially resolved |
 | [[wiki/requirements/use-case-pages/UC - Configure New Campus|Configure New Campus]] | MVP | Campus admin | US-23 | FR-2301, FR-2302; NFR-37, NFR-38 | 22 | Draft narrative exists |
 | [[wiki/requirements/use-case-pages/UC - Manage Campus Structured Options|Manage Campus Structured Options]] | MVP | Campus admin | US-24 | FR-0301, FR-0304, FR-2302; NFR-39, NFR-40 | 20 | Draft narrative exists |
-| [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]] | MVP | Campus admin | US-30 | FR-2902, FR-2903, FR-3001; NFR-45, NFR-46, NFR-47 | 20 | First-skeleton table/diagram entry exists; sequence/collaboration diagrams exist; dedicated narrative file missing |
+| [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]] | MVP | Campus admin | US-30 | FR-2902, FR-2903, FR-3001; NFR-45, NFR-46, NFR-47 | 20 | Table/diagram-only until a dedicated narrative source exists; sequence/collaboration diagrams exist |
 | [[wiki/requirements/use-case-pages/UC - View Friends and Social Indicators|View Friends and Social Indicators]] | postMVP | Student | US-10 | FR-1001, FR-1002; NFR-23 | 13 | Draft narrative exists; deferred |
 | [[wiki/requirements/use-case-pages/UC - Receive Activity Reminder|Receive Activity Reminder]] | MVP | Student | US-11 | FR-1101; NFR-24 | 13 | Draft narrative exists; active NSF reminder branch in first-skeleton sources |
 | [[wiki/requirements/use-case-pages/UC - Track Participation Points|Track Participation Points]] | postMVP | System | US-12 | FR-1201; NFR-25 | 15 | Draft narrative exists; deferred |
@@ -207,58 +207,12 @@ The 2026-05-09 tables and first-skeleton diagrams also include a consent/insight
 - Formal numeric UC IDs are not assigned.
 - [[wiki/requirements/use-case-pages/UC - Set Activity Date and Time|Set Activity Date and Time]] is modeled as part of [[wiki/requirements/use-case-pages/UC - Create Activity|Create Activity]] for first-skeleton DFD/diagram purposes, but its derived card remains for source traceability.
 - Host and participant notification use cases remain formal use case inventory items, while NSF owns notification consequences in the DFD model.
-- [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] and [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]] are present in the 2026-05-09 use-case table/diagram package but do not yet have dedicated narrative files.
+- [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] and [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]] are present in the 2026-05-09 use-case table/diagram package and are intentionally tracked as table/diagram-only until dedicated narrative source files exist.
 - Pending-request withdrawal host notification behavior is resolved as non-notifying by CRUD Matrix `v1.6` and the first-skeleton behavioral/state diagrams.
 - `use-case-diagram-v1.7.md` is the latest normative MVP first-skeleton diagram source.
 - The activity state vocabulary is clearer in the architecture batch, but a full state-transition diagram is not final.
 - Some source traceability uses inconsistent requirement ID formatting, such as `FR-301` vs `FR-0301`.
 - A true Activity lifecycle state chart source is still missing; the delivered SCD package models `ActivityParticipation` instead.
-
-## Use Case Template
-
-Use this template when a use case is revised or finalized.
-
-```markdown
-## UC-XXX: Title
-
-Status: Draft | Confirmed | Revised | Superseded
-
-Primary actor:
-
-Goal:
-
-Scope:
-
-Trigger:
-
-Preconditions:
-
-Main success scenario:
-1.
-2.
-3.
-
-Alternative flows:
--
-
-Exceptions:
--
-
-Linked user stories:
-- US-XXX
-
-Linked functional requirements:
-- FR-XXX
-
-Linked non-functional requirements:
-- NFR-XXX
-
-Source snapshots:
-- raw/affine/YYYY-MM-DD-batch/file.md
-
-Open questions:
--
-```
 
 ## Related Pages
 

@@ -1,6 +1,6 @@
 # View Consent-Based Student Insights
 
-Status: Draft sourced use case; MVP first-skeleton entry.
+Status: Draft sourced use case; table/diagram-only MVP first-skeleton entry until a dedicated source narrative exists.
 
 Scope: MVP in `User Story v1.3`, `Use cases v1.2`, and `use-case-diagram-v1.7.md`.
 
@@ -21,7 +21,7 @@ Related use case links:
 
 Architecture note: identifiable insight reads require student consent, authorized campus scope, and least-privilege access. The first skeleton keeps this flow admin-only, campus-scoped, and read-only over existing AP/H&L stores; it does not add a new insight data store or formal Campus Admin entity/store. Campus Admin identity is runtime `AuthenticatedAdminContext`; exact admin authentication remains provisional.
 
-Open points: the source has not provided a dedicated narrative file, exact insight fields, aggregation/identifiability rules, exact admin authentication implementation, or least-privilege view content.
+Open points: this is intentionally tracked as a table/diagram-only use case until the team provides a dedicated narrative source. Exact insight fields, aggregation/identifiability rules, exact admin authentication implementation, and least-privilege view content remain unresolved.
 
 Source:
 - [[raw/affine/09-05-2026/updates/User Story v1.3|User Story v1.3]]

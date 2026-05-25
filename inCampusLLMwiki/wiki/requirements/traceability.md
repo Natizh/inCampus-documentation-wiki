@@ -119,7 +119,7 @@ The matrix preserves the original source story IDs and marks first-skeleton arch
 - Several use case narratives contain conservative assumptions that need team confirmation before implementation.
 - The postMVP stories have narratives, but the source still marks them as postMVP.
 - `US-25` needs final documentation treatment confirmation because first-skeleton modeling folds date/time into Create Activity while the sourced card remains useful for traceability.
-- `Update Campus Insight Consent` and `View Consent-Based Student Insights` need dedicated narrative files if the team treats them as full current use cases.
+- `Update Campus Insight Consent` and `View Consent-Based Student Insights` are intentionally table/diagram-only until the team provides dedicated narrative source files.
 - `use-case-diagram-v1.7.md` is the normative MVP first-skeleton diagram, but final formal UC IDs remain unresolved.
 - A true Activity lifecycle state chart source is missing from the 2026-05-09 state-chart package.
 - Some architecture artifacts still contain stale wording around deletion notification triggers and archive behavior; see [[wiki/architecture/crud-matrix|CRUD Matrix And Invariants]].

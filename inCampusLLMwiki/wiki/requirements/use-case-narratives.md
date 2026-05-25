@@ -32,7 +32,7 @@ raw/affine/09-05-2026/
 ```
 
 The primary snapshot contains 31 use case narrative files.
-The 2026-05-08 use-case table contains 33 current entries, adding `Update Campus Insight Consent` and `View Consent-Based Student Insights` as table-only use cases without dedicated narrative files yet.
+The 2026-05-08 use-case table introduced `Update Campus Insight Consent` and `View Consent-Based Student Insights`; the 2026-05-09 first-skeleton table and diagram retain them as table/diagram-only use cases until dedicated narrative source files exist.
 Most use the structure requested in the AFFiNE workflow:
 - related requirements
 - initiating actor
@@ -56,7 +56,7 @@ The narratives are useful for requirements review, but they should not yet be tr
 - `use-case-diagram-v1.7.md` is the normative MVP first-skeleton diagram source, but formal UC IDs are still unresolved
 - several narratives explicitly flag open questions
 - some traceability IDs are inconsistent across sources
-- the two new consent/insight use cases do not yet have dedicated narrative files
+- the two consent/insight use cases are intentionally table/diagram-only until dedicated narrative source files exist
 - a true Activity lifecycle state chart source is still missing
 
 ## Narrative Inventory
@@ -66,7 +66,7 @@ The narratives are useful for requirements review, but they should not yet be tr
 | [[wiki/requirements/use-case-pages/UC - Sign Up with University Email|Sign Up with University Email]] | MVP | Student creates an account with university-affiliated access and password credential state. | Exact verification mechanism details remain open, but the 2026-05-03 source confirms password creation and `PasswordHash` on Student Account. |
 | [[wiki/requirements/use-case-pages/UC - Sign In|Sign In]] | MVP | Student signs back in to a verified account. | No major narrative note captured in the source file. |
 | [[wiki/requirements/use-case-pages/UC - Select Campus|Select Campus]] | MVP | Student confirms or selects the campus associated with their university. | Exact onboarding order and whether campus can later be changed are unresolved. |
-| [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] | MVP | Student grants or revokes consent for profile-interest and activity-participation insight sharing with authorized campus staff. | First-skeleton table/diagram entry exists; dedicated narrative, UI placement, and consent-change edge cases are unresolved. |
+| [[wiki/requirements/use-case-pages/UC - Update Campus Insight Consent|Update Campus Insight Consent]] | MVP | Student grants or revokes consent for profile-interest and activity-participation insight sharing with authorized campus staff. | Table/diagram-only until a dedicated narrative source exists; UI placement and consent-change edge cases are unresolved. |
 | [[wiki/requirements/use-case-pages/UC - Set Up Profile|Set Up Profile]] | MVP | Student creates a minimal profile after registration. | Minimal profile fields, photo handling, and whether profile setup blocks app use are unresolved. |
 | [[wiki/requirements/use-case-pages/UC - Edit Profile|Edit Profile]] | MVP | Student edits an existing minimal profile. | Exact editable fields are unresolved. |
 | [[wiki/requirements/use-case-pages/UC - View Student Minimal Profile|View Student Minimal Profile]] | MVP | Student views another student's minimal profile in relevant activity contexts. | Exact profile fields and visibility limits need final definition. |
@@ -91,7 +91,7 @@ The narratives are useful for requirements review, but they should not yet be tr
 | [[wiki/requirements/use-case-pages/UC - Block User|Block User]] | MVP | Student blocks another user from further direct interaction. | Reciprocal visibility/interactions are resolved; unblock and exact pending-request representation remain open. |
 | [[wiki/requirements/use-case-pages/UC - Configure New Campus|Configure New Campus]] | MVP | Campus admin configures a new campus through guided steps. | Exact fields, sequence, and validation rules are not specified. |
 | [[wiki/requirements/use-case-pages/UC - Manage Campus Structured Options|Manage Campus Structured Options]] | MVP | Campus admin manages campus locations, activity categories, and similar structured choices. | CRUD details and whether this is only initial setup or ongoing maintenance are unresolved. |
-| [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]] | MVP | Authorized campus admin views consent-based student interest and activity-participation insights within authorized campus scope. | First-skeleton table/diagram/sequence entry exists; dedicated narrative, exact insight fields, and least-privilege view content remain unresolved. Campus Admin identity is runtime `AuthenticatedAdminContext`. |
+| [[wiki/requirements/use-case-pages/UC - View Consent-Based Student Insights|View Consent-Based Student Insights]] | MVP | Authorized campus admin views consent-based student interest and activity-participation insights within authorized campus scope. | Table/diagram-only until a dedicated narrative source exists; exact insight fields and least-privilege view content remain unresolved. Campus Admin identity is runtime `AuthenticatedAdminContext`. |
 | [[wiki/requirements/use-case-pages/UC - View Friends and Social Indicators|View Friends and Social Indicators]] | postMVP | Student views friends/connections and feed indicators. | Adding/removing friends and chat/profile transitions are not specified. |
 | [[wiki/requirements/use-case-pages/UC - Receive Activity Reminder|Receive Activity Reminder]] | MVP | Student receives a reminder shortly before joined activity start. | Active NSF branch in first-skeleton sources; delivery channel remains open. |
 | [[wiki/requirements/use-case-pages/UC - Track Participation Points|Track Participation Points]] | postMVP | System awards or deducts points based on participation outcome. | Attendance verification, point values, last-minute cutoff, and balance/history views are unresolved. |

@@ -12,17 +12,17 @@ Status labels:
 
 - [[wiki/project/overview|Project Overview]] - Product identity, MVP scope, actors, requirements counts, architecture updates, and unresolved project details. Status: Draft Sourced.
 - [[wiki/project/decisions|Decisions]] - Durable decisions, source-derived working rules, architecture rules, and unresolved decision points. Status: Draft Sourced.
-- [[wiki/project/weekly-status|Weekly Status]] - Current architecture-analysis status and next review focus. Status: Draft Sourced.
+- [[wiki/project/weekly-status|Weekly Status]] - Current implementation baseline, first-skeleton source status, active ambiguities, and next update pattern. Status: Draft Sourced.
 
 ## Requirements Hub
 
 - [[wiki/requirements/use-cases|Use Cases]] - Sourced inventory of 33 current use-case table entries, 31 narrative-backed cards, actors, requirement links, scope, current diagram notes, and architecture-scope updates. Status: Draft Sourced.
-- [[wiki/requirements/use-case-narratives|Use Case Narratives]] - Narrative readiness, modeling notes, relationship notes, and unresolved questions from the 31 use case files plus two table-only consent/insight use cases. Status: Draft Sourced.
+- [[wiki/requirements/use-case-narratives|Use Case Narratives]] - Narrative readiness, modeling notes, relationship notes, and unresolved questions from the 31 use case files plus two table/diagram-only consent/insight use cases. Status: Draft Sourced.
 - [[wiki/requirements/traceability|Traceability]] - Matrix linking 30 user stories, 69 FRs, 47 NFRs, current use-case table entries, and architecture-scope overlays. Status: Draft Sourced.
 
 ## Architecture Hub
 
-- [[wiki/architecture/overview|Architecture Overview]] - Current architecture-analysis baseline, source priority, Level-1 process areas, version handling, and major modeling decisions. Status: Draft Sourced.
+- [[wiki/architecture/overview|Architecture Overview]] - Current implementation architecture baseline, source priority, Level-1 process areas, version handling, and major modeling decisions. Status: Draft Sourced.
 - [[wiki/architecture/first-skeleton-architecture|First Skeleton Architecture]] - First-skeleton modular-monolith choice, tenant boundary, event catalog, canonical stores, runtime admin context, and behavioral/state-model highlights. Status: Draft Sourced.
 - [[wiki/architecture/data-flow|Architecture Data Flow]] - Unified DFD structure and subgroup-level logical data-flow summary. Status: Draft Sourced.
 - [[wiki/architecture/data-stores|Architecture Data Stores]] - Logical store catalog, ownership boundaries, reuse rules, and alignment issues. Status: Draft Sourced.
@@ -32,6 +32,7 @@ Status labels:
 ## Planning And Governance
 
 - [[wiki/planning/workflow|Workflow]] - AFFiNE snapshot process, ingest workflow, query workflow, and staged use-case workflow. Status: Draft Sourced.
+- [[wiki/README|Wiki Viewer README]] - Support page for the local viewer, repository layout, and start-reading links.
 - [[wiki/log|Wiki Log]] - Append-only chronological record of ingests, updates, and lint passes.
 - [[AGENTS|Root Instructions]] - Agent roles, source model, wiki rules, and current priorities.
 
@@ -131,5 +132,5 @@ Important current gaps:
 - `Home.md` contains an `OUTDATED` marker
 - requirement ID formatting differs across some source files
 - `Set Activity Date and Time` remains preserved as a derived card/table row, but the first-skeleton diagram and architecture model fold it into `Create Activity`
-- consent-based campus insight now has dedicated student/admin user stories and use cases, but detailed narratives, exact insight fields, admin authentication implementation, and exact consent UI placement remain unresolved
+- consent-based campus insight now has dedicated student/admin user stories and table/diagram-only use cases, but detailed narratives, exact insight fields, admin authentication implementation, and exact consent UI placement remain unresolved
 - a true `Activity` lifecycle state chart was not found in the 2026-05-09 batch; the delivered corrected SCD models `ActivityParticipation`

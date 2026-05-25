@@ -1,5 +1,7 @@
 # InCampus LLM Wiki
 
+Status: Support documentation for the local wiki viewer. Canonical project knowledge starts at [[wiki/index|Wiki Index]].
+
 This repository contains the InCampus project wiki and a local web viewer for browsing it.
 
 InCampus is a mobile app concept for reducing isolation in university campus life by helping students find low-pressure opportunities to share ordinary campus moments, such as lunch, coffee breaks, study sessions, sports, and small activities.
